@@ -1,6 +1,8 @@
 package com.mygdx.mechwargame.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -12,16 +14,23 @@ import com.mygdx.mechwargame.state.GameState;
 
 public class MainMenuUIFactory {
 
-    public static Label getSmallTextLabel(String text) {
+    public static Label getTextLabel(String text, BitmapFont bitmapFont, Color color) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = UIFactoryCommon.fontSmall;
+        labelStyle.font = bitmapFont;
+        labelStyle.fontColor = color;
+        return new Label(text, labelStyle);
+    }
+
+    public static Label getTextLabel(String text, BitmapFont bitmapFont) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = bitmapFont;
         return new Label(text, labelStyle);
     }
 
     public static ImageTextButton getMenuButton(final String text) {
 
         final ImageTextButton.ImageTextButtonStyle textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
-        textButtonStyle.font = UIFactoryCommon.fontLarge;
+        textButtonStyle.font = UIFactoryCommon.fontMedium;
 
         final ImageTextButton textButton = new ImageTextButton(text, textButtonStyle);
 

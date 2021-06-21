@@ -2,19 +2,23 @@ package com.mygdx.mechwargame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.screen.action.PeriodicShakeAction;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.ScreenState;
 import com.mygdx.mechwargame.ui.MainMenuUIFactory;
+import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
 public class MainMenuScreen extends ScreenAdapter {
 
@@ -23,12 +27,21 @@ public class MainMenuScreen extends ScreenAdapter {
 
     private boolean loading = false;
 
+    private Table loadingTextTable;
+    private Label loadingText;
+
     @Override
     public void show() {
         // loading assets
         loading = true;
         GameState.assetManager.load(AssetManagerV2.MAIN_MENU_BUTTON_BG_FRAME, Texture.class);
         mainMenuStage.setViewport(ScreenState.viewport);
+
+        loadingTextTable = new Table();
+        loadingText = MainMenuUIFactory.getTextLabel("Loading...", UIFactoryCommon.fontLarge);
+        loadingTextTable.add(loadingText);
+        loadingTextTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+        mainMenuStage.addActor(loadingTextTable);
     }
 
     @Override
@@ -42,6 +55,7 @@ public class MainMenuScreen extends ScreenAdapter {
                 loading = false;
                 finishedLoading();
         } else if(loading){
+            mainMenuStage.getActors().removeValue(loadingTextTable, true);
             return;
         }
 
@@ -71,6 +85,11 @@ public class MainMenuScreen extends ScreenAdapter {
         ImageTextButton optionsButton = MainMenuUIFactory.getMenuButton("Options");
         ImageTextButton exitButton = MainMenuUIFactory.getMenuButton("Exit");
 
+        Label titleLabel = MainMenuUIFactory.getTextLabel("Monster Apocalypse", UIFactoryCommon.fontLarge, Color.GREEN);
+        titleLabel.setPosition(Config.SCREEN_WIDTH / 2f - 380, Config.SCREEN_HEIGHT - 100f);
+        titleLabel.addAction(new PeriodicShakeAction(titleLabel, 10, 0.5f, 10f));
+        mainMenuStage.addActor(titleLabel);
+
         table.add(newGameButton).size(400, 80).pad(30).row();
         table.add(loadGameButton).size(400, 80).pad(30).row();
         table.add(optionsButton).size(400, 80).pad(30).row();
@@ -79,7 +98,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         mainMenuStage.addActor(table);
 
-        Label versionLabel = MainMenuUIFactory.getSmallTextLabel(String.format("version %s", GameState.VERSION));
+        Label versionLabel = MainMenuUIFactory.getTextLabel(String.format("version %s", GameState.VERSION), UIFactoryCommon.fontSmall);
         versionLabel.setPosition(1500, 20);
         mainMenuStage.addActor(versionLabel);
 
