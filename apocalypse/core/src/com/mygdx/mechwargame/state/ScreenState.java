@@ -1,9 +1,9 @@
-package com.mygdx.apocalypsegame.screen;
+package com.mygdx.mechwargame.state;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.apocalypsegame.Config;
+import com.mygdx.mechwargame.Config;
 
 public class ScreenState {
 

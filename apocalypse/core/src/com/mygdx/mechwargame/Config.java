@@ -1,4 +1,4 @@
-package com.mygdx.apocalypsegame;
+package com.mygdx.mechwargame;
 
 public class Config {
 

@@ -1,16 +1,18 @@
-package com.mygdx.apocalypsegame.desktop;
+package com.mygdx.mechwargame.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.apocalypsegame.ApocalypseGame;
-import com.mygdx.apocalypsegame.Config;
+import com.mygdx.mechwargame.MechWarGame;
+import com.mygdx.mechwargame.state.GameState;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.fullscreen = true;
+		//config.fullscreen = true;
 
-		new LwjglApplication(new ApocalypseGame(), config);
+		GameState.game = new MechWarGame();
+
+		new LwjglApplication(GameState.game, config);
 	}
 }
