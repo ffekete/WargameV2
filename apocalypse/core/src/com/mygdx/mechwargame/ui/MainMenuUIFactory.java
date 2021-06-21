@@ -14,19 +14,6 @@ import com.mygdx.mechwargame.state.GameState;
 
 public class MainMenuUIFactory {
 
-    public static Label getTextLabel(String text, BitmapFont bitmapFont, Color color) {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = bitmapFont;
-        labelStyle.fontColor = color;
-        return new Label(text, labelStyle);
-    }
-
-    public static Label getTextLabel(String text, BitmapFont bitmapFont) {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = bitmapFont;
-        return new Label(text, labelStyle);
-    }
-
     public static ImageTextButton getMenuButton(final String text) {
 
         final ImageTextButton.ImageTextButtonStyle textButtonStyle = new ImageTextButton.ImageTextButtonStyle();

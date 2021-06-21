@@ -6,6 +6,8 @@ import com.mygdx.mechwargame.ui.AssetLoader;
 public class AssetManagerV2 extends AssetManager {
 
     public static final String MAIN_MENU_BUTTON_BG_FRAME = "mainmenu/MainMenuButtonBgUp.png";
+    public static final String MAIN_MENU_PARALLAX_ANIM = "mainmenu/Parallax.png";
+    public static final String TEXT_CURSOR = "ui/TextCursor.png";
 
     @Override
     public synchronized <T> T get(String fileName,
