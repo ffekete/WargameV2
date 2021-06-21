@@ -5,11 +5,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.state.GameState;
 
 public class MainMenuUIFactory {
+
+    public static Label getSmallTextLabel(String text) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = UIFactoryCommon.fontSmall;
+        return new Label(text, labelStyle);
+    }
 
     public static ImageTextButton getMenuButton(final String text) {
 

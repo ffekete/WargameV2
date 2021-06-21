@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
@@ -77,6 +78,10 @@ public class MainMenuScreen extends ScreenAdapter {
         table.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
         mainMenuStage.addActor(table);
+
+        Label versionLabel = MainMenuUIFactory.getSmallTextLabel(String.format("version %s", GameState.VERSION));
+        versionLabel.setPosition(1500, 20);
+        mainMenuStage.addActor(versionLabel);
 
         mainMenuStage.addListener(new InputListener() {
             @Override
