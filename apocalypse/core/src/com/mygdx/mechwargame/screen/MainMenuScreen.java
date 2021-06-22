@@ -32,11 +32,12 @@ public class MainMenuScreen extends GenericScreenAdapter {
 
     @Override
     public void show() {
+
+        super.show();
+
         // loading assets
         loading = true;
         GameState.assetManager.loadAll();
-
-        stage.setViewport(ScreenState.viewport);
 
         loadingTextTable = new Table();
         loadingText = UIFactoryCommon.getTextLabel("Loading...", UIFactoryCommon.fontLarge, Color.WHITE);
