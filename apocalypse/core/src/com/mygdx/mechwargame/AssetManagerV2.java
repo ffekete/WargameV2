@@ -16,7 +16,16 @@ public class AssetManagerV2 extends AssetManager {
     public static final String LOGO_01 = "company/logo/Logo01.png";
     public static final String LOGO_02 = "company/logo/Logo02.png";
 
-    public List<String> logos = Arrays.asList(LOGO_01, LOGO_02);
+    public static final String PORTRAIT_01 = "portrait/Portrait01.png";
+    public static final String PORTRAIT_02 = "portrait/Portrait02.png";
+
+    public List<String> logos = Arrays.asList(
+            LOGO_01,
+            LOGO_02);
+
+    public List<String> portraits = Arrays.asList(
+            PORTRAIT_01,
+            PORTRAIT_02);
 
     @Override
     public synchronized <T> T get(String fileName,
@@ -38,5 +47,7 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.TEXT_CURSOR, Texture.class);
         load(AssetManagerV2.LOGO_01, Texture.class);
         load(AssetManagerV2.LOGO_02, Texture.class);
+        load(AssetManagerV2.PORTRAIT_01, Texture.class);
+        load(AssetManagerV2.PORTRAIT_02, Texture.class);
     }
 }

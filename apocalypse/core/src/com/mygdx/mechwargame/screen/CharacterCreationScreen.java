@@ -20,6 +20,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
 
     private Table screenContentTable = new Table();
     private int logoIndex = 0;
+    private int portraitIndex = 0;
 
     @Override
     public void show() {
@@ -44,8 +45,19 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 .colspan(5)
                 .row();
 
+        // select portrait
+        screenContentTable.add(UIFactoryCommon.getTextLabel("Choose portrait", UIFactoryCommon.fontSmall)).width(300);
+        screenContentTable.add().size(128, 128);
+        TextButton scrollPortraitLeftButton = UIFactoryCommon.getTextButton("<", UIFactoryCommon.fontLarge);
+        screenContentTable.add(scrollPortraitLeftButton).size(128).right();
 
-        screenContentTable.add(UIFactoryCommon.getTextLabel("Choose logo", UIFactoryCommon.fontSmall)).size(128);
+        final Image portraitImage = new Image(GameState.assetManager.get(GameState.assetManager.portraits.get(portraitIndex), Texture.class));
+        final Cell<Image> portraitImgeCell = screenContentTable.add(portraitImage).size(128, 128).center();
+        TextButton scrollPortraitRightButton = UIFactoryCommon.getTextButton(">", UIFactoryCommon.fontLarge);
+        screenContentTable.add(scrollPortraitRightButton).size(128).left().row();
+
+        // select logo
+        screenContentTable.add(UIFactoryCommon.getTextLabel("Choose logo", UIFactoryCommon.fontSmall)).width(300);
         screenContentTable.add().size(128, 128);
         TextButton scrollLogoLeftButton = UIFactoryCommon.getTextButton("<", UIFactoryCommon.fontLarge);
         screenContentTable.add(scrollLogoLeftButton).size(128).right();
@@ -73,6 +85,26 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 return true;
             }
         });
+
+        scrollPortraitRightButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+
+                portraitIndex++;
+                if (portraitIndex >= GameState.assetManager.portraits.size()) {
+                    portraitIndex = 0;
+                }
+
+                portraitImgeCell.setActor(new Image(GameState.assetManager.get(GameState.assetManager.portraits.get(portraitIndex), Texture.class)));
+
+                return true;
+            }
+        });
+
         screenContentTable.add().size(128, 128).row();
 
         stage.addActor(screenContentTable);
