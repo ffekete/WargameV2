@@ -14,6 +14,14 @@ public class AnimatedDrawable extends TextureRegionDrawable {
 
     private final Animation<TextureRegion> animation;
     private float duration = 0f;
+    private boolean looping = true;
+
+    public AnimatedDrawable(String file, int width, int height, boolean looping, float speed) {
+        TextureRegion[][] textureRegion = TextureRegion.split(GameState.assetManager.get(file, Texture.class), width, height);
+        this.animation = new Animation<>(speed, textureRegion[0]);
+        this.looping = looping;
+
+    }
 
     public AnimatedDrawable(String file) {
         TextureRegion[][] textureRegion = TextureRegion.split(GameState.assetManager.get(file, Texture.class), 577, 128);
@@ -29,6 +37,6 @@ public class AnimatedDrawable extends TextureRegionDrawable {
                      float height) {
         duration += Gdx.graphics.getDeltaTime();
         batch.setColor(Color.WHITE);
-        batch.draw(animation.getKeyFrame(duration, true), x, y, width, height);
+        batch.draw(animation.getKeyFrame(duration, looping), x, y, width, height);
     }
 }

@@ -73,10 +73,12 @@ public class MainMenuScreen extends GenericScreenAdapter {
     private void finishedLoading() {
         Table table = new Table();
 
-        final ImageTextButton newGameButton = MainMenuUIFactory.getMenuButton("Start");
-        ImageTextButton loadGameButton = MainMenuUIFactory.getMenuButton("Load");
-        ImageTextButton optionsButton = MainMenuUIFactory.getMenuButton("Options");
-        ImageTextButton exitButton = MainMenuUIFactory.getMenuButton("Exit");
+        table.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
+
+        final ImageTextButton newGameButton = UIFactoryCommon.getMenuButton("Start");
+        ImageTextButton loadGameButton = UIFactoryCommon.getMenuButton("Load");
+        ImageTextButton optionsButton = UIFactoryCommon.getMenuButton("Options");
+        ImageTextButton exitButton = UIFactoryCommon.getMenuButton("Exit");
 
         Label titleLabel = UIFactoryCommon.getTextLabel("Monster Apocalypse", UIFactoryCommon.fontLarge, Color.GREEN);
 

@@ -10,6 +10,7 @@ import java.util.List;
 public class AssetManagerV2 extends AssetManager {
 
     public static final String MAIN_MENU_BUTTON_BG_FRAME = "mainmenu/MainMenuButtonBgUp.png";
+    public static final String MAIN_MENU_BACKGROUND = "mainmenu/Background.png";
     public static final String MAIN_MENU_PARALLAX_ANIM = "mainmenu/Parallax.png";
     public static final String TEXT_CURSOR = "ui/TextCursor.png";
 
@@ -18,6 +19,8 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String PORTRAIT_01 = "portrait/Portrait01.png";
     public static final String PORTRAIT_02 = "portrait/Portrait02.png";
+
+    public static final String PORTRAIT_FRAME = "portrait/Frame.png";
 
     public List<String> logos = Arrays.asList(
             LOGO_01,
@@ -43,11 +46,13 @@ public class AssetManagerV2 extends AssetManager {
 
     public void loadAll() {
         load(AssetManagerV2.MAIN_MENU_BUTTON_BG_FRAME, Texture.class);
+        load(AssetManagerV2.MAIN_MENU_BACKGROUND, Texture.class);
         load(AssetManagerV2.MAIN_MENU_PARALLAX_ANIM, Texture.class);
         load(AssetManagerV2.TEXT_CURSOR, Texture.class);
         load(AssetManagerV2.LOGO_01, Texture.class);
         load(AssetManagerV2.LOGO_02, Texture.class);
         load(AssetManagerV2.PORTRAIT_01, Texture.class);
         load(AssetManagerV2.PORTRAIT_02, Texture.class);
+        load(AssetManagerV2.PORTRAIT_FRAME, Texture.class);
     }
 }
