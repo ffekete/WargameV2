@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -68,4 +69,10 @@ public class UIFactoryCommon {
         return container;
     }
 
+    public static TextButton getTextButton(String text, BitmapFont bitmapFont) {
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = bitmapFont;
+
+        return new TextButton(text, textButtonStyle);
+    }
 }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -12,11 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.screen.action.FlashingAction;
-import com.mygdx.mechwargame.screen.action.PeriodicShakeAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.ScreenState;
@@ -37,13 +34,12 @@ public class MainMenuScreen extends GenericScreenAdapter {
     public void show() {
         // loading assets
         loading = true;
-        GameState.assetManager.load(AssetManagerV2.MAIN_MENU_BUTTON_BG_FRAME, Texture.class);
-        GameState.assetManager.load(AssetManagerV2.MAIN_MENU_PARALLAX_ANIM, Texture.class);
-        GameState.assetManager.load(AssetManagerV2.TEXT_CURSOR, Texture.class);
+        GameState.assetManager.loadAll();
+
         stage.setViewport(ScreenState.viewport);
 
         loadingTextTable = new Table();
-        loadingText = UIFactoryCommon.getTextLabel("Loading...", UIFactoryCommon.fontLarge);
+        loadingText = UIFactoryCommon.getTextLabel("Loading...", UIFactoryCommon.fontLarge, Color.WHITE);
         loadingTextTable.add(loadingText);
         loadingTextTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         stage.addActor(loadingTextTable);
@@ -59,9 +55,7 @@ public class MainMenuScreen extends GenericScreenAdapter {
         if (loading && GameState.assetManager.update()) {
             loading = false;
             finishedLoading();
-        } else if (loading) {
             stage.getActors().removeValue(loadingTextTable, true);
-            return;
         }
 
         // draw
