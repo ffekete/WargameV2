@@ -97,7 +97,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
         ImageTextButton scrollLogoRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
         screenContentTable.add(scrollLogoRightButton).size(64).left().row();
 
-        screenContentTable.add().size(128, 93).row();
+        screenContentTable.add().size(128, 92).row();
 
         ImageTextButton attributesButton = UIFactoryCommon.getMenuButton("attributes >");
 
