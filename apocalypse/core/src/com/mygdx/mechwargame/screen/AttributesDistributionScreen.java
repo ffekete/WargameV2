@@ -9,6 +9,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Attributes;
 import com.mygdx.mechwargame.core.character.Character;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
@@ -58,7 +59,7 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
 
         attributesTable.add(UIFactoryCommon.getTextLabel("Points remaining")).padBottom(20).padRight(20).colspan(2).left();
         attributesTable.add().size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel("", () -> Integer.toString(pointsToDistribute))).pad(5, 20, 20, 5).width(LAST_CELL_WIDTH).center();
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(pointsToDistribute))).pad(5, 20, 20, 5).width(LAST_CELL_WIDTH).center();
         attributesTable.row();
 
         ImageTextButton endurancePlusButton = UIFactoryCommon.getSmallRoundButton("+");
@@ -66,7 +67,7 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Endurance.displayName)).left().padRight(20);
         attributesTable.add(enduranceMinusButton).size(64).pad(5);
         attributesTable.add(endurancePlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel("0", () -> Integer.toString(character.attributeValues.get(Attributes.Endurance)))).center().padLeft(20).width(LAST_CELL_WIDTH);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Endurance)))).center().padLeft(20).width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         ImageTextButton perceptionPlusButton = UIFactoryCommon.getSmallRoundButton("+");
@@ -74,7 +75,7 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Perception.displayName)).left().padRight(20);
         attributesTable.add(perceptionMinusButton).size(64).pad(5);
         attributesTable.add(perceptionPlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel("0", () -> Integer.toString(character.attributeValues.get(Attributes.Perception)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Perception)))).padLeft(20).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         ImageTextButton reflexesPlusButton = UIFactoryCommon.getSmallRoundButton("+");
@@ -82,7 +83,7 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Reflexes.displayName)).left().padRight(20);
         attributesTable.add(reflexesMinusButton).size(64).pad(5);
         attributesTable.add(reflexesPlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel("0", () -> Integer.toString(character.attributeValues.get(Attributes.Reflexes)))).center().padLeft(20).width(LAST_CELL_WIDTH);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Reflexes)))).center().padLeft(20).width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         ImageTextButton hecPlusButton = UIFactoryCommon.getSmallRoundButton("+");
@@ -90,13 +91,13 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.HandEyeCoordination.displayName)).left().padRight(20);
         attributesTable.add(hecMinusButton).size(64).pad(5);
         attributesTable.add(hecPlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel("0", () -> Integer.toString(character.attributeValues.get(Attributes.HandEyeCoordination)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.HandEyeCoordination)))).padLeft(20).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
 
-        attributesTable.add().size(75);
+        attributesTable.add().size(98);
 
-        ImageTextButton attributesButton = UIFactoryCommon.getMenuButton("skills >");
-        screenContentTable.add(attributesButton).colspan(6).right().size(450, 80);
+        ImageTextButton skillsButton = UIFactoryCommon.getMenuButton("skills >");
+        screenContentTable.add(skillsButton).colspan(6).right().size(450, 80).padTop(5);
 
         // add click action
         enduranceMinusButton.addListener(addDecreaseListener(Attributes.Endurance));
@@ -114,6 +115,18 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         stage.addActor(screenContentTable);
 
         Gdx.input.setInputProcessor(stage);
+
+        skillsButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                GameState.game.setScreen(new SkillsDistributionScreen(character));
+                return true;
+            }
+        });
     }
 
     private InputListener addIncreaseListener(Attributes attribute) {

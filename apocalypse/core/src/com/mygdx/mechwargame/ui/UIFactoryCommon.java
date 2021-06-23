@@ -53,10 +53,16 @@ public class UIFactoryCommon {
         return new Label(text, labelStyle);
     }
 
-    public static Label getDynamicTextLabel(String text, Supplier<String> textSource) {
+    public static Label getDynamicTextLabel(Supplier<String> textSource) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = fontMedium;
-        return new DynamicTextLabel(text, labelStyle, textSource);
+        return new DynamicTextLabel("", labelStyle, textSource);
+    }
+
+    public static Label getDynamicTextLabel(Supplier<String> textSource, BitmapFont bitmapFont) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = bitmapFont;
+        return new DynamicTextLabel("", labelStyle, textSource);
     }
 
     public static Container<TextField> getTextField(String message, String text, BitmapFont bitmapFont) {
