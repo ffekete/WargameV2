@@ -34,12 +34,23 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
 
         screenContentTable.add(UIFactoryCommon.getTextLabel("1. appearance", UIFactoryCommon.fontSmall)).colspan(6).padBottom(50).row();
 
-        screenContentTable.add(UIFactoryCommon.getTextLabel("name", UIFactoryCommon.fontSmall))
+        screenContentTable.add(UIFactoryCommon.getTextLabel("first name", UIFactoryCommon.fontSmall))
                 .left()
                 .width(250);
 
-        Container<TextField> nameTextField = UIFactoryCommon.getTextField("enter name", "", UIFactoryCommon.fontSmall);
-        screenContentTable.add(nameTextField)
+        Container<TextField> firstNameTextField = UIFactoryCommon.getTextField("first name", "", UIFactoryCommon.fontSmall);
+        screenContentTable.add(firstNameTextField)
+                .width(600)
+                .pad(10)
+                .colspan(5)
+                .row();
+
+        screenContentTable.add(UIFactoryCommon.getTextLabel("last name", UIFactoryCommon.fontSmall))
+                .left()
+                .width(250);
+
+        Container<TextField> lastNameTextField = UIFactoryCommon.getTextField("last name", "", UIFactoryCommon.fontSmall);
+        screenContentTable.add(lastNameTextField)
                 .width(600)
                 .pad(10)
                 .colspan(5)
@@ -59,16 +70,16 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
         // select portrait
         screenContentTable.add(UIFactoryCommon.getTextLabel("choose portrait", UIFactoryCommon.fontSmall)).width(300);
         screenContentTable.add().size(128, 128);
-        TextButton scrollPortraitLeftButton = UIFactoryCommon.getTextButton("<", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollPortraitLeftButton).size(128).right();
+        ImageTextButton scrollPortraitLeftButton = UIFactoryCommon.getSmallRoundButton("-", UIFactoryCommon.fontLarge);
+        screenContentTable.add(scrollPortraitLeftButton).size(64).right();
 
         final AnimatedDrawable portraitFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
         final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, false, FRAME_ANIM_SPEED);
         final Image portraitImage = new LayeredAnimatedImage(portraitDrawable, portraitFrameAnimation);
 
         final Cell<Image> portraitImgeCell = screenContentTable.add(portraitImage).size(128, 128).center();
-        TextButton scrollPortraitRightButton = UIFactoryCommon.getTextButton(">", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollPortraitRightButton).size(128).left().row();
+        ImageTextButton scrollPortraitRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
+        screenContentTable.add(scrollPortraitRightButton).size(64).left().row();
 
         // separator
         screenContentTable.add().size(32).row();
@@ -76,21 +87,21 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
         // select logo
         screenContentTable.add(UIFactoryCommon.getTextLabel("choose logo", UIFactoryCommon.fontSmall)).width(300);
         screenContentTable.add().size(128, 128);
-        TextButton scrollLogoLeftButton = UIFactoryCommon.getTextButton("<", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollLogoLeftButton).size(128).right();
+        ImageTextButton scrollLogoLeftButton = UIFactoryCommon.getSmallRoundButton("-", UIFactoryCommon.fontLarge);
+        screenContentTable.add(scrollLogoLeftButton).size(64).right();
 
         final AnimatedDrawable logoFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
         final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, false, FRAME_ANIM_SPEED);
         final Image logoImage = new LayeredAnimatedImage(logoFrameAnimation, logoDrawable);
         final Cell<Image> logoImgeCell = screenContentTable.add(logoImage).size(128, 128).center();
-        TextButton scrollLogoRightButton = UIFactoryCommon.getTextButton(">", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollLogoRightButton).size(128).left().row();
+        ImageTextButton scrollLogoRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
+        screenContentTable.add(scrollLogoRightButton).size(64).left().row();
 
-        screenContentTable.add().size(128, 128).row();
+        screenContentTable.add().size(128, 64).row();
 
         ImageTextButton attributesButton = UIFactoryCommon.getMenuButton("attributes >");
 
-        screenContentTable.add(attributesButton).colspan(6).right().size(400, 80);
+        screenContentTable.add(attributesButton).colspan(6).right().size(450, 80);
 
         scrollLogoLeftButton.addListener(new ClickListener(Input.Buttons.LEFT) {
             @Override
@@ -194,9 +205,10 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
 
                 Character character = new Character();
 
-                character.name = nameTextField.getName();
-                character.nickName = nickNameTextField.getName();
-                character.portrait = portraitImgeCell.getActor();
+                character.firstName = firstNameTextField.getActor().getText();
+                character.lastName = lastNameTextField.getActor().getText();
+                character.nickName = nickNameTextField.getActor().getText();
+                character.portrait = (LayeredAnimatedImage)portraitImgeCell.getActor();
 
                 GameState.game.setScreen(new AttributesDistributionScreen(character));
                 return true;

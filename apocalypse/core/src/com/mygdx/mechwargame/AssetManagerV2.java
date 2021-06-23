@@ -13,6 +13,10 @@ public class AssetManagerV2 extends AssetManager {
     public static final String MAIN_MENU_BACKGROUND = "mainmenu/Background.png";
     public static final String MAIN_MENU_PARALLAX_ANIM = "mainmenu/Parallax.png";
     public static final String TEXT_CURSOR = "ui/TextCursor.png";
+    public static final String ROUND_SMALL_BUTTON = "ui/RoundSmallButton.png";
+    public static final String CHARACTER_INFO_FRAME = "ui/CharacterInfoFrame.png";
+    public static final String CHARACTER_ATTRIBUTES_FRAME = "ui/CharacterAttributesFrame.png";
+    public static final String TEXT_FIELD_BG = "ui/TextFieldBg.png";
 
     public static final String LOGO_01 = "company/logo/Logo01.png";
     public static final String LOGO_02 = "company/logo/Logo02.png";
@@ -59,5 +63,9 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.PORTRAIT_02, Texture.class);
         load(AssetManagerV2.PORTRAIT_03, Texture.class);
         load(AssetManagerV2.PORTRAIT_FRAME, Texture.class);
+        load(AssetManagerV2.CHARACTER_INFO_FRAME, Texture.class);
+        load(AssetManagerV2.CHARACTER_ATTRIBUTES_FRAME, Texture.class);
+        load(AssetManagerV2.ROUND_SMALL_BUTTON, Texture.class);
+        load(AssetManagerV2.TEXT_FIELD_BG, Texture.class);
     }
 }
