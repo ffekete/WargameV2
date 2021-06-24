@@ -3,13 +3,16 @@ package com.mygdx.mechwargame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
-import com.mygdx.mechwargame.core.character.Attributes;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.character.Skills;
+import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
@@ -110,10 +113,25 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
         skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Evasion)))).padLeft(20).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
-        ImageTextButton attributesButton = UIFactoryCommon.getMenuButton("gear >");
-        screenContentTable.add(attributesButton).colspan(6).right().size(450, 80).padTop(5);
+        ImageTextButton gearButton = UIFactoryCommon.getMenuButton("gear >");
+        screenContentTable.add(gearButton).colspan(6).right().size(450, 80).padTop(5);
 
         // add click action
+        gearButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                SequenceAction sequenceAction = new SequenceAction();
+                sequenceAction.addAction(Actions.delay(0.15f));
+                sequenceAction.addAction(new SetScreenAction(new GearSelectionScreen()));
+                stage.addAction(sequenceAction);
+                return true;
+            }
+        });
+
         lasersMinusButton.addListener(addDecreaseListener(Skills.Lasers));
         lasersPlusButton.addListener(addIncreaseListener(Skills.Lasers));
 
@@ -133,6 +151,7 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
         evasionPlusButton.addListener(addIncreaseListener(Skills.Evasion));
 
         stage.addActor(screenContentTable);
+
 
         Gdx.input.setInputProcessor(stage);
     }

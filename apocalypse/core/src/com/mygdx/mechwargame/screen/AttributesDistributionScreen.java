@@ -3,12 +3,15 @@ package com.mygdx.mechwargame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Attributes;
 import com.mygdx.mechwargame.core.character.Character;
+import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
@@ -123,7 +126,10 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
                                      float y,
                                      int pointer,
                                      int button) {
-                GameState.game.setScreen(new SkillsDistributionScreen(character));
+                SequenceAction sequenceAction = new SequenceAction();
+                sequenceAction.addAction(Actions.delay(0.15f));
+                sequenceAction.addAction(new SetScreenAction(new SkillsDistributionScreen(character)));
+                stage.addAction(sequenceAction);
                 return true;
             }
         });

@@ -4,11 +4,15 @@ package com.mygdx.mechwargame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Character;
+import com.mygdx.mechwargame.screen.action.FlashingAction;
+import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
@@ -210,7 +214,11 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 character.nickName = nickNameTextField.getActor().getText();
                 character.portrait = (LayeredAnimatedImage)portraitImgeCell.getActor();
 
-                GameState.game.setScreen(new AttributesDistributionScreen(character));
+                SequenceAction sequenceAction = new SequenceAction();
+                sequenceAction.addAction(Actions.delay(0.15f));
+                sequenceAction.addAction(new SetScreenAction(new AttributesDistributionScreen(character)));
+                stage.addAction(sequenceAction);
+                //GameState.game.setScreen(new AttributesDistributionScreen(character));
                 return true;
             }
 
