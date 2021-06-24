@@ -60,41 +60,41 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
 
         attributesTable.padTop(50);
 
-        attributesTable.add(UIFactoryCommon.getTextLabel("Points remaining")).padBottom(20).padRight(20).colspan(2).left();
-        attributesTable.add().size(64).pad(5);
+        attributesTable.add(UIFactoryCommon.getTextLabel("Points remaining")).padBottom(20).padRight(60).colspan(2).left();
+        attributesTable.add().size(64).padBottom(20);
         attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(pointsToDistribute))).pad(5, 20, 20, 5).width(LAST_CELL_WIDTH).center();
         attributesTable.row();
 
         ImageTextButton endurancePlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton enduranceMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Endurance.displayName)).left().padRight(20);
-        attributesTable.add(enduranceMinusButton).size(64).pad(5);
-        attributesTable.add(endurancePlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Endurance)))).center().padLeft(20).width(LAST_CELL_WIDTH);
+        attributesTable.add(enduranceMinusButton).size(64).padRight(20);
+        attributesTable.add(endurancePlusButton).size(64).padRight(20);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Endurance)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         ImageTextButton perceptionPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton perceptionMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Perception.displayName)).left().padRight(20);
-        attributesTable.add(perceptionMinusButton).size(64).pad(5);
-        attributesTable.add(perceptionPlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Perception)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        attributesTable.add(perceptionMinusButton).size(64).padRight(20);
+        attributesTable.add(perceptionPlusButton).size(64).padRight(20);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Perception)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         ImageTextButton reflexesPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton reflexesMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Reflexes.displayName)).left().padRight(20);
-        attributesTable.add(reflexesMinusButton).size(64).pad(5);
-        attributesTable.add(reflexesPlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Reflexes)))).center().padLeft(20).width(LAST_CELL_WIDTH);
+        attributesTable.add(reflexesMinusButton).size(64).padRight(20);
+        attributesTable.add(reflexesPlusButton).size(64).padRight(20);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Reflexes)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         ImageTextButton hecPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton hecMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.HandEyeCoordination.displayName)).left().padRight(20);
-        attributesTable.add(hecMinusButton).size(64).pad(5);
-        attributesTable.add(hecPlusButton).size(64).pad(5);
-        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.HandEyeCoordination)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        attributesTable.add(hecMinusButton).size(64).padRight(20);
+        attributesTable.add(hecPlusButton).size(64).padRight(20);
+        attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.HandEyeCoordination)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         attributesTable.add().size(98);

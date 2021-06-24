@@ -49,8 +49,8 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
 
         Table innerTable = new Table();
 
-        screenContentTable.add(characterInfoTable).width(1500).padBottom(50).row();
-        screenContentTable.add(skillsTable).width(1500).center().row();
+        screenContentTable.add(characterInfoTable).width(1500).padBottom(30).row();
+        screenContentTable.add(skillsTable).width(1500).height(500).center().row();
 
         characterInfoTable.add(character.portrait).size(128).padRight(20);
         innerTable.add(UIFactoryCommon.getTextLabel(character.firstName, UIFactoryCommon.fontSmall)).left().padRight(20);
@@ -58,59 +58,57 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
         innerTable.add(UIFactoryCommon.getTextLabel(String.format("[%s]", character.nickName), UIFactoryCommon.fontSmall)).left();
         characterInfoTable.add(innerTable).left().width(1300);
 
-        skillsTable.padTop(0);
-
-        skillsTable.add(UIFactoryCommon.getTextLabel("Points remaining")).padBottom(5).padRight(20).colspan(2).left();
-        skillsTable.add().size(64).pad(5);
-        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(pointsToDistribute))).pad(5, 20, 20, 5).width(LAST_CELL_WIDTH).center();
+        skillsTable.add(UIFactoryCommon.getTextLabel("points remaining")).width(600).padBottom(5).padRight(60).colspan(2).left();
+        skillsTable.add().size(64);
+        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(pointsToDistribute))).width(LAST_CELL_WIDTH).height(64).center();
         skillsTable.row();
 
         ImageTextButton lasersPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton lasersMinusButton = UIFactoryCommon.getSmallRoundButton("-");
-        skillsTable.add(UIFactoryCommon.getTextLabel(Skills.Lasers.displayName)).left().padRight(20);
-        skillsTable.add(lasersMinusButton).size(64).pad(5);
-        skillsTable.add(lasersPlusButton).size(64).pad(5);
-        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Lasers)))).center().padLeft(20).width(LAST_CELL_WIDTH);
+        skillsTable.add(UIFactoryCommon.getTextLabel(Skills.Lasers.displayName)).width(600 - 64 - 20).left().padRight(20);
+        skillsTable.add(lasersMinusButton).size(64).padRight(20).padBottom(5);
+        skillsTable.add(lasersPlusButton).size(64).padRight(40);
+        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Lasers)))).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
         ImageTextButton missilesPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton missilesMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         skillsTable.add(UIFactoryCommon.getTextLabel(Skills.Missiles.displayName)).left().padRight(20);
-        skillsTable.add(missilesMinusButton).size(64).pad(5);
-        skillsTable.add(missilesPlusButton).size(64).pad(5);
-        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Missiles)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        skillsTable.add(missilesMinusButton).size(64).padRight(20).padBottom(5);
+        skillsTable.add(missilesPlusButton).size(64).padRight(40);
+        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Missiles)))).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
         ImageTextButton gunsPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton gunsMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         skillsTable.add(UIFactoryCommon.getTextLabel(Skills.Guns.displayName)).left().padRight(20);
-        skillsTable.add(gunsMinusButton).size(64).pad(5);
-        skillsTable.add(gunsPlusButton).size(64).pad(5);
-        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Guns)))).center().padLeft(20).width(LAST_CELL_WIDTH);
+        skillsTable.add(gunsMinusButton).size(64).padRight(20).padBottom(5);
+        skillsTable.add(gunsPlusButton).size(64).padRight(40);
+        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Guns)))).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
         ImageTextButton meleePlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton meleeMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         skillsTable.add(UIFactoryCommon.getTextLabel(Skills.Melee.displayName)).left().padRight(20);
-        skillsTable.add(meleeMinusButton).size(64).pad(5);
-        skillsTable.add(meleePlusButton).size(64).pad(5);
-        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Melee)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        skillsTable.add(meleeMinusButton).size(64).padRight(20).padBottom(5);
+        skillsTable.add(meleePlusButton).size(64).padRight(40);
+        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Melee)))).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
         ImageTextButton pilotingPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton pilotingMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         skillsTable.add(UIFactoryCommon.getTextLabel(Skills.Piloting.displayName)).left().padRight(20);
-        skillsTable.add(pilotingMinusButton).size(64).pad(5);
-        skillsTable.add(pilotingPlusButton).size(64).pad(5);
-        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Piloting)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        skillsTable.add(pilotingMinusButton).size(64).padRight(20).padBottom(5);
+        skillsTable.add(pilotingPlusButton).size(64).padRight(40);
+        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Piloting)))).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
         ImageTextButton evasionPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton evasionMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         skillsTable.add(UIFactoryCommon.getTextLabel(Skills.Evasion.displayName)).left().padRight(20);
-        skillsTable.add(evasionMinusButton).size(64).pad(5);
-        skillsTable.add(evasionPlusButton).size(64).pad(5);
-        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Evasion)))).padLeft(20).center().width(LAST_CELL_WIDTH);
+        skillsTable.add(evasionMinusButton).size(64).padRight(20).padBottom(5);
+        skillsTable.add(evasionPlusButton).size(64).padRight(40);
+        skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Evasion)))).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
         ImageTextButton gearButton = UIFactoryCommon.getMenuButton("gear >");

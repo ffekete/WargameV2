@@ -1,6 +1,7 @@
 package com.mygdx.mechwargame.core.mech;
 
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.core.weapon.LaserCannon;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
@@ -12,6 +13,8 @@ public class BlackBear extends Mech {
         armor = 3;
         movementPoints = 1;
         initiative = 1;
+        primaryWeapon = new LaserCannon();
+        hp = 3;
     }
 
     @Override
