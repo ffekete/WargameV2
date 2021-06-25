@@ -40,7 +40,7 @@ public class UIFactoryCommon {
             table.add(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_EMPTY, 32, 32, true, 0.15f))).size(32).padRight(5).left();
         }
 
-        table.add().width(360 - max * (32 + 5));
+        table.add().width(260 - max * (32 + 5));
 
         return table;
     }

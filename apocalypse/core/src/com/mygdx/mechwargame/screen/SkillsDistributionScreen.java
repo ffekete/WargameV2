@@ -12,6 +12,7 @@ import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.character.Skills;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
@@ -111,8 +112,8 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
         skillsTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.skillValues.get(Skills.Evasion)))).center().width(LAST_CELL_WIDTH);
         skillsTable.row();
 
-        ImageTextButton gearButton = UIFactoryCommon.getMenuButton("gear >");
-        screenContentTable.add(gearButton).colspan(6).right().size(450, 80).padTop(5);
+        ImageTextButton gearButton = UIFactoryCommon.getMenuButton("gear");
+        screenContentTable.add(gearButton).colspan(6).center().size(450, 80).padTop(5);
 
         // add click action
         gearButton.addListener(new InputListener() {
@@ -122,6 +123,7 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
                                      float y,
                                      int pointer,
                                      int button) {
+                GameData.mainCharacter = character;
                 SequenceAction sequenceAction = new SequenceAction();
                 sequenceAction.addAction(Actions.delay(0.15f));
                 sequenceAction.addAction(new SetScreenAction(new GearSelectionScreen()));

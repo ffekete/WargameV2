@@ -68,7 +68,7 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         ImageTextButton endurancePlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton enduranceMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Endurance.displayName)).left().padRight(20);
-        attributesTable.add(enduranceMinusButton).size(64).padRight(20);
+        attributesTable.add(enduranceMinusButton).size(64).padRight(20).padBottom(5);
         attributesTable.add(endurancePlusButton).size(64).padRight(20);
         attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Endurance)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
@@ -76,7 +76,7 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         ImageTextButton perceptionPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton perceptionMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Perception.displayName)).left().padRight(20);
-        attributesTable.add(perceptionMinusButton).size(64).padRight(20);
+        attributesTable.add(perceptionMinusButton).size(64).padRight(20).padBottom(5);
         attributesTable.add(perceptionPlusButton).size(64).padRight(20);
         attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Perception)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
@@ -84,7 +84,7 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         ImageTextButton reflexesPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton reflexesMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.Reflexes.displayName)).left().padRight(20);
-        attributesTable.add(reflexesMinusButton).size(64).padRight(20);
+        attributesTable.add(reflexesMinusButton).size(64).padRight(20).padBottom(5);
         attributesTable.add(reflexesPlusButton).size(64).padRight(20);
         attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.Reflexes)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
@@ -92,15 +92,15 @@ public class AttributesDistributionScreen extends GenericScreenAdapter {
         ImageTextButton hecPlusButton = UIFactoryCommon.getSmallRoundButton("+");
         ImageTextButton hecMinusButton = UIFactoryCommon.getSmallRoundButton("-");
         attributesTable.add(UIFactoryCommon.getTextLabel(Attributes.HandEyeCoordination.displayName)).left().padRight(20);
-        attributesTable.add(hecMinusButton).size(64).padRight(20);
+        attributesTable.add(hecMinusButton).size(64).padRight(20).padBottom(5);
         attributesTable.add(hecPlusButton).size(64).padRight(20);
         attributesTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(character.attributeValues.get(Attributes.HandEyeCoordination)))).center().width(LAST_CELL_WIDTH);
         attributesTable.row();
 
         attributesTable.add().size(98);
 
-        ImageTextButton skillsButton = UIFactoryCommon.getMenuButton("skills >");
-        screenContentTable.add(skillsButton).colspan(6).right().size(450, 80).padTop(5);
+        ImageTextButton skillsButton = UIFactoryCommon.getMenuButton("skills");
+        screenContentTable.add(skillsButton).colspan(6).center().size(450, 80).padTop(5);
 
         // add click action
         enduranceMinusButton.addListener(addDecreaseListener(Attributes.Endurance));

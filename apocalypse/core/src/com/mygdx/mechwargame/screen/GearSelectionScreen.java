@@ -19,8 +19,8 @@ import com.mygdx.mechwargame.core.mech.BlackBear;
 import com.mygdx.mechwargame.core.mech.Hellfire;
 import com.mygdx.mechwargame.core.mech.Interceptor;
 import com.mygdx.mechwargame.core.mech.Mech;
-import com.mygdx.mechwargame.screen.action.FlashingAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
@@ -73,36 +73,36 @@ public class GearSelectionScreen extends GenericScreenAdapter {
                 .left()
                 .top()
                 .height(150)
-                .pad(20).row();
+                .pad(20, 0, 20, 0).row();
 
         Cell<Table> hpCell = gearDescriptionTable.add(UIFactoryCommon.getPowerGauge("hp", 5, mech.hp))
-                .width(800)
+                .center()
                 .left();
         gearDescriptionTable.padBottom(40).row();
 
         Cell<Table> armorCell = gearDescriptionTable.add(UIFactoryCommon.getPowerGauge("armor", 5, mech.armor))
-                .width(800)
+                .center()
                 .left();
         gearDescriptionTable.padBottom(40).row();
 
         Cell<Table> movementCell = gearDescriptionTable.add(UIFactoryCommon.getPowerGauge("movement", 5, mech.movementPoints))
-                .width(800)
+                .center()
                 .left();
         gearDescriptionTable.padBottom(40).row();
 
         Cell<Table> initiativeCell = gearDescriptionTable.add(UIFactoryCommon.getPowerGauge("initiative", 5, mech.initiative))
-                .width(800)
+                .center()
                 .left();
         gearDescriptionTable.padBottom(40).row();
 
         Cell<Table> primaryWeaponCell = gearDescriptionTable.add(UIFactoryCommon.getPowerGauge(mech.primaryWeapon.name, 5, mech.primaryWeapon.damage * mech.primaryWeapon.rateOfFire))
-                .width(800)
+                .center()
                 .left();
         gearDescriptionTable.padBottom(40).row();
 
         Table secondaryWeaponDescription = mech.secondaryWeapon != null ? UIFactoryCommon.getPowerGauge(mech.secondaryWeapon.name, 5, mech.secondaryWeapon.damage * mech.secondaryWeapon.rateOfFire) : new Table();
         Cell<Table> secondaryWeaponCell = gearDescriptionTable.add(secondaryWeaponDescription)
-                .width(800)
+                .center()
                 .height(32)
                 .left();
         gearDescriptionTable.padBottom(40).row();
@@ -115,20 +115,21 @@ public class GearSelectionScreen extends GenericScreenAdapter {
 
         screenContentTable.add().size(128, 5).row();
 
-        ImageTextButton finishButton = UIFactoryCommon.getMenuButton("finish >");
+        ImageTextButton galaxySetupButton = UIFactoryCommon.getMenuButton("galaxy setup");
 
-        screenContentTable.add(finishButton).colspan(5).right().size(450, 80);
+        screenContentTable.add(galaxySetupButton).colspan(5).center().size(450, 80);
 
-        finishButton.addListener(new ClickListener() {
+        galaxySetupButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event,
                                      float x,
                                      float y,
                                      int pointer,
                                      int button) {
+                GameData.mainCharacterMech = mech;
                 SequenceAction sequenceAction = new SequenceAction();
-                sequenceAction.addAction(new FlashingAction(0.1f, 8, finishButton.getLabel()));
-                sequenceAction.addAction(new SetScreenAction(new GalaxyMapScreen()));
+                sequenceAction.addAction(Actions.delay(0.15f));
+                sequenceAction.addAction(new SetScreenAction(new GalaxySetupScreen()));
                 stage.addAction(sequenceAction);
 
                 return true;
@@ -188,23 +189,6 @@ public class GearSelectionScreen extends GenericScreenAdapter {
                 secondaryWeaponCell.setActor(secondaryWeaponDescription);
                 return true;
             }
-        });
-
-        finishButton.addListener(new ClickListener(Input.Buttons.LEFT) {
-
-            @Override
-            public boolean touchDown(InputEvent event,
-                                     float x,
-                                     float y,
-                                     int pointer,
-                                     int button) {
-
-                Character character = new Character();
-
-                //GameState.game.setScreen(???);
-                return true;
-            }
-
         });
 
         stage.addActor(screenContentTable);
