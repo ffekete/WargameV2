@@ -5,38 +5,43 @@ import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
+
+import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
 
 public class StarImageGenerator {
 
-    private static final List<String> starImages = Arrays.asList(
-            AssetManagerV2.STAR_SMALL,
-            AssetManagerV2.STAR_MEDIUM,
-            AssetManagerV2.STAR_LARGE
-    );
+    public static Random random;
 
     public static void generate(GalaxySetupParameters galaxySetupParameters) {
 
         GalaxyGeneratorState.state = "generating star images";
+        int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
+        int height = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
 
-        for (int i = 0; i < galaxySetupParameters.height; i++) {
-            for (int j = 0; j < galaxySetupParameters.width; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+
+                int x = i;
+                int y = j;
+
                 GameData.galaxy.sectors[i][j].stars.forEach(star -> {
 
-                    int index = new Random().nextInt(3);
+                    int index = random.nextInt(3);
 
                     switch (index) {
                         case 0:
-                            star.setStarAnimation(AssetManagerV2.STAR_SMALL, 4, 4);
+                            star.setStarAnimation(AssetManagerV2.STAR_SMALL, 32, 32);
+                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
                         case 1:
-                            star.setStarAnimation(AssetManagerV2.STAR_MEDIUM, 20, 20);
+                            star.setStarAnimation(AssetManagerV2.STAR_MEDIUM, 32, 32);
+                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
 
                         case 2:
-                            star.setStarAnimation(AssetManagerV2.STAR_LARGE, 28, 28);
+                            star.setStarAnimation(AssetManagerV2.STAR_LARGE, 32, 32);
+                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
                     }
                 });

@@ -9,16 +9,21 @@ import java.util.Random;
 
 public class GalaxyStarDistributor {
 
+    public static Random random;
+
     public static void distributeStars(GalaxySetupParameters galaxySetupParameters) {
         GalaxyGeneratorState.state = "creating stars";
 
         int nrOfStarsDistributed = 0;
         int neededNrOfStars = galaxySetupParameters.numberOfStars * galaxySetupParameters.numberOfStarsMultiplier;
+        int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
+        int height = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
 
         while (nrOfStarsDistributed < neededNrOfStars) {
-            for (int i = 0; i < galaxySetupParameters.height; i++) {
-                for (int j = 0; j < galaxySetupParameters.width; j++) {
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
                     Star star = new Star();
+                    star.name = "Star-" + nrOfStarsDistributed;
                     GameData.galaxy.sectors[i][j].stars.add(star);
                     nrOfStarsDistributed++;
                 }
@@ -27,17 +32,17 @@ public class GalaxyStarDistributor {
 
         while (nrOfStarsDistributed > neededNrOfStars) {
             // remove from random sectors
-            int x = new Random().nextInt(galaxySetupParameters.width);
-            int y = new Random().nextInt(galaxySetupParameters.height);
+            int x = random.nextInt(width);
+            int y = random.nextInt(height);
 
-            while (GameData.galaxy.sectors[y][x].stars.isEmpty()) {
-                y = new Random().nextInt(galaxySetupParameters.height);
-                x = new Random().nextInt(galaxySetupParameters.width);
+            while (GameData.galaxy.sectors[x][y].stars.isEmpty()) {
+                y = random.nextInt(height);
+                x = random.nextInt(width);
             }
 
-            int index = GameData.galaxy.sectors[y][x].stars.size();
+            int index = GameData.galaxy.sectors[x][y].stars.size();
 
-            GameData.galaxy.sectors[y][x].stars.remove(new Random().nextInt(index));
+            GameData.galaxy.sectors[x][y].stars.remove(random.nextInt(index));
 
             nrOfStarsDistributed--;
         }

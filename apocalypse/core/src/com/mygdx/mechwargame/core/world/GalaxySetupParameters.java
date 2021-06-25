@@ -30,8 +30,8 @@ public class GalaxySetupParameters {
         sizes.put(3, "large");
         sizes.put(4, "huge");
 
-        width = 20;
-        height = 40;
+        width = 40;
+        height = 20;
     }
 
     public int nextFactionsCount() {
