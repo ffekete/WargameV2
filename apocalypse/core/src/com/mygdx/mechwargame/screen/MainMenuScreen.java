@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
@@ -13,8 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.character.Attributes;
+import com.mygdx.mechwargame.core.character.Character;
+import com.mygdx.mechwargame.core.character.Skills;
+import com.mygdx.mechwargame.core.mech.BlackBear;
 import com.mygdx.mechwargame.screen.action.FlashingAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.ScreenState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
@@ -76,6 +82,7 @@ public class MainMenuScreen extends GenericScreenAdapter {
 
         table.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
 
+        final ImageTextButton quickStartButton = UIFactoryCommon.getMenuButton("Quick Start");
         final ImageTextButton newGameButton = UIFactoryCommon.getMenuButton("Start");
         ImageTextButton loadGameButton = UIFactoryCommon.getMenuButton("Load");
         ImageTextButton optionsButton = UIFactoryCommon.getMenuButton("Options");
@@ -85,6 +92,7 @@ public class MainMenuScreen extends GenericScreenAdapter {
 
         table.add(titleLabel).row();
         table.add().size(400, 80).row();
+        table.add(quickStartButton).size(400, 80).pad(20).row();
         table.add(newGameButton).size(400, 80).pad(20).row();
         table.add(loadGameButton).size(400, 80).pad(20).row();
         table.add(optionsButton).size(400, 80).pad(20).row();
@@ -107,10 +115,35 @@ public class MainMenuScreen extends GenericScreenAdapter {
                                 int pointer,
                                 int button) {
                 SequenceAction sequenceAction = new SequenceAction();
-                sequenceAction.addAction(new FlashingAction(0.1f, 8, newGameButton.getLabel()));
+                sequenceAction.addAction(new FlashingAction(0.1f, 8, newGameButton));
                 sequenceAction.addAction(new SetScreenAction(new CharacterCreationScreen()));
                 stage.addAction(sequenceAction);
+            }
+        });
 
+        quickStartButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+
+                Character character = new Character();
+                character.skillValues.put(Skills.Lasers, 3);
+                character.attributeValues.put(Attributes.Endurance, 2);
+                character.firstName = "Lukas";
+                character.lastName = "Kovalenko";
+                character.nickName = "Mole";
+
+                GameData.mainCharacter = character;
+                GameData.mainCharacterMech = new BlackBear();
+
+                SequenceAction sequenceAction = new SequenceAction();
+                sequenceAction.addAction(new FlashingAction(0.1f, 8, quickStartButton));
+                sequenceAction.addAction(new SetScreenAction(new GalaxySetupScreen()));
+                stage.addAction(sequenceAction);
+                return true;
             }
         });
 

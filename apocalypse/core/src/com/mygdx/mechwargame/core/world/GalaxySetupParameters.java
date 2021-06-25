@@ -8,7 +8,7 @@ public class GalaxySetupParameters {
     public int height;
     public int defaultSize = 1;
 
-    public int numberOfStars = 200;
+    public int numberOfStars = 25;
     public int numberOfStarsMultiplier = 1;
 
     public int numberOfPirates = 5;
@@ -81,7 +81,7 @@ public class GalaxySetupParameters {
 
     public int previousStarsMultiplier() {
         numberOfStarsMultiplier--;
-        if(numberOfStarsMultiplier < 0) {
+        if(numberOfStarsMultiplier < 1) {
             numberOfStarsMultiplier = 4;
         }
 
@@ -94,6 +94,13 @@ public class GalaxySetupParameters {
             defaultSize = 1;
         }
 
+        maxNumberOfFactions = 7 + defaultSize;
+        if (defaultNumberOfFactions > maxNumberOfFactions) {
+            defaultNumberOfFactions = maxNumberOfFactions;
+        }
+
+        numberOfStars = 25 * defaultSize;
+
         return defaultSize;
     }
 
@@ -102,6 +109,13 @@ public class GalaxySetupParameters {
         if(defaultSize < 0) {
             defaultSize = 4;
         }
+
+        maxNumberOfFactions = 7 + defaultSize;
+        if (defaultNumberOfFactions > maxNumberOfFactions) {
+            defaultNumberOfFactions = maxNumberOfFactions;
+        }
+
+        numberOfStars = 25 * defaultSize;
 
         return defaultSize;
     }
