@@ -19,6 +19,14 @@ public class AnimatedDrawable extends TextureRegionDrawable {
     private float delayCounter = 0;
     private float delay = 0;
     private boolean looping = true;
+    public float rotation = 0f;
+    public float scale = 1f;
+
+    public AnimatedDrawable(String file, int width, int height, float speed) {
+        this(file, width, height, true, speed);
+        this.delay = delay;
+        this.delayCounter = new Random().nextFloat() * delay;
+    }
 
     public AnimatedDrawable(String file, int width, int height, boolean looping, float speed, float delay) {
         this(file, width, height, looping, speed);
@@ -49,14 +57,14 @@ public class AnimatedDrawable extends TextureRegionDrawable {
         if(delayCounter > delay) {
             duration += Gdx.graphics.getDeltaTime();
             batch.setColor(Color.WHITE);
-            batch.draw(animation.getKeyFrame(duration, looping), x, y, width, height);
+            batch.draw(animation.getKeyFrame(duration, looping), x, y, width / 2f, height / 2f, width, height, scale, scale, rotation);
 
             if(duration > animation.getAnimationDuration()) {
                 delayCounter = 0;
                 duration = 0;
             }
         } else {
-            batch.draw(animation.getKeyFrame(0, looping), x, y, width, height);
+            batch.draw(animation.getKeyFrame(0, looping), x, y, width / 2f, height / 2f, width, height, scale, scale, rotation);
         }
     }
 }

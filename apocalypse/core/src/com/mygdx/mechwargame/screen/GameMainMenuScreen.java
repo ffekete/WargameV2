@@ -17,7 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.ship.StarShip;
 import com.mygdx.mechwargame.core.world.Star;
+import com.mygdx.mechwargame.screen.event.galaxyscreen.MapClickEvent;
+import com.mygdx.mechwargame.screen.event.galaxyscreen.ScrollEvent;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.ScreenState;
@@ -54,6 +57,12 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
                         }
 
                         @Override
+                        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                            GameData.starShip.addAction(MapClickEvent.check(x,y));
+                            return true;
+                        }
+
+                        @Override
                         public void exit(InputEvent event,
                                           float x,
                                           float y,
@@ -72,30 +81,31 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
         stage.addListener(new InputListener() {
 
             @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                GameData.starShip.addAction(MapClickEvent.check(x,y));
+                return true;
+            }
+
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                System.exit(1);
+                return true;
+            }
+
+            @Override
             public boolean mouseMoved(InputEvent event,
                                       float x,
                                       float y) {
-
-                Vector2 coord = stage.stageToScreenCoordinates(new Vector2(x,y));
-
-                if(coord.x < 15) {
-                    scrollController.xOffset = -10;
-                } else if(coord.x > stage.getViewport().getScreenWidth() - 10) {
-                    scrollController.xOffset = 10;
-                } else {
-                    scrollController.xOffset = 0;
-                }
-
-                if(coord.y < 10) {
-                    scrollController.yOffset = 10;
-                } else if(coord.y > stage.getViewport().getScreenHeight() -10) {
-                    scrollController.yOffset = -10;
-                } else {
-                    scrollController.yOffset = 0;
-                }
-                return true;
+                return ScrollEvent.check(x,y,stage,scrollController);
             }
         });
+
+        StarShip starShip = new StarShip();
+        starShip.setSize(32, 32);
+        starShip.setScale(2f);
+        starShip.setPosition(100, 100);
+        stage.addActor(starShip);
+        GameData.starShip = starShip;
 
         stage.addActor(starNameLabel);
         Gdx.input.setInputProcessor(stage);

@@ -20,6 +20,10 @@ public class LayeredAnimatedImage extends Image {
     @Override
     public void draw(Batch batch,
                      float parentAlpha) {
-        animatedDrawables.forEach(animatedDrawable -> animatedDrawable.draw(batch, getX(), getY(), getWidth(), getHeight()));
+        animatedDrawables.forEach(animatedDrawable -> {
+            animatedDrawable.rotation = getRotation();
+            animatedDrawable.scale = getScaleX();
+            animatedDrawable.draw(batch, getX(), getY(), getWidth(), getHeight());
+        });
     }
 }

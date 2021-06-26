@@ -40,6 +40,9 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STAR_SMALL = "galaxy/StarSmall.png";
     public static final String STAR_MEDIUM = "galaxy/StarMedium.png";
     public static final String STAR_LARGE = "galaxy/StarLarge.png";
+
+    public static final String SHIP = "ship/StarShip.png";
+
     public List<String> logos = Arrays.asList(
             LOGO_01,
             LOGO_02
@@ -93,5 +96,7 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.STAR_SMALL, Texture.class);
         load(AssetManagerV2.STAR_MEDIUM, Texture.class);
         load(AssetManagerV2.STAR_LARGE, Texture.class);
+
+        load(AssetManagerV2.SHIP, Texture.class);
     }
 }
