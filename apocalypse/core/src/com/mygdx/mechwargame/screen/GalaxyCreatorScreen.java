@@ -51,6 +51,6 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
         StarSpreadGenerator.spread(galaxySetupParameters);
         FactionDistributor.distribute(galaxySetupParameters);
 
-        GameState.game.setScreen(new GameMainMenuScreen());
+        GameState.game.setScreen(new GalaxyViewScreen());
     }
 }

@@ -18,6 +18,7 @@ import com.mygdx.mechwargame.screen.event.galaxyscreen.MapClickEvent;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.ScrollEvent;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.Random;
 
 import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
 
-public class GameMainMenuScreen extends GenericScreenAdapter {
+public class GalaxyViewScreen extends GenericScreenAdapter {
 
     private Label starNameLabel;
     private Star selectedStar;
@@ -61,6 +62,9 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
                                                  float y,
                                                  int pointer,
                                                  int button) {
+
+                            clearStarLocalTable();
+
                             MainAction sequenceAction = new MainAction();
                             GameData.starShip.addAction(sequenceAction);
 
@@ -97,6 +101,7 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
                                      float y,
                                      int pointer,
                                      int button) {
+                clearStarLocalTable();
                 SequenceAction sequenceAction = new SequenceAction();
                 MapClickEvent.check(sequenceAction, x, y);
                 GameData.starShip.addAction(sequenceAction);
@@ -142,6 +147,13 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
         Gdx.input.setInputProcessor(stage);
     }
 
+    private void clearStarLocalTable() {
+        if(GameData.starLocalMenu != null) {
+            stage.getActors().removeValue(GameData.starLocalMenu, true);
+            GameData.starLocalMenu = null;
+        }
+    }
+
     @Override
     public void render(float delta) {
         Gdx.graphics.getGL20().glClearColor(0, 0, 0, 1);
@@ -172,11 +184,17 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
         spriteBatch.setColor(Color.valueOf("ffffffff"));
 
         // ownership
-        spriteBatch.setColor(Color.valueOf("ffffff33"));
         for (int i = 0; i < GameData.galaxy.width; i++) {
             for (int j = 0; j < GameData.galaxy.height; j++) {
                 if (stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE + SECTOR_SIZE, j * SECTOR_SIZE + SECTOR_SIZE, 0) ||
                         stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE, j * SECTOR_SIZE, 0)) {
+
+                    if(GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
+                        Color color = GameData.galaxy.sectors[i][j].sectorOwnerArea.owner.color;
+                        color.a = 0.1f;
+                        spriteBatch.setColor(color);
+                    }
+
                     GameData.galaxy.sectors[i][j].sectorOwnerArea.draw((SpriteBatch) spriteBatch);
                 }
             }

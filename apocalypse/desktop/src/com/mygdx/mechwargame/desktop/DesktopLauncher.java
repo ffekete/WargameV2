@@ -1,6 +1,5 @@
 package com.mygdx.mechwargame.desktop;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.mechwargame.MechWarGame;

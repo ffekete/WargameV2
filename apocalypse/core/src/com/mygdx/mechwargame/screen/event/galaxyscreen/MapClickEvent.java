@@ -14,7 +14,6 @@ import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
 public class MapClickEvent {
 
     public static void check(SequenceAction mainAction, float x, float y) {
-
         SequenceAction rotateAndMoveAction = new SequenceAction();
 
         ParallelAction doThemTogetherAction = new ParallelAction();

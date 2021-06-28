@@ -1,6 +1,7 @@
 package com.mygdx.mechwargame.core.world.generator;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.mechwargame.core.faction.Faction;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
@@ -23,6 +24,20 @@ public class FactionDistributor {
 
         int strength = galaxySetupParameters.factionStrength * galaxySetupParameters.defaultSize;
 
+        List<Color> colors = new ArrayList<>(Arrays.asList(Color.YELLOW,
+                Color.RED,
+                Color.GREEN,
+                Color.BLUE,
+                Color.MAGENTA,
+                Color.BROWN,
+                Color.PURPLE,
+                Color.CHARTREUSE,
+                Color.FIREBRICK,
+                Color.GOLD,
+                Color.LIME,
+                Color.OLIVE,
+                Color.VIOLET));
+
         // assign starting stars
         for (int i = 0; i < galaxySetupParameters.defaultNumberOfFactions; i++) {
             int x, y;
@@ -32,9 +47,11 @@ public class FactionDistributor {
 
             } while (startingPoints.contains(new Vector2(x, y)) || GameData.galaxy.sectors[x][y].stars.isEmpty());
 
-            Faction faction = new Faction("Faction " + i, Color.WHITE);
+            Color color = colors.remove(random.nextInt(colors.size()));
+
+            Faction faction = new Faction("Faction " + i, color);
             GameData.galaxy.sectors[x][y].sectorOwnerArea.owner = faction;
-            factionStrengths.put(faction, random.nextInt(strength / 2)  + strength / 2);
+            factionStrengths.put(faction, random.nextInt(strength / 2) + strength / 2);
 
             startingPoints.add(new Vector2(x, y));
             factions.put(faction, new Vector2(x, y));
