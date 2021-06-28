@@ -51,7 +51,6 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
                 GameData.galaxy.sectors[i][j].stars.forEach(star -> {
                     stage.addActor(star);
                     star.setSize(SECTOR_SIZE, SECTOR_SIZE);
-                    star.debug();
 
                     star.addListener(new InputListener() {
                         @Override
@@ -109,7 +108,6 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
         });
 
         StarShip starShip = new StarShip();
-        starShip.debug();
         starShip.setSize(SECTOR_SIZE, SECTOR_SIZE);
         starShip.setPosition(100, 100);
         stage.addActor(starShip);
@@ -130,7 +128,7 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
         Batch spriteBatch = stage.getBatch();
 
         spriteBatch.begin();
-        spriteBatch.setColor(Color.valueOf("ffffff11"));
+        spriteBatch.setColor(Color.valueOf("ffffff0A"));
         for (int i = 0; i < GameData.galaxy.width; i++) {
             for (int j = 0; j < GameData.galaxy.height; j++) {
                 stage.getBatch().draw(GameData.galaxy.sectors[i][j].background, i * SECTOR_SIZE, j * SECTOR_SIZE, SECTOR_SIZE, SECTOR_SIZE);

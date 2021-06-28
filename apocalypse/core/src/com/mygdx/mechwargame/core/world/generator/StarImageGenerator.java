@@ -27,11 +27,21 @@ public class StarImageGenerator {
 
                 GameData.galaxy.sectors[i][j].stars.forEach(star -> {
 
-                    int index = random.nextInt(1);
+                    int index = random.nextInt(3);
 
                     switch (index) {
                         case 0:
-                            star.setStarAnimation(AssetManagerV2.STAR_SMALL, 32, 32);
+                            star.setStarAnimation(AssetManagerV2.STAR_01, 32, 32);
+                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
+                            break;
+
+                        case 1:
+                            star.setStarAnimation(AssetManagerV2.STAR_02, 32, 32);
+                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
+                            break;
+
+                        case 2:
+                            star.setStarAnimation(AssetManagerV2.STAR_03, 32, 32);
                             star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
                     }

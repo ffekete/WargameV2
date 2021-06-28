@@ -37,7 +37,9 @@ public class AssetManagerV2 extends AssetManager {
     public static final String HELLFIRE_IMAGE = "mech/Hellfire.png";
     public static final String INTERCEPTOR_IMAGE = "mech/Interceptor.png";
 
-    public static final String STAR_SMALL = "galaxy/StarSmall.png";
+    public static final String STAR_01 = "galaxy/Star01.png";
+    public static final String STAR_02 = "galaxy/Star02.png";
+    public static final String STAR_03 = "galaxy/Star03.png";
     public static final String AREA_LAYER = "galaxy/AreaLayer.png";
     public static final String SECTOR_BOUNDARY = "galaxy/SectorBoundary.png";
 
@@ -93,7 +95,9 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.HELLFIRE_IMAGE, Texture.class);
         load(AssetManagerV2.INTERCEPTOR_IMAGE, Texture.class);
 
-        load(AssetManagerV2.STAR_SMALL, Texture.class);
+        load(AssetManagerV2.STAR_01, Texture.class);
+        load(AssetManagerV2.STAR_02, Texture.class);
+        load(AssetManagerV2.STAR_03, Texture.class);
         load(AssetManagerV2.AREA_LAYER, Texture.class);
         load(AssetManagerV2.SECTOR_BOUNDARY, Texture.class);
 

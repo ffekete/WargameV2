@@ -23,7 +23,7 @@ public class StarSpreadGenerator {
                     float x = star.getX();
                     float y = star.getY();
 
-                    star.setPosition(x + 32 + random.nextInt(64), y + 32 + random.nextInt(64));
+                    star.setPosition(x + 10 - random.nextInt(20), y + 10 - random.nextInt(20));
                 });
             }
         }
