@@ -2,15 +2,24 @@ package com.mygdx.mechwargame.core.world;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.mechwargame.core.BaseActor;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
-public class Star extends Actor {
+import static com.mygdx.mechwargame.Config.SCALE;
 
-    public LayeredAnimatedImage layeredAnimatedImage;
+public class Star extends BaseActor {
+
     public Rectangle bounds;
     public String name;
+
+    public Star() {
+        super(null);
+    }
+
+    public Star(LayeredAnimatedImage layeredAnimatedImage) {
+        super(layeredAnimatedImage);
+    }
 
     public void setStarAnimation(String file,
                                  int width,
@@ -30,7 +39,7 @@ public class Star extends Actor {
     public void setPosition(float x,
                             float y) {
         super.setPosition(x, y);
-        layeredAnimatedImage.setPosition(x,y);
+        layeredAnimatedImage.setPosition(x, y);
     }
 
     @Override
@@ -39,12 +48,12 @@ public class Star extends Actor {
                           float width,
                           float height) {
         super.setBounds(x, y, width, height);
-        this.bounds = new Rectangle(x,y,width, height);
+        this.bounds = new Rectangle(x, y, width, height);
         this.setWidth(width);
         this.setHeight(height);
         this.setX(x);
         this.setY(y);
-        layeredAnimatedImage.setPosition(x,y);
+        layeredAnimatedImage.setPosition(x, y);
         layeredAnimatedImage.setWidth(width);
         layeredAnimatedImage.setHeight(height);
     }

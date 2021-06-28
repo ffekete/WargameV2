@@ -38,8 +38,8 @@ public class AssetManagerV2 extends AssetManager {
     public static final String INTERCEPTOR_IMAGE = "mech/Interceptor.png";
 
     public static final String STAR_SMALL = "galaxy/StarSmall.png";
-    public static final String STAR_MEDIUM = "galaxy/StarMedium.png";
-    public static final String STAR_LARGE = "galaxy/StarLarge.png";
+    public static final String AREA_LAYER = "galaxy/AreaLayer.png";
+    public static final String SECTOR_BOUNDARY = "galaxy/SectorBoundary.png";
 
     public static final String SHIP = "ship/StarShip.png";
 
@@ -94,8 +94,8 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.INTERCEPTOR_IMAGE, Texture.class);
 
         load(AssetManagerV2.STAR_SMALL, Texture.class);
-        load(AssetManagerV2.STAR_MEDIUM, Texture.class);
-        load(AssetManagerV2.STAR_LARGE, Texture.class);
+        load(AssetManagerV2.AREA_LAYER, Texture.class);
+        load(AssetManagerV2.SECTOR_BOUNDARY, Texture.class);
 
         load(AssetManagerV2.SHIP, Texture.class);
     }

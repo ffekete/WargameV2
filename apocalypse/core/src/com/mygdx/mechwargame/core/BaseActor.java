@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
+import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+
 public class BaseActor extends Actor {
 
     public LayeredAnimatedImage layeredAnimatedImage;
 
     public BaseActor(LayeredAnimatedImage layeredAnimatedImage) {
         this.layeredAnimatedImage = layeredAnimatedImage;
+        super.setOrigin(SECTOR_SIZE / 2f, SECTOR_SIZE / 2f);
     }
 
     @Override
@@ -44,7 +47,7 @@ public class BaseActor extends Actor {
     @Override
     public void setSize(float width, float height) {
         super.setSize(width, height);
-        layeredAnimatedImage.setSize(32, 32);
+        layeredAnimatedImage.setSize(width, height);
     }
 
 }

@@ -7,6 +7,8 @@ import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.state.GameData;
 
+import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+
 public class ScrollController extends Actor {
 
     public Stage stage;
@@ -28,8 +30,8 @@ public class ScrollController extends Actor {
             camera.position.x = Config.SCREEN_WIDTH / 2f;
         }
 
-        if(camera.position.x > GameData.galaxy.width * 64 - Config.SCREEN_WIDTH / 2f) {
-            camera.position.x = GameData.galaxy.width * 64 - Config.SCREEN_WIDTH / 2f;
+        if(camera.position.x > GameData.galaxy.width * SECTOR_SIZE - Config.SCREEN_WIDTH / 2f) {
+            camera.position.x = GameData.galaxy.width * SECTOR_SIZE - Config.SCREEN_WIDTH / 2f;
         }
 
         camera.position.y += yOffset;
@@ -38,8 +40,8 @@ public class ScrollController extends Actor {
             camera.position.y = Config.SCREEN_HEIGHT / 2f;
         }
 
-        if(camera.position.y > GameData.galaxy.height * 64 - Config.SCREEN_HEIGHT / 2f) {
-            camera.position.y = GameData.galaxy.height * 64 - Config.SCREEN_HEIGHT / 2f;
+        if(camera.position.y > GameData.galaxy.height * SECTOR_SIZE - Config.SCREEN_HEIGHT / 2f) {
+            camera.position.y = GameData.galaxy.height * SECTOR_SIZE - Config.SCREEN_HEIGHT / 2f;
         }
     }
 }

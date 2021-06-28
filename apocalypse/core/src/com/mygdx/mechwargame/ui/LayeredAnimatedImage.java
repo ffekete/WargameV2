@@ -1,6 +1,5 @@
 package com.mygdx.mechwargame.ui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -20,6 +19,7 @@ public class LayeredAnimatedImage extends Image {
     @Override
     public void draw(Batch batch,
                      float parentAlpha) {
+        super.draw(batch, parentAlpha);
         animatedDrawables.forEach(animatedDrawable -> {
             animatedDrawable.rotation = getRotation();
             animatedDrawable.scale = getScaleX();
