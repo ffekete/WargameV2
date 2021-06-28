@@ -13,7 +13,7 @@ import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
 
 public class MapClickEvent {
 
-    public static Action check(float x, float y) {
+    public static void check(SequenceAction mainAction, float x, float y) {
 
         SequenceAction rotateAndMoveAction = new SequenceAction();
 
@@ -34,14 +34,14 @@ public class MapClickEvent {
 
         rotateAndMoveAction.addAction(doThemTogetherAction);
 
+        mainAction.addAction(rotateAndMoveAction);
+
         if (GameData.galaxyMapPlayerAction != null) {
             // remove previous action
             GameData.starShip.getActions().removeValue(GameData.galaxyMapPlayerAction, true);
         }
 
-        GameData.galaxyMapPlayerAction = rotateAndMoveAction;
-
-        return rotateAndMoveAction;
+        GameData.galaxyMapPlayerAction = mainAction;
     }
 
 }

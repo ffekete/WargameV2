@@ -9,11 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.mechwargame.core.ship.StarShip;
 import com.mygdx.mechwargame.core.world.Star;
+import com.mygdx.mechwargame.screen.action.MainAction;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.MapClickEvent;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.ScrollEvent;
+import com.mygdx.mechwargame.screen.event.galaxyscreen.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
@@ -58,7 +61,15 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
                                                  float y,
                                                  int pointer,
                                                  int button) {
-                            GameData.starShip.addAction(MapClickEvent.check(x, y));
+                            MainAction sequenceAction = new MainAction();
+                            GameData.starShip.addAction(sequenceAction);
+
+                            Vector2 stageCoord = star.localToStageCoordinates(new Vector2(x, y));
+
+                            MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y);
+                            StarClickEvent.handle(sequenceAction, star, stage);
+
+                            event.stop();
                             return true;
                         }
 
@@ -86,7 +97,10 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
                                      float y,
                                      int pointer,
                                      int button) {
-                GameData.starShip.addAction(MapClickEvent.check(x, y));
+                SequenceAction sequenceAction = new SequenceAction();
+                MapClickEvent.check(sequenceAction, x, y);
+                GameData.starShip.addAction(sequenceAction);
+                event.stop();
                 return true;
             }
 
@@ -134,7 +148,7 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         // center the camera once
-        if(firstRun) {
+        if (firstRun) {
             stage.getViewport().getCamera().position.x = GameData.starShip.getX();
             stage.getViewport().getCamera().position.y = GameData.starShip.getY();
             firstRun = false;
@@ -173,8 +187,5 @@ public class GameMainMenuScreen extends GenericScreenAdapter {
 
         stage.act();
         stage.draw();
-
-        System.out.println("lett: " + stage.getViewport().getCamera().position.x);
-        System.out.println("lett: " + stage.getViewport().getCamera().position.y);
     }
 }
