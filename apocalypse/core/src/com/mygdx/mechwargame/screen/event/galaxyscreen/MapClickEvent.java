@@ -20,13 +20,13 @@ public class MapClickEvent {
         ParallelAction doThemTogetherAction = new ParallelAction();
 
         RotateToAction rotateToAction = new RotateToAction();
-        float angle = MathUtils.getAngle(new Vector2(GameData.starShip.getX(), GameData.starShip.getY()), new Vector2(x, y));
+        float angle = MathUtils.getAngle(new Vector2(GameData.starShip.getX(), GameData.starShip.getY()), new Vector2(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
         rotateToAction.setRotation(angle);
         rotateToAction.setActor(GameData.starShip);
 
         MoveToAction moveToAction = new MoveToAction();
         moveToAction.setActor(GameData.starShip);
-        moveToAction.setDuration(0.01f * (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x, y)));
+        moveToAction.setDuration(0.01f * (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f)));
         moveToAction.setPosition(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f);
 
         doThemTogetherAction.addAction(rotateToAction);
