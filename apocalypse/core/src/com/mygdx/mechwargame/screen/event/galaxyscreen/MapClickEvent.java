@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.util.MathUtils;
 
+import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+
 public class MapClickEvent {
 
     public static Action check(float x, float y) {
@@ -25,7 +27,7 @@ public class MapClickEvent {
         MoveToAction moveToAction = new MoveToAction();
         moveToAction.setActor(GameData.starShip);
         moveToAction.setDuration(0.01f * (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x, y)));
-        moveToAction.setPosition(x, y);
+        moveToAction.setPosition(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f);
 
         doThemTogetherAction.addAction(rotateToAction);
         doThemTogetherAction.addAction(moveToAction);

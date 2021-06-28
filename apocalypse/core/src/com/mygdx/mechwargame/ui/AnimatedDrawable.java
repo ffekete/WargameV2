@@ -56,7 +56,6 @@ public class AnimatedDrawable extends TextureRegionDrawable {
 
         if(delayCounter > delay) {
             duration += Gdx.graphics.getDeltaTime();
-            batch.setColor(Color.WHITE);
             batch.draw(animation.getKeyFrame(duration, looping), x, y, width / 2f, height / 2f, width, height, scale, scale, rotation);
 
             if(duration > animation.getAnimationDuration()) {

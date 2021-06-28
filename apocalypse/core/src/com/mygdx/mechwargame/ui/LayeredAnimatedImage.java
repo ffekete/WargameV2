@@ -1,5 +1,6 @@
 package com.mygdx.mechwargame.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -20,10 +21,13 @@ public class LayeredAnimatedImage extends Image {
     public void draw(Batch batch,
                      float parentAlpha) {
         super.draw(batch, parentAlpha);
+        batch.setColor(getColor());
         animatedDrawables.forEach(animatedDrawable -> {
             animatedDrawable.rotation = getRotation();
             animatedDrawable.scale = getScaleX();
             animatedDrawable.draw(batch, getX(), getY(), getWidth(), getHeight());
         });
+
+        batch.setColor(Color.WHITE);
     }
 }

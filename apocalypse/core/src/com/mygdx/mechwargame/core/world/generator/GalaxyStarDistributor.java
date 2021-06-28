@@ -1,6 +1,7 @@
 package com.mygdx.mechwargame.core.world.generator;
 
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
+import com.mygdx.mechwargame.core.world.SectorOwnerArea;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
@@ -25,6 +26,9 @@ public class GalaxyStarDistributor {
                     Star star = new Star();
                     star.name = "Star-" + nrOfStarsDistributed;
                     GameData.galaxy.sectors[i][j].stars.add(star);
+                    GameData.galaxy.sectors[i][j].sectorOwnerArea = new SectorOwnerArea();
+                    GameData.galaxy.sectors[i][j].sectorOwnerArea.x = i;
+                    GameData.galaxy.sectors[i][j].sectorOwnerArea.y = j;
                     nrOfStarsDistributed++;
                 }
             }

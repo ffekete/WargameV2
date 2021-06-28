@@ -8,7 +8,7 @@ public class GalaxySetupParameters {
     public int height;
     public int defaultSize = 1;
 
-    public int numberOfStars = 25;
+    public int numberOfStars = 50;
     public int numberOfStarsMultiplier = 1;
 
     public int numberOfPirates = 5;
@@ -18,6 +18,8 @@ public class GalaxySetupParameters {
     public int minNumberOfFactions = 4;
     public int maxNumberOfFactions = 8;
     public int defaultNumberOfFactions = 4;
+
+    public int factionStrength = 20;
 
     public int seed = new Random().nextInt(10000000);
 
@@ -99,7 +101,7 @@ public class GalaxySetupParameters {
             defaultNumberOfFactions = maxNumberOfFactions;
         }
 
-        numberOfStars = 25 * defaultSize;
+        numberOfStars = 50 * defaultSize;
 
         return defaultSize;
     }
@@ -115,7 +117,7 @@ public class GalaxySetupParameters {
             defaultNumberOfFactions = maxNumberOfFactions;
         }
 
-        numberOfStars = 25 * defaultSize;
+        numberOfStars = 50 * defaultSize;
 
         return defaultSize;
     }
