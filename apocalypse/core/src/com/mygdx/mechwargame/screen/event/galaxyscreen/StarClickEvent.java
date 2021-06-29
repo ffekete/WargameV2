@@ -15,7 +15,9 @@ public class StarClickEvent {
 
     public static void handle(SequenceAction sequenceAction,
                               Star star,
-                              Stage stage) {
+                              Stage stage,
+                              float x,
+                              float y) {
 
         StarLocalMenu starLocalMenu = new StarLocalMenu(star, stage);
         GameData.starLocalMenu = starLocalMenu;
@@ -23,7 +25,16 @@ public class StarClickEvent {
         ShowAction visibleAction = new ShowAction();
         visibleAction.setVisible(true);
 
-        sequenceAction.addAction(visibleAction);
+        ConditionalAction conditionalAction = new ConditionalAction(visibleAction, () -> {
+
+            float a = Math.abs((GameData.starShip.getX() + SECTOR_SIZE / 2f) - x);
+            float b = Math.abs((GameData.starShip.getY() + SECTOR_SIZE / 2f) - y);
+
+            return (Math.sqrt(a * a + b * b) < 128);
+        });
+
+        sequenceAction.addAction(conditionalAction);
+
         visibleAction.setActor(starLocalMenu);
         visibleAction.setTarget(starLocalMenu);
     }

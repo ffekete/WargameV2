@@ -2,7 +2,6 @@ package com.mygdx.mechwargame.ui;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -22,19 +21,30 @@ public class AnimatedDrawable extends TextureRegionDrawable {
     public float rotation = 0f;
     public float scale = 1f;
 
-    public AnimatedDrawable(String file, int width, int height, float speed) {
+    public AnimatedDrawable(String file,
+                            int width,
+                            int height,
+                            float speed) {
         this(file, width, height, true, speed);
-        this.delay = delay;
         this.delayCounter = new Random().nextFloat() * delay;
     }
 
-    public AnimatedDrawable(String file, int width, int height, boolean looping, float speed, float delay) {
+    public AnimatedDrawable(String file,
+                            int width,
+                            int height,
+                            boolean looping,
+                            float speed,
+                            float delay) {
         this(file, width, height, looping, speed);
         this.delay = delay;
         this.delayCounter = new Random().nextFloat() * delay;
     }
 
-    public AnimatedDrawable(String file, int width, int height, boolean looping, float speed) {
+    public AnimatedDrawable(String file,
+                            int width,
+                            int height,
+                            boolean looping,
+                            float speed) {
         TextureRegion[][] textureRegion = TextureRegion.split(GameState.assetManager.get(file, Texture.class), width, height);
         this.animation = new Animation<>(speed, textureRegion[0]);
         this.looping = looping;
@@ -52,18 +62,28 @@ public class AnimatedDrawable extends TextureRegionDrawable {
                      float y,
                      float width,
                      float height) {
+
+        if(!looping && animation.isAnimationFinished(duration)) {
+            return;
+        }
+
         delayCounter += Gdx.graphics.getDeltaTime();
 
-        if(delayCounter > delay) {
+        if (delayCounter > delay) {
             duration += Gdx.graphics.getDeltaTime();
             batch.draw(animation.getKeyFrame(duration, looping), x, y, width / 2f, height / 2f, width, height, scale, scale, rotation);
 
-            if(duration > animation.getAnimationDuration()) {
+            if (duration > animation.getAnimationDuration() && looping) {
                 delayCounter = 0;
                 duration = 0;
             }
         } else {
             batch.draw(animation.getKeyFrame(0, looping), x, y, width / 2f, height / 2f, width, height, scale, scale, rotation);
         }
+    }
+
+    public void reset() {
+        duration = 0;
+        delayCounter = 0;
     }
 }

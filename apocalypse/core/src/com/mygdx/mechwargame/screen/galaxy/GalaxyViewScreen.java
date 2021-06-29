@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.StarShip;
@@ -23,7 +24,9 @@ import com.mygdx.mechwargame.screen.event.galaxyscreen.ScrollEvent;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.KeyMapping;
+import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
+import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
     private Label starNameLabel;
     private Label pausedLabel;
     private Star selectedStar;
+    private LayeredAnimatedImage targetMarker;
 
     private Stage uiStage;
     private Viewport uiViewPort;
@@ -47,6 +51,20 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
     @Override
     public void show() {
         super.show();
+
+        targetMarker = new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.TARGET_MARKER, 32, 32, false, 0.05f) {
+            @Override
+            public void draw(Batch batch,
+                             float x,
+                             float y,
+                             float width,
+                             float height) {
+                super.draw(batch, x, y, width, height);
+            }
+        });
+        stage.addActor(targetMarker);
+        targetMarker.setSize(128, 128);
+        targetMarker.setVisible(true);
 
         uiViewPort = new FitViewport(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         uiStage = new Stage(uiViewPort);
@@ -88,11 +106,12 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
                             MainAction sequenceAction = new MainAction();
                             GameData.starShip.addAction(sequenceAction);
+                            Vector2 stageCoord = new Vector2(star.getX() + SECTOR_SIZE / 2f, star.getY() + SECTOR_SIZE / 2f);
 
-                            //Vector2 stageCoord = star.localToStageCoordinates(new Vector2(star.getX(), star.getY()));
-                            Vector2 stageCoord = new Vector2(star.getX() + 64, star.getY() + 64);
+                            showTargetMarker(new Vector2(star.getX(), star.getY()));
+
                             MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y);
-                            StarClickEvent.handle(sequenceAction, star, stage);
+                            StarClickEvent.handle(sequenceAction, star, stage, stageCoord.x, stageCoord.y);
 
                             event.stop();
                             return true;
@@ -126,6 +145,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                 MainAction sequenceAction = new MainAction();
                 MapClickEvent.check(sequenceAction, x, y);
                 GameData.starShip.addAction(sequenceAction);
+                showTargetMarker(new Vector2(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
                 event.stop();
                 return true;
             }
@@ -208,6 +228,12 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
         stage.addActor(starNameLabel);
         Gdx.input.setInputProcessor(stage);
+    }
+
+    private void showTargetMarker(Vector2 stageCoord) {
+        targetMarker.setVisible(true);
+        targetMarker.resetAnimations();
+        targetMarker.setPosition(stageCoord.x, stageCoord.y);
     }
 
     private void clearStarLocalTable() {

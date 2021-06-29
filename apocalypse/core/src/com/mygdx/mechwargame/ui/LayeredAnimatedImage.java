@@ -30,4 +30,10 @@ public class LayeredAnimatedImage extends Image {
 
         batch.setColor(Color.WHITE);
     }
+
+    public void resetAnimations() {
+        animatedDrawables.forEach(animatedDrawable -> {
+            animatedDrawable.reset();
+        });
+    }
 }

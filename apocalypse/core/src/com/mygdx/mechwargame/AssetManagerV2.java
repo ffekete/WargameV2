@@ -47,6 +47,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STAR_04 = "galaxy/Star04.png";
     public static final String AREA_LAYER = "galaxy/AreaLayer.png";
     public static final String SECTOR_BOUNDARY = "galaxy/SectorBoundary.png";
+    public static final String TARGET_MARKER = "galaxy/TargetMarker.png";
 
     public static final String SHIP = "ship/StarShip.png";
 
@@ -106,6 +107,7 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.STAR_04, Texture.class);
         load(AssetManagerV2.AREA_LAYER, Texture.class);
         load(AssetManagerV2.SECTOR_BOUNDARY, Texture.class);
+        load(AssetManagerV2.TARGET_MARKER, Texture.class);
 
         load(AssetManagerV2.SHIP, Texture.class);
 
