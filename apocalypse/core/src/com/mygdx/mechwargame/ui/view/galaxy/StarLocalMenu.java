@@ -1,14 +1,20 @@
 package com.mygdx.mechwargame.ui.view.galaxy;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.util.ScreenUtils;
+
+import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFrustum;
 
 public class StarLocalMenu extends Table {
 
@@ -18,12 +24,18 @@ public class StarLocalMenu extends Table {
 
     public Star star;
 
-    public StarLocalMenu(Star star, Stage stage) {
+    public StarLocalMenu(Star star,
+                         Stage stage) {
         this.star = star;
 
         this.background(new AnimatedDrawable(AssetManagerV2.STAR_LOCAL_MENU, 450, 350, true, 0.1f));
         this.setSize(450, 350);
         this.setPosition(star.getX(), star.getY());
+
+        Camera camera = stage.getCamera();
+
+        repositionToScreenIfNotInFrustum(camera, this);
+
         this.setVisible(false);
 
         stage.addActor(this);

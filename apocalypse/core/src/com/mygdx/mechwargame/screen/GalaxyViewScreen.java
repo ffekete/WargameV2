@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.mechwargame.core.ship.StarShip;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFrustum;
 
 public class GalaxyViewScreen extends GenericScreenAdapter {
 
@@ -38,6 +40,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         super.show();
 
         starNameLabel = UIFactoryCommon.getDynamicTextLabel(() -> selectedStar == null ? "" : selectedStar.name, UIFactoryCommon.fontSmall);
+        starNameLabel.setTouchable(Touchable.disabled);
+        starNameLabel.setSize(300, 80);
 
         for (int i = 0; i < GameData.galaxy.width; i++) {
             for (int j = 0; j < GameData.galaxy.height; j++) {
@@ -54,6 +58,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                                           Actor fromActor) {
                             selectedStar = star;
                             starNameLabel.setPosition(star.getX() + 20, star.getY() - 20);
+                            repositionToScreenIfNotInFrustum(stage.getCamera(), starNameLabel);
                         }
 
                         @Override
