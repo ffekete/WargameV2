@@ -20,6 +20,8 @@ public class GalaxySetupParameters {
     public int defaultNumberOfFactions = 4;
 
     public int factionStrength = 20;
+    public int pirateStrength = 1;
+
 
     public int seed = new Random().nextInt(10000000);
 

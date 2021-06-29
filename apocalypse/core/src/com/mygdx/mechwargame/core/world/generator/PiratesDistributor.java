@@ -8,7 +8,7 @@ import com.mygdx.mechwargame.state.GameData;
 
 import java.util.*;
 
-public class FactionDistributor {
+public class PiratesDistributor {
 
     public static Random random;
 
@@ -21,24 +21,10 @@ public class FactionDistributor {
         int galaxyWidth = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
         int galaxyHeight = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
 
-        int strength = galaxySetupParameters.factionStrength * galaxySetupParameters.defaultSize;
-
-        List<Color> colors = new ArrayList<>(Arrays.asList(Color.YELLOW,
-                Color.RED,
-                Color.GREEN,
-                Color.BLUE,
-                Color.MAGENTA,
-                Color.BROWN,
-                Color.PURPLE,
-                Color.CHARTREUSE,
-                Color.FIREBRICK,
-                Color.GOLD,
-                Color.LIME,
-                Color.OLIVE,
-                Color.ORANGE));
+        int strength = galaxySetupParameters.pirateStrength * galaxySetupParameters.defaultSize;
 
         // assign starting stars
-        for (int i = 0; i < galaxySetupParameters.defaultNumberOfFactions; i++) {
+        for (int i = 0; i < galaxySetupParameters.numberOfPirates; i++) {
             int x, y;
             do {
                 x = random.nextInt(galaxyWidth);
@@ -46,11 +32,9 @@ public class FactionDistributor {
 
             } while (startingPoints.contains(new Vector2(x, y)) || GameData.galaxy.sectors[x][y].stars.isEmpty());
 
-            Color color = colors.remove(random.nextInt(colors.size()));
-
-            Faction faction = new Faction("Faction " + i, color);
+            Faction faction = new Faction("Pirates " + i, Color.WHITE);
             GameData.galaxy.sectors[x][y].sectorOwnerArea.owner = faction;
-            factionStrengths.put(faction, random.nextInt(strength / 2) + strength / 2);
+            factionStrengths.put(faction, Math.max(random.nextInt(Math.max(strength / 2, 1) + strength / 2), 1));
 
             startingPoints.add(new Vector2(x, y));
             factions.put(faction, new Vector2(x, y));

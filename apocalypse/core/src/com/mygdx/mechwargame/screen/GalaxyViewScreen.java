@@ -42,6 +42,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         starNameLabel = UIFactoryCommon.getDynamicTextLabel(() -> selectedStar == null ? "" : selectedStar.name, UIFactoryCommon.fontSmall);
         starNameLabel.setTouchable(Touchable.disabled);
         starNameLabel.setSize(300, 80);
+        starNameLabel.setColor(Color.WHITE);
 
         for (int i = 0; i < GameData.galaxy.width; i++) {
             for (int j = 0; j < GameData.galaxy.height; j++) {
@@ -194,6 +195,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                 if (stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE + SECTOR_SIZE, j * SECTOR_SIZE + SECTOR_SIZE, 0) ||
                         stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE, j * SECTOR_SIZE, 0)) {
 
+                    // change color alpha
                     if(GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
                         Color color = GameData.galaxy.sectors[i][j].sectorOwnerArea.owner.color;
                         color.a = 0.1f;
@@ -201,12 +203,19 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     }
 
                     GameData.galaxy.sectors[i][j].sectorOwnerArea.draw((SpriteBatch) spriteBatch);
+
+                    // restore color alpha
+                    if(GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
+                        Color color = GameData.galaxy.sectors[i][j].sectorOwnerArea.owner.color;
+                        color.a = 1f;
+                        spriteBatch.setColor(color);
+                    }
                 }
             }
         }
-        spriteBatch.setColor(Color.valueOf("ffffffff"));
 
         spriteBatch.end();
+        spriteBatch.setColor(Color.valueOf("FFFFFFFF"));
 
         stage.act();
         stage.draw();
