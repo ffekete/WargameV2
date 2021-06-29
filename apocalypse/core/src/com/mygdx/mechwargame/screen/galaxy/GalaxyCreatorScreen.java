@@ -1,12 +1,12 @@
-package com.mygdx.mechwargame.screen;
+package com.mygdx.mechwargame.screen.galaxy;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.world.Galaxy;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.generator.*;
+import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;

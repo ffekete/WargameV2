@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.screen;
+package com.mygdx.mechwargame.screen.chargen;
 
 
 import com.badlogic.gdx.Gdx;
@@ -19,7 +19,9 @@ import com.mygdx.mechwargame.core.mech.BlackBear;
 import com.mygdx.mechwargame.core.mech.Hellfire;
 import com.mygdx.mechwargame.core.mech.Interceptor;
 import com.mygdx.mechwargame.core.mech.Mech;
+import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.screen.galaxy.GalaxySetupScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;

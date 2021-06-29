@@ -16,6 +16,10 @@ public class MoveShipAction extends MoveToAction {
     public boolean act(float delta) {
         fuelConsumptionDelay += delta;
 
+        if(starShip.fuel <= 0) {
+            return true;
+        }
+
         if (fuelConsumptionDelay >= 0.5f) {
             starShip.consumeFuel();
             fuelConsumptionDelay = 0;

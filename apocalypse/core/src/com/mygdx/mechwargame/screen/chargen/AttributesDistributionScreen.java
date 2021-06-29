@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.screen;
+package com.mygdx.mechwargame.screen.chargen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,8 +11,8 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Attributes;
 import com.mygdx.mechwargame.core.character.Character;
+import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
-import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 

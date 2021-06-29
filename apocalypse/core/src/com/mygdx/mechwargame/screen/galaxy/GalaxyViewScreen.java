@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.screen;
+package com.mygdx.mechwargame.screen.galaxy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,6 +15,8 @@ import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.StarShip;
 import com.mygdx.mechwargame.core.world.Star;
+import com.mygdx.mechwargame.screen.GenericScreenAdapter;
+import com.mygdx.mechwargame.screen.ScrollController;
 import com.mygdx.mechwargame.screen.action.MainAction;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.MapClickEvent;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.ScrollEvent;
@@ -87,8 +89,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                             MainAction sequenceAction = new MainAction();
                             GameData.starShip.addAction(sequenceAction);
 
-                            Vector2 stageCoord = star.localToStageCoordinates(new Vector2(x, y));
-
+                            //Vector2 stageCoord = star.localToStageCoordinates(new Vector2(star.getX(), star.getY()));
+                            Vector2 stageCoord = new Vector2(star.getX() + 64, star.getY() + 64);
                             MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y);
                             StarClickEvent.handle(sequenceAction, star, stage);
 
@@ -165,7 +167,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         fuelProgressBar.addAction(new Action() {
             @Override
             public boolean act(float delta) {
-                fuelProgressBar.setPosition(starShip.getX(), starShip.getY() +136);
+                fuelProgressBar.setPosition(starShip.getX(), starShip.getY() + 136);
                 return false;
             }
         });
@@ -199,6 +201,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
         Vector2 startingPoint = startingPoints.get(new Random().nextInt(startingPoints.size()));
         starShip.setPosition(startingPoint.x, startingPoint.y);
+        starShip.setTouchable(Touchable.disabled);
 
         stage.addActor(starShip);
         GameData.starShip = starShip;

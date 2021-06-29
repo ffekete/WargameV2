@@ -21,11 +21,11 @@ import com.mygdx.mechwargame.core.character.Skills;
 import com.mygdx.mechwargame.core.mech.BlackBear;
 import com.mygdx.mechwargame.screen.action.FlashingAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.screen.chargen.CharacterCreationScreen;
+import com.mygdx.mechwargame.screen.galaxy.GalaxySetupScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.state.ScreenState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
-import com.mygdx.mechwargame.ui.MainMenuUIFactory;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
 public class MainMenuScreen extends GenericScreenAdapter {
