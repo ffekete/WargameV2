@@ -33,6 +33,7 @@ public class PiratesDistributor {
             } while (startingPoints.contains(new Vector2(x, y)) || GameData.galaxy.sectors[x][y].stars.isEmpty());
 
             Faction faction = new Faction("Pirates " + i, Color.WHITE);
+            faction.isPirate = true;
             GameData.galaxy.sectors[x][y].sectorOwnerArea.owner = faction;
             factionStrengths.put(faction, Math.max(random.nextInt(Math.max(strength / 2, 1) + strength / 2), 1));
 

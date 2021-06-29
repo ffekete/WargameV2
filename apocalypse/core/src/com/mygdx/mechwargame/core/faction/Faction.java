@@ -6,6 +6,7 @@ public class Faction {
 
     public String name;
     public Color color;
+    public boolean isPirate = false;
 
     public Faction(String name, Color color) {
         this.name = name;
