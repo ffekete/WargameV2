@@ -1,18 +1,15 @@
 package com.mygdx.mechwargame.ui.view.galaxy;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
-import com.mygdx.mechwargame.util.ScreenUtils;
 
 import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFrustum;
 
@@ -41,7 +38,7 @@ public class StarLocalMenu extends Table {
         stage.addActor(this);
 
         Table starNameTable = new Table();
-        starNameTable.add(UIFactoryCommon.getTextLabel(star.name));
+        starNameTable.add(UIFactoryCommon.getTextLabel(star.name, UIFactoryCommon.fontSmall));
 
         Table mainTable = new Table();
 

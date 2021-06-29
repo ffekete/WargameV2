@@ -10,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.ship.BaseShip;
-import com.mygdx.mechwargame.core.ship.StarShip;
 import com.mygdx.mechwargame.state.GameState;
 
 import java.util.function.Supplier;
