@@ -2,12 +2,16 @@ package com.mygdx.mechwargame.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.core.ship.BaseShip;
+import com.mygdx.mechwargame.core.ship.StarShip;
 import com.mygdx.mechwargame.state.GameState;
 
 import java.util.function.Supplier;
@@ -19,10 +23,56 @@ public class UIFactoryCommon {
     public static BitmapFont fontLarge;
 
     static {
-
         fontSmall = getFont("font/font_small.fnt");
         fontMedium = getFont("font/font_med.fnt");
         fontLarge = getFont("font/font_huge.fnt");
+    }
+
+    public static DynamicProgressBar createProgressBar(int width,
+                                                       int height,
+                                                       Supplier<Float> currentValue,
+                                                       Supplier<Float> maxValue,
+                                                       Color bgColor,
+                                                       Color knobColor) {
+        Pixmap pixmap = new Pixmap(width / 4, height / 4, Pixmap.Format.RGBA8888);
+        pixmap.setColor(bgColor);
+        pixmap.fill();
+
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+
+        ProgressBar.ProgressBarStyle mpProgressBarStyle = new ProgressBar.ProgressBarStyle();
+        mpProgressBarStyle.background = drawable;
+
+        pixmap = new Pixmap(0, height / 4, Pixmap.Format.RGBA8888);
+        pixmap.setColor(knobColor);
+        pixmap.fill();
+
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+        mpProgressBarStyle.knob = drawable;
+
+        pixmap = new Pixmap(width / 4, height / 4, Pixmap.Format.RGBA8888);
+        pixmap.setColor(knobColor);
+        pixmap.fill();
+
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+        mpProgressBarStyle.knobBefore = drawable;
+
+        DynamicProgressBar dynamicProgressBar = new DynamicProgressBar(0,
+                1,
+                1,
+                false,
+                mpProgressBarStyle,
+                currentValue,
+                maxValue);
+        dynamicProgressBar.setSize(width, height);
+
+        return dynamicProgressBar;
     }
 
     public static Table getPowerGauge(String text,

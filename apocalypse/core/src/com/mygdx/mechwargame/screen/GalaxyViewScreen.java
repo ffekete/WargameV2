@@ -1,17 +1,18 @@
 package com.mygdx.mechwargame.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.StarShip;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.action.MainAction;
@@ -19,7 +20,8 @@ import com.mygdx.mechwargame.screen.event.galaxyscreen.MapClickEvent;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.ScrollEvent;
 import com.mygdx.mechwargame.screen.event.galaxyscreen.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
-import com.mygdx.mechwargame.state.GameState;
+import com.mygdx.mechwargame.state.KeyMapping;
+import com.mygdx.mechwargame.ui.DynamicProgressBar;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
 import java.util.ArrayList;
@@ -32,12 +34,23 @@ import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFr
 public class GalaxyViewScreen extends GenericScreenAdapter {
 
     private Label starNameLabel;
+    private Label pausedLabel;
     private Star selectedStar;
+
+    private Stage uiStage;
+    private Viewport uiViewPort;
+
     private boolean firstRun = true;
 
     @Override
     public void show() {
         super.show();
+
+        uiViewPort = new FitViewport(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+        uiStage = new Stage(uiViewPort);
+
+        pausedLabel = UIFactoryCommon.getDynamicTextLabel(() -> GameData.isPaused ? "paused" : "");
+        stage.addActor(pausedLabel);
 
         starNameLabel = UIFactoryCommon.getDynamicTextLabel(() -> selectedStar == null ? "" : selectedStar.name, UIFactoryCommon.fontSmall);
         starNameLabel.setTouchable(Touchable.disabled);
@@ -108,7 +121,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                                      int pointer,
                                      int button) {
                 clearStarLocalTable();
-                SequenceAction sequenceAction = new SequenceAction();
+                MainAction sequenceAction = new MainAction();
                 MapClickEvent.check(sequenceAction, x, y);
                 GameData.starShip.addAction(sequenceAction);
                 event.stop();
@@ -118,7 +131,14 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             @Override
             public boolean keyDown(InputEvent event,
                                    int keycode) {
-                System.exit(1);
+                if (Input.Keys.ESCAPE == keycode) {
+                    System.exit(1);
+                }
+
+                if (KeyMapping.UNPAUSE == keycode) {
+                    GameData.isPaused = !GameData.isPaused;
+                }
+
                 return true;
             }
 
@@ -130,8 +150,42 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             }
         });
 
-        StarShip starShip = new StarShip();
+        BaseShip starShip = new StarShip();
         starShip.setSize(SECTOR_SIZE, SECTOR_SIZE);
+
+        DynamicProgressBar fuelProgressBar = UIFactoryCommon.createProgressBar(128,
+                16,
+                () -> starShip.fuel,
+                () -> starShip.maxFuel,
+                Color.DARK_GRAY,
+                Color.LIGHT_GRAY);
+
+        stage.addActor(fuelProgressBar);
+        fuelProgressBar.setSize(128, 16);
+        fuelProgressBar.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                fuelProgressBar.setPosition(starShip.getX(), starShip.getY() +136);
+                return false;
+            }
+        });
+
+        DynamicProgressBar hullProgressBar = UIFactoryCommon.createProgressBar(128,
+                16,
+                () -> (float) starShip.hull,
+                () -> (float) starShip.maxHull,
+                Color.SCARLET,
+                Color.CHARTREUSE);
+
+        stage.addActor(hullProgressBar);
+        hullProgressBar.setSize(128, 16);
+        hullProgressBar.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                hullProgressBar.setPosition(starShip.getX(), starShip.getY() + 128);
+                return false;
+            }
+        });
 
         List<Vector2> startingPoints = new ArrayList<>();
 
@@ -154,7 +208,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
     }
 
     private void clearStarLocalTable() {
-        if(GameData.starLocalMenu != null) {
+        if (GameData.starLocalMenu != null) {
             stage.getActors().removeValue(GameData.starLocalMenu, true);
             GameData.starLocalMenu = null;
         }
@@ -196,7 +250,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                         stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE, j * SECTOR_SIZE, 0)) {
 
                     // change color alpha
-                    if(GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
+                    if (GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
                         Color color = GameData.galaxy.sectors[i][j].sectorOwnerArea.owner.color;
                         color.a = 0.1f;
                         spriteBatch.setColor(color);
@@ -205,7 +259,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     GameData.galaxy.sectors[i][j].sectorOwnerArea.draw((SpriteBatch) spriteBatch);
 
                     // restore color alpha
-                    if(GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
+                    if (GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
                         Color color = GameData.galaxy.sectors[i][j].sectorOwnerArea.owner.color;
                         color.a = 1f;
                         spriteBatch.setColor(color);
@@ -217,7 +271,20 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         spriteBatch.end();
         spriteBatch.setColor(Color.valueOf("FFFFFFFF"));
 
+        pausedLabel.setPosition(stage.getCamera().position.x, stage.getCamera().position.y);
+
         stage.act();
         stage.draw();
+
+        uiStage.getViewport().apply(true);
+        uiStage.act();
+        uiStage.draw();
+    }
+
+    @Override
+    public void resize(int width,
+                       int height) {
+        super.resize(width, height);
+        uiStage.getViewport().update(width, height, true);
     }
 }

@@ -1,11 +1,10 @@
 package com.mygdx.mechwargame.screen.event.galaxyscreen;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.mygdx.mechwargame.screen.action.MoveShipAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.util.MathUtils;
 
@@ -23,7 +22,7 @@ public class MapClickEvent {
         rotateToAction.setRotation(angle);
         rotateToAction.setActor(GameData.starShip);
 
-        MoveToAction moveToAction = new MoveToAction();
+        MoveShipAction moveToAction = new MoveShipAction(GameData.starShip);
         moveToAction.setActor(GameData.starShip);
         moveToAction.setDuration(0.01f * (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f)));
         moveToAction.setPosition(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f);
