@@ -1,6 +1,7 @@
 package com.mygdx.mechwargame.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.world.Galaxy;
@@ -19,6 +20,8 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
 
     private Table screenContentTable = new Table();
 
+    private boolean finishedGenerating = false;
+
     public GalaxyCreatorScreen(GalaxySetupParameters galaxySetupParameters) {
         this.galaxySetupParameters = galaxySetupParameters;
     }
@@ -27,7 +30,7 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
     public void show() {
         super.show();
         GameData.galaxy = new Galaxy(galaxySetupParameters);
-
+        stage.getViewport().apply(true);
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
         screenContentTable.add(UIFactoryCommon.getDynamicTextLabel(() -> GalaxyGeneratorState.state))
@@ -44,12 +47,30 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
         FactionDistributor.random = random;
         PiratesDistributor.random = random;
 
-        GalaxyStarDistributor.distributeStars(galaxySetupParameters);
-        StarImageGenerator.generate(galaxySetupParameters);
-        StarSpreadGenerator.spread(galaxySetupParameters);
-        FactionDistributor.distribute(galaxySetupParameters);
-        PiratesDistributor.distribute(galaxySetupParameters);
+        new Thread() {
+            @Override
+            public void run() {
+                GalaxyStarDistributor.distributeStars(galaxySetupParameters);
+                StarImageGenerator.generate(galaxySetupParameters);
+                StarSpreadGenerator.spread(galaxySetupParameters);
+                FactionDistributor.distribute(galaxySetupParameters);
+                PiratesDistributor.distribute(galaxySetupParameters);
+                finishedGenerating = true;
+            }
+        }.start();
+    }
 
-        GameState.game.setScreen(new GalaxyViewScreen());
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        refreshScreen();
+        if(finishedGenerating) {
+            GameState.game.setScreen(new GalaxyViewScreen());
+        }
+    }
+
+    private void refreshScreen() {
+        stage.act();
+        stage.draw();
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.mechwargame.core.faction.Faction;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
+import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 
 import java.util.*;
@@ -13,6 +14,7 @@ public class FactionDistributor {
     public static Random random;
 
     public static void distribute(GalaxySetupParameters galaxySetupParameters) {
+        GalaxyGeneratorState.state = "distributing factions";
 
         List<Vector2> startingPoints = new ArrayList<>();
         Map<Faction, Vector2> factions = new HashMap<>();
@@ -67,6 +69,8 @@ public class FactionDistributor {
                 spread(entry.getKey(), startingPoint);
             }
         }
+
+        GalaxyGeneratorState.state = "done distributing factions";
 
     }
 

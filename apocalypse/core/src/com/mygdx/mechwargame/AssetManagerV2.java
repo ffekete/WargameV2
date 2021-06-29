@@ -24,6 +24,8 @@ public class AssetManagerV2 extends AssetManager {
     public static final String POWER_ICON_EMPTY = "ui/PowerIconEmpty.png";
     public static final String POWER_ICON_FULL = "ui/PowerIconFull.png";
 
+    public static final String MOUSE_POINTER = "ui/MousePointer.png";
+
     public static final String STAR_LOCAL_MENU = "ui/StarLocalMenu.png";
 
     public static final String LOGO_01 = "company/logo/Logo01.png";
@@ -108,5 +110,7 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.SHIP, Texture.class);
 
         load(STAR_LOCAL_MENU, Texture.class);
+
+        load(MOUSE_POINTER, Texture.class);
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -38,6 +39,10 @@ public class MainMenuScreen extends GenericScreenAdapter {
 
     @Override
     public void show() {
+
+        Pixmap pm = new Pixmap(Gdx.files.internal(AssetManagerV2.MOUSE_POINTER));
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+        pm.dispose();
 
         super.show();
 
