@@ -13,6 +13,8 @@ public class SmallStarShip extends BaseShip {
     public SmallStarShip() {
         super(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.SHIP, 32, 32, 0.15f)), "small starship");
 
+        name = "Kraken";
+
         this.engine = new StandardEngine(1);
         this.hullArmor = new StandardHullArmor(1);
         this.cargoBay = new StandardCargoBay(1);

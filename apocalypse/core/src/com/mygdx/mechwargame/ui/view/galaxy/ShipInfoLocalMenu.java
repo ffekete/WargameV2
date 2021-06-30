@@ -3,13 +3,12 @@ package com.mygdx.mechwargame.ui.view.galaxy;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ai.steer.behaviors.Alignment;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -41,10 +40,17 @@ public class ShipInfoLocalMenu extends Table {
         shipNameTable.add(backButton)
                 .size(80);
 
-        Label nameLabel = UIFactoryCommon.getTextLabel(ship.modelName, UIFactoryCommon.fontSmall);
-        nameLabel.setAlignment(Align.center);
-        shipNameTable.add(nameLabel)
-                .size(1420, 80)
+        Container<TextField> nameTextField = UIFactoryCommon.getTextField(ship.name, "", UIFactoryCommon.fontSmall);
+        shipNameTable.add(nameTextField)
+                .size(700, 80)
+                .padRight(10)
+                .center();
+
+        Label modelNameLabel = UIFactoryCommon.getTextLabel(ship.modelName, UIFactoryCommon.fontSmall);
+        modelNameLabel.setAlignment(Align.center);
+        shipNameTable.add(modelNameLabel)
+                .size(700, 80)
+                .padRight(10)
                 .center();
 
         shipNameTable.setSize(1500, 80);
@@ -125,5 +131,27 @@ public class ShipInfoLocalMenu extends Table {
             }
         });
 
+        nameTextField.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+        });
+
+        nameTextField.getActor().addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event,
+                                Actor actor) {
+                ship.name = nameTextField.getActor().getText();
+            }
+        });
+
     }
+
 }
