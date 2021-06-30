@@ -52,6 +52,10 @@ public class AssetManagerV2 extends AssetManager {
     public static final String SECTOR_BOUNDARY = "galaxy/SectorBoundary.png";
     public static final String TARGET_MARKER = "galaxy/TargetMarker.png";
 
+    public static final String MOVEMENT_PATH_BEGIN = "effect/movementpath/PathStart.png";
+    public static final String MOVEMENT_PATH_MID = "effect/movementpath/PathMiddle.png";
+    public static final String MOVEMENT_PATH_END = "effect/movementpath/PathEnd.png";
+
     public static final String SHIP = "ship/StarShip.png";
 
     public List<String> logos = Arrays.asList(
@@ -120,5 +124,9 @@ public class AssetManagerV2 extends AssetManager {
         load(MOUSE_POINTER, Texture.class);
         load(BACK_BUTTON_UP, Texture.class);
         load(BACK_BUTTON_DOWN, Texture.class);
+
+        load(MOVEMENT_PATH_BEGIN, Texture.class);
+        load(MOVEMENT_PATH_MID, Texture.class);
+        load(MOVEMENT_PATH_END, Texture.class);
     }
 }

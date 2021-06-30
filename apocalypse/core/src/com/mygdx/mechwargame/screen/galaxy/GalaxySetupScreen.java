@@ -49,6 +49,7 @@ public class GalaxySetupScreen extends GenericScreenAdapter {
 
         ImageTextButton galaxySizeIncreaseButton = UIFactoryCommon.getSmallRoundButton("+");
         galaxySizeTable.add(galaxySizeIncreaseButton)
+                .padBottom(10)
                 .padRight(30);
 
         galaxySizeTable.add(UIFactoryCommon.getDynamicTextLabel(() -> galaxySetupParameters.sizes.get(galaxySetupParameters.defaultSize)))
@@ -67,6 +68,7 @@ public class GalaxySetupScreen extends GenericScreenAdapter {
 
         ImageTextButton nrOfStarsIncreaseButton = UIFactoryCommon.getSmallRoundButton("+");
         starsSizeTable.add(nrOfStarsIncreaseButton)
+                .padBottom(10)
                 .padRight(30);
 
         starsSizeTable.add(UIFactoryCommon.getDynamicTextLabel(() -> String.valueOf(galaxySetupParameters.numberOfStars * galaxySetupParameters.numberOfStarsMultiplier)))
@@ -85,6 +87,7 @@ public class GalaxySetupScreen extends GenericScreenAdapter {
 
         ImageTextButton nrOfFactionsIncreaseButton = UIFactoryCommon.getSmallRoundButton("+");
         factionsSizeTable.add(nrOfFactionsIncreaseButton)
+                .padBottom(10)
                 .padRight(30);
 
         factionsSizeTable.add(UIFactoryCommon.getDynamicTextLabel(() -> String.valueOf(galaxySetupParameters.defaultNumberOfFactions)))
@@ -103,6 +106,7 @@ public class GalaxySetupScreen extends GenericScreenAdapter {
 
         ImageTextButton nrOfPiratesIncreaseButton = UIFactoryCommon.getSmallRoundButton("+");
         piratesSizeTable.add(nrOfPiratesIncreaseButton)
+                .padBottom(10)
                 .padRight(30);
 
         piratesSizeTable.add(UIFactoryCommon.getDynamicTextLabel(() -> String.valueOf(galaxySetupParameters.numberOfPirates)))

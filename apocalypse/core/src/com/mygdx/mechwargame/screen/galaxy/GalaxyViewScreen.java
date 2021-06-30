@@ -112,7 +112,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
                             showTargetMarker(new Vector2(star.getX(), star.getY()));
 
-                            MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y);
+                            MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y, stage);
                             StarClickEvent.handle(sequenceAction, star, stage, stageCoord.x, stageCoord.y);
 
                             event.stop();
@@ -145,7 +145,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                                      int button) {
                 clearStarLocalTable();
                 MainAction sequenceAction = new MainAction();
-                MapClickEvent.check(sequenceAction, x, y);
+                MapClickEvent.check(sequenceAction, x, y, stage);
                 GameData.starShip.addAction(sequenceAction);
                 showTargetMarker(new Vector2(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
                 event.stop();
