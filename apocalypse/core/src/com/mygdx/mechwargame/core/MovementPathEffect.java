@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.mechwargame.AssetManagerV2;
-import org.w3c.dom.Text;
 
 public class MovementPathEffect extends Actor {
 
     private int size = 128;
 
-    private Texture startTexture = new Texture(AssetManagerV2.MOVEMENT_PATH_BEGIN);
     private Texture middleTexture = new Texture(AssetManagerV2.MOVEMENT_PATH_MID);
     private Texture endTexture = new Texture(AssetManagerV2.MOVEMENT_PATH_END);
 
@@ -44,7 +42,6 @@ public class MovementPathEffect extends Actor {
             middleTexture.getTextureData().prepare();
             pixmap.drawPixmap(middleTexture.getTextureData().consumePixmap(), remainder + i * size, 0);
         }
-
 
         sprite = new Texture(pixmap);
     }
