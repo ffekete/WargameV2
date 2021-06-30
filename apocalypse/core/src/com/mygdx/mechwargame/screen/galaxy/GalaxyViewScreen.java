@@ -177,8 +177,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
         DynamicProgressBar fuelProgressBar = UIFactoryCommon.createProgressBar(128,
                 16,
-                () -> starShip.fuel,
-                () -> starShip.maxFuel,
+                () -> starShip.engine.getFuel(),
+                () -> starShip.engine.getMaxFuel(),
                 Color.DARK_GRAY,
                 Color.LIGHT_GRAY);
 
@@ -194,8 +194,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
         DynamicProgressBar hullProgressBar = UIFactoryCommon.createProgressBar(128,
                 16,
-                () -> (float) starShip.hull,
-                () -> (float) starShip.maxHull,
+                () -> (float) starShip.hullArmor.armor,
+                () -> (float) starShip.hullArmor.maxArmor,
                 Color.SCARLET,
                 Color.CHARTREUSE);
 

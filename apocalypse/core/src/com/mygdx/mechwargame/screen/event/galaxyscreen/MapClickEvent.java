@@ -24,7 +24,7 @@ public class MapClickEvent {
 
         MoveShipAction moveToAction = new MoveShipAction(GameData.starShip);
         moveToAction.setActor(GameData.starShip);
-        moveToAction.setDuration(0.01f * (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f)));
+        moveToAction.setDuration( GameData.starShip.engine.getSpeed() * 0.01f * (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f)));
         moveToAction.setPosition(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f);
 
         doThemTogetherAction.addAction(rotateToAction);
