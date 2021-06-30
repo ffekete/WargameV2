@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.mech.Mech;
 import com.mygdx.mechwargame.core.ship.BaseShip;
-import com.mygdx.mechwargame.core.ship.StarShip;
 import com.mygdx.mechwargame.core.world.Galaxy;
 import com.mygdx.mechwargame.ui.view.galaxy.StarLocalMenu;
 

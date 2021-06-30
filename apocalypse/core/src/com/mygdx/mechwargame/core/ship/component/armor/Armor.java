@@ -9,8 +9,8 @@ public abstract class Armor extends Component {
     public int armor;
     public int maxArmor;
 
-    public Armor(int level) {
-        super(level);
+    public Armor(int level, String name) {
+        super(level, name);
     }
 
     @Override

@@ -4,17 +4,20 @@ import com.mygdx.mechwargame.core.ship.component.Component;
 
 public abstract class Engine extends Component {
 
-    protected int fuelBaseCapacity = 0;
-    protected int fuelUpgradePerLevel = 0;
+    protected float fuelBaseCapacity = 0;
+    protected float fuelUpgradePerLevel = 0;
     protected float baseFuelConsumption = 0f;
     protected float baseEnergyConsumption = 0f;
+    protected float baseSpeed;
+    protected float speedUpgradePerLevel;
+    protected float fuelConsumptionPerLevelDivider;
 
     public float fuel;
     public float maxFuel;
     public float fuelConsumption;
 
-    public Engine(int level) {
-        super(level);
+    public Engine(int level, String name) {
+        super(level, name);
         adjustValues(level);
     }
 
@@ -23,14 +26,14 @@ public abstract class Engine extends Component {
     }
 
     public float getSpeed() {
-        return 1f - ((float) level * 0.05f);
+        return baseSpeed - ((float) level * speedUpgradePerLevel);
     }
 
     @Override
     public void adjustValues(int level) {
         this.fuel = fuelBaseCapacity + level * fuelUpgradePerLevel;
         this.maxFuel = fuelBaseCapacity + level * fuelUpgradePerLevel;
-        this.fuelConsumption = baseFuelConsumption - level / 2f;
+        this.fuelConsumption = baseFuelConsumption - level / fuelConsumptionPerLevelDivider;
     }
 
     public void consumeFuel() {

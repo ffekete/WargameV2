@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.ship.BaseShip;
-import com.mygdx.mechwargame.core.ship.StarShip;
+import com.mygdx.mechwargame.core.ship.SmallStarShip;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.ScrollController;
@@ -172,13 +172,13 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             }
         });
 
-        BaseShip starShip = new StarShip();
+        BaseShip starShip = new SmallStarShip();
         starShip.setSize(SECTOR_SIZE, SECTOR_SIZE);
 
         DynamicProgressBar fuelProgressBar = UIFactoryCommon.createProgressBar(128,
                 16,
-                () -> starShip.engine.getFuel(),
-                () -> starShip.engine.getMaxFuel(),
+                () -> starShip.engine.fuel,
+                () -> starShip.engine.maxFuel,
                 Color.DARK_GRAY,
                 Color.LIGHT_GRAY);
 

@@ -4,8 +4,11 @@ public abstract class Component {
 
     protected int level;
 
-    public Component(int level) {
+    public String name;
+
+    public Component(int level, String name) {
         this.level = level;
+        this.name = name;
     }
 
     int getLevel() {

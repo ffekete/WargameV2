@@ -4,8 +4,9 @@ import com.mygdx.mechwargame.core.ship.component.Component;
 
 public abstract class CargoBay extends Component {
 
-    public CargoBay(int level) {
-        super(level);
+    public CargoBay(int level,
+                    String name) {
+        super(level, name);
     }
 
     @Override

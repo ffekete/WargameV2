@@ -9,8 +9,8 @@ public abstract class EnergyGrid extends Component {
     public int energyOutput;
     public int maxEnergyOutput;
 
-    public EnergyGrid(int level) {
-        super(level);
+    public EnergyGrid(int level, String name) {
+        super(level, name);
     }
 
     @Override
