@@ -21,6 +21,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String TEXT_FIELD_BG = "ui/TextFieldBg.png";
     public static final String MECH_DESCRIPTION_FRAME = "ui/gearselection/MechDescriptionFrame.png";
     public static final String SHIP_INFO_DESCRIPTION_PANEL = "ui/ship/ShipInfoDescriptionPanel.png";
+    public static final String HELP_ICON = "ui/HelpIcon.png";
 
     public static final String POWER_ICON_EMPTY = "ui/PowerIconEmpty.png";
     public static final String POWER_ICON_FULL = "ui/PowerIconFull.png";
@@ -126,5 +127,6 @@ public class AssetManagerV2 extends AssetManager {
 
         load(MOVEMENT_PATH_MID, Texture.class);
         load(MOVEMENT_PATH_END, Texture.class);
+        load(HELP_ICON, Texture.class);
     }
 }

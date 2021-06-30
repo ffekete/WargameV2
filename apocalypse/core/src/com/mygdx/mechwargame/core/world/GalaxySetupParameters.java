@@ -110,7 +110,7 @@ public class GalaxySetupParameters {
 
     public int previousSize() {
         defaultSize--;
-        if(defaultSize < 0) {
+        if(defaultSize < 1) {
             defaultSize = 4;
         }
 

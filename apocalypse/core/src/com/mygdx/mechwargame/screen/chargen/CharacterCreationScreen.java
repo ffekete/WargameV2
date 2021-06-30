@@ -78,7 +78,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
         screenContentTable.add(scrollPortraitLeftButton).size(64).right();
 
         final AnimatedDrawable portraitFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
-        final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, false, FRAME_ANIM_SPEED);
+        final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, true, FRAME_ANIM_SPEED);
         final Image portraitImage = new LayeredAnimatedImage(portraitDrawable, portraitFrameAnimation);
 
         final Cell<Image> portraitImgeCell = screenContentTable.add(portraitImage).size(128, 128).center();
@@ -95,7 +95,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
         screenContentTable.add(scrollLogoLeftButton).size(64).right();
 
         final AnimatedDrawable logoFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
-        final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, false, FRAME_ANIM_SPEED);
+        final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, true, FRAME_ANIM_SPEED);
         final Image logoImage = new LayeredAnimatedImage(logoFrameAnimation, logoDrawable);
         final Cell<Image> logoImgeCell = screenContentTable.add(logoImage).size(128, 128).center();
         ImageTextButton scrollLogoRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
@@ -121,7 +121,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 }
 
                 final AnimatedDrawable logoFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
-                final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, false, FRAME_ANIM_SPEED);
+                final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, true, FRAME_ANIM_SPEED);
                 final Image logoImage = new LayeredAnimatedImage(logoFrameAnimation, logoDrawable);
                 logoImgeCell.setActor(logoImage);
 
@@ -144,7 +144,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 }
 
                 final AnimatedDrawable logoFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
-                final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, false, FRAME_ANIM_SPEED);
+                final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, true, FRAME_ANIM_SPEED);
                 final Image logoImage = new LayeredAnimatedImage(logoFrameAnimation, logoDrawable);
                 logoImgeCell.setActor(logoImage);
 
@@ -166,7 +166,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 }
 
                 final AnimatedDrawable portraitFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
-                final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, false, FRAME_ANIM_SPEED);
+                final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, true, FRAME_ANIM_SPEED);
                 final Image portraitImage = new LayeredAnimatedImage(portraitDrawable, portraitFrameAnimation);
 
                 portraitImgeCell.setActor(portraitImage);
@@ -189,7 +189,7 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 }
 
                 final AnimatedDrawable portraitFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
-                final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, false, FRAME_ANIM_SPEED);
+                final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, true, FRAME_ANIM_SPEED);
                 final Image portraitImage = new LayeredAnimatedImage(portraitDrawable, portraitFrameAnimation);
 
                 portraitImgeCell.setActor(portraitImage);
@@ -218,7 +218,6 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
                 sequenceAction.addAction(Actions.delay(0.15f));
                 sequenceAction.addAction(new SetScreenAction(new AttributesDistributionScreen(character)));
                 stage.addAction(sequenceAction);
-                //GameState.game.setScreen(new AttributesDistributionScreen(character));
                 return true;
             }
 

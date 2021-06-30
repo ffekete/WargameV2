@@ -1,7 +1,6 @@
 package com.mygdx.mechwargame.ui.view.galaxy;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ai.steer.behaviors.Alignment;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.ship.BaseShip;
@@ -19,7 +19,9 @@ import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
 public class ShipInfoLocalMenu extends Table {
 
-    public ImageTextButton engineInfoButton;
+    public ImageTextButton statusInfoButton;
+    public ImageTextButton componentsInfoButton;
+    public ImageTextButton cargoInfoButton;
 
     public ShipInfoLocalMenu(Stage stage) {
 
@@ -81,38 +83,114 @@ public class ShipInfoLocalMenu extends Table {
                 .center()
                 .size(1000, 500);
 
-        engineInfoButton = UIFactoryCommon.getMenuButton("status");
-        buttonsTable.add(engineInfoButton)
+        statusInfoButton = UIFactoryCommon.getMenuButton("status");
+        buttonsTable.add(statusInfoButton)
                 .size(400, 80)
                 .center()
                 .padBottom(10)
                 .padLeft(20)
                 .row();
 
-        engineInfoButton = UIFactoryCommon.getMenuButton("components");
-        buttonsTable.add(engineInfoButton)
+        componentsInfoButton = UIFactoryCommon.getMenuButton("component");
+        buttonsTable.add(componentsInfoButton)
                 .size(400, 80)
                 .center()
                 .padBottom(10)
                 .padLeft(20)
                 .row();
 
-        engineInfoButton = UIFactoryCommon.getMenuButton("cargo");
-        buttonsTable.add(engineInfoButton)
+        cargoInfoButton = UIFactoryCommon.getMenuButton("cargo");
+        buttonsTable.add(cargoInfoButton)
                 .size(400, 80)
                 .center()
                 .padBottom(10)
                 .padLeft(20)
                 .row();
+
+        statusInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+
+                descriptionTable.clear();
+
+                Table table = new Table();
+                table.setSize(960, 500);
+
+                addLabels(table, "hull armor", ship.hullArmor.armor, ship.hullArmor.maxArmor);
+                addLabels(table, "energy output", ship.energyGrid.energyOutput, ship.energyGrid.maxEnergyOutput);
+                addLabels(table, "cargo capacity", ship.cargoBay.capacity, ship.cargoBay.maxCapacity);
+                addLabels(table, "fuel level", (int) ship.engine.fuel, (int) ship.engine.maxFuel);
+                addLabel(table, "fuel consumption", (int) ship.engine.fuelConsumption);
+                addLabel(table, "ship speed", (int) ship.engine.getSpeed());
+
+                descriptionTable.add(table).size(960, 500);
+
+            }
+        });
+
+        componentsInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+
+                descriptionTable.clear();
+
+                Table table = new Table();
+                table.setSize(960, 500);
+
+                addLabels(table, ship.engine.name, ship.engine.level, 10);
+                addLabels(table, ship.hullArmor.name, ship.hullArmor.level, 10);
+                addLabels(table, ship.energyGrid.name, ship.energyGrid.level, 10);
+                addLabels(table, ship.cargoBay.name, ship.cargoBay.level, 10);
+
+                descriptionTable.add(table).size(960, 500);
+
+            }
+        });
 
         backButton.addListener(new ClickListener(Input.Buttons.LEFT) {
 
             @Override
             public boolean touchDown(InputEvent event,
-                                float x,
-                                float y,
-                                int pointer,
-                                int button) {
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
                 super.touchDown(event, x, y, pointer, button);
                 event.stop();
                 return true;
@@ -152,6 +230,67 @@ public class ShipInfoLocalMenu extends Table {
             }
         });
 
+    }
+
+    private void addLabel(Table table,
+                           String text,
+                           String value) {
+        Image helpIcon = new Image(new AnimatedDrawable(AssetManagerV2.HELP_ICON, 48, 48, 0.1f));
+        table.add(helpIcon)
+                .size(48)
+                .padRight(10);
+
+        Label hpLabel = UIFactoryCommon.getTextLabel(text);
+        table.add(hpLabel).size(500, 60);
+
+        Label hullLabel = UIFactoryCommon.getTextLabel(value);
+        hullLabel.setAlignment(Align.right);
+        table.add(hullLabel)
+                .size(150, 60)
+                .padRight(10)
+                .right()
+                .row();
+    }
+
+    private void addLabels(Table table,
+                           String text,
+                           int baseValue,
+                           int maxValue) {
+
+        Image helpIcon = new Image(new AnimatedDrawable(AssetManagerV2.HELP_ICON, 48, 48, 0.1f));
+        table.add(helpIcon)
+                .size(48)
+                .padRight(10);
+
+        Label hpLabel = UIFactoryCommon.getTextLabel(text);
+        table.add(hpLabel).size(500, 60);
+
+        Label hullLabel = UIFactoryCommon.getTextLabel(Integer.toString(baseValue));
+        hullLabel.setAlignment(Align.right);
+        table.add(hullLabel)
+                .size(125, 60)
+                .padRight(10)
+                .right();
+
+        Label delimiterLabel = UIFactoryCommon.getTextLabel("/");
+        delimiterLabel.setAlignment(Align.center);
+        table.add(delimiterLabel)
+                .size(40, 60)
+                .padRight(10)
+                .center();
+
+        Label maxHullLabel = UIFactoryCommon.getTextLabel(Integer.toString(maxValue));
+        maxHullLabel.setAlignment(Align.left);
+        table.add(maxHullLabel)
+                .size(125, 60)
+                .left()
+                .row();
+    }
+
+    private void addLabel(Table table,
+                          String text,
+                          int baseValue) {
+        addLabel(table, text, Integer.toString(baseValue));
     }
 
 }

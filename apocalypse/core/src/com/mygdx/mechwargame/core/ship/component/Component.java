@@ -2,7 +2,7 @@ package com.mygdx.mechwargame.core.ship.component;
 
 public abstract class Component {
 
-    protected int level;
+    public int level;
 
     public String name;
 
