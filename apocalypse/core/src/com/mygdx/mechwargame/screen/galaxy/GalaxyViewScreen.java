@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,9 +20,10 @@ import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.ScrollController;
 import com.mygdx.mechwargame.screen.action.MainAction;
-import com.mygdx.mechwargame.screen.event.galaxyscreen.MapClickEvent;
-import com.mygdx.mechwargame.screen.event.galaxyscreen.ScrollEvent;
-import com.mygdx.mechwargame.screen.event.galaxyscreen.StarClickEvent;
+import com.mygdx.mechwargame.screen.galaxy.event.MapClickEvent;
+import com.mygdx.mechwargame.screen.galaxy.event.ScrollEvent;
+import com.mygdx.mechwargame.screen.galaxy.event.ShipClickEvent;
+import com.mygdx.mechwargame.screen.galaxy.event.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
@@ -159,6 +161,12 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
                 if (KeyMapping.UNPAUSE == keycode) {
                     GameData.isPaused = !GameData.isPaused;
+                }
+
+                if(KeyMapping.SHIP_INFO == keycode) {
+                    SequenceAction sequenceAction = new SequenceAction();
+                    ShipClickEvent.handle(sequenceAction, stage);
+                    stage.addAction(sequenceAction);
                 }
 
                 return true;

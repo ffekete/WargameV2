@@ -1,6 +1,5 @@
-package com.mygdx.mechwargame.screen.event.galaxyscreen;
+package com.mygdx.mechwargame.screen.galaxy.event;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.mechwargame.core.world.Star;

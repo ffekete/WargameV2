@@ -5,6 +5,7 @@ import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.mech.Mech;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.world.Galaxy;
+import com.mygdx.mechwargame.ui.view.galaxy.ShipInfoLocalMenu;
 import com.mygdx.mechwargame.ui.view.galaxy.StarLocalMenu;
 
 public class GameData {
@@ -16,5 +17,6 @@ public class GameData {
     public static BaseShip starShip;
     public static Action galaxyMapPlayerAction;
     public static StarLocalMenu starLocalMenu;
+    public static ShipInfoLocalMenu shipInfoLocalMenu;
 
 }

@@ -20,11 +20,14 @@ public class AssetManagerV2 extends AssetManager {
     public static final String CHARACTER_ATTRIBUTES_FRAME = "ui/CharacterAttributesFrame.png";
     public static final String TEXT_FIELD_BG = "ui/TextFieldBg.png";
     public static final String MECH_DESCRIPTION_FRAME = "ui/gearselection/MechDescriptionFrame.png";
+    public static final String SHIP_INFO_DESCRIPTION_PANEL = "ui/ship/ShipInfoDescriptionPanel.png";
 
     public static final String POWER_ICON_EMPTY = "ui/PowerIconEmpty.png";
     public static final String POWER_ICON_FULL = "ui/PowerIconFull.png";
 
     public static final String MOUSE_POINTER = "ui/MousePointer.png";
+    public static final String BACK_BUTTON_UP = "ui/ship/BackButtonUp.png";
+    public static final String BACK_BUTTON_DOWN = "ui/ship/BackButtonDown.png";
 
     public static final String STAR_LOCAL_MENU = "ui/StarLocalMenu.png";
 
@@ -96,6 +99,7 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.MECH_DESCRIPTION_FRAME, Texture.class);
         load(AssetManagerV2.POWER_ICON_EMPTY, Texture.class);
         load(AssetManagerV2.POWER_ICON_FULL, Texture.class);
+        load(AssetManagerV2.SHIP_INFO_DESCRIPTION_PANEL, Texture.class);
 
         load(AssetManagerV2.BLACK_BEAR_IMAGE, Texture.class);
         load(AssetManagerV2.HELLFIRE_IMAGE, Texture.class);
@@ -114,5 +118,7 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_LOCAL_MENU, Texture.class);
 
         load(MOUSE_POINTER, Texture.class);
+        load(BACK_BUTTON_UP, Texture.class);
+        load(BACK_BUTTON_DOWN, Texture.class);
     }
 }

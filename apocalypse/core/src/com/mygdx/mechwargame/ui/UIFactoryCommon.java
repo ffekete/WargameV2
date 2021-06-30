@@ -175,6 +175,21 @@ public class UIFactoryCommon {
         return new TextButton(text, textButtonStyle);
     }
 
+    public static ImageButton getBackButton() {
+
+        final ImageButton.ImageButtonStyle textButtonStyle = new ImageButton.ImageButtonStyle();
+
+        final ImageButton imageButton = new ImageButton(textButtonStyle);
+
+        final TextureRegionDrawable buttonUp = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.BACK_BUTTON_UP, Texture.class));
+        final TextureRegionDrawable buttonDown = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.BACK_BUTTON_DOWN, Texture.class));
+
+        imageButton.getStyle().up = buttonUp;
+        imageButton.getStyle().down = buttonDown;
+
+        return imageButton;
+    }
+
     public static ImageTextButton getMenuButton(final String text) {
 
         final ImageTextButton.ImageTextButtonStyle textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
