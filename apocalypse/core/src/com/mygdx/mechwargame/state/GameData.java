@@ -1,6 +1,7 @@
 package com.mygdx.mechwargame.state;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.mygdx.mechwargame.core.MovementPathEffect;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.mech.Mech;
 import com.mygdx.mechwargame.core.ship.BaseShip;
@@ -18,5 +19,6 @@ public class GameData {
     public static Action galaxyMapPlayerAction;
     public static StarLocalMenu starLocalMenu;
     public static ShipInfoLocalMenu shipInfoLocalMenu;
+    public static MovementPathEffect movementPathEffect;
 
 }

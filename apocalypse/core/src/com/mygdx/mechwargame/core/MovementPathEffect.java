@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.mechwargame.AssetManagerV2;
+import org.w3c.dom.Text;
 
 public class MovementPathEffect extends Actor {
 
@@ -16,29 +17,34 @@ public class MovementPathEffect extends Actor {
 
     private Texture sprite;
 
+    public int fullLength;
+
+    public int srcX = 0;
+    public int srcY = 0;
+
     public MovementPathEffect(int length) {
 
-        int parts = length / 32;
+        int parts = length / size;
 
-        Pixmap pixmap = new Pixmap(length + size / 2, size, Pixmap.Format.RGBA8888);
+        fullLength = length + size;
+
+        Pixmap pixmap = new Pixmap(fullLength, size, Pixmap.Format.RGBA8888);
         pixmap.setColor(0x00000000);
         pixmap.fill();
 
         pixmap.setBlending(Pixmap.Blending.SourceOver);
 
-        startTexture.getTextureData().prepare();
-        pixmap.drawPixmap(startTexture.getTextureData().consumePixmap(), 0, 0);
+        endTexture.getTextureData().prepare();
+        pixmap.drawPixmap(endTexture.getTextureData().consumePixmap(), length, 0, 0, 0, size, size);
+
+        int remainder = length - parts * size;
 
         int i;
-        for (i = 1; i <= parts; i++) {
+        for (i = 0; i < parts; i++) {
             middleTexture.getTextureData().prepare();
-            pixmap.drawPixmap(middleTexture.getTextureData().consumePixmap(), i * size, 0);
+            pixmap.drawPixmap(middleTexture.getTextureData().consumePixmap(), remainder + i * size, 0);
         }
 
-        int remainder = length - i * size;
-
-        middleTexture.getTextureData().prepare();
-        pixmap.drawPixmap(middleTexture.getTextureData().consumePixmap(), i * size, 0, 0, 0, remainder, size);
 
         sprite = new Texture(pixmap);
     }
@@ -47,6 +53,11 @@ public class MovementPathEffect extends Actor {
     public void draw(Batch batch,
                      float parentAlpha) {
 
-        batch.draw(sprite, getX() - size / 2f, getY() - size / 2f, size / 2f, size / 2f, sprite.getWidth(), sprite.getHeight(), getScaleX(), getScaleY(), getRotation(), 0, 0, sprite.getWidth(), sprite.getHeight(), false, false);
+        Pixmap pixmap = new Pixmap(fullLength, size, Pixmap.Format.RGBA8888);
+        pixmap.drawPixmap(sprite.getTextureData().consumePixmap(), srcX, 0, srcX, 0, sprite.getWidth(), sprite.getHeight());
+
+        Texture texture = new Texture(pixmap);
+
+        batch.draw(texture, getX() - size / 2f, getY() - size / 2f, size / 2f, size / 2f, sprite.getWidth(), sprite.getHeight(), getScaleX(), getScaleY(), getRotation(), 0, 0, sprite.getWidth(), sprite.getHeight(), false, false);
     }
 }
