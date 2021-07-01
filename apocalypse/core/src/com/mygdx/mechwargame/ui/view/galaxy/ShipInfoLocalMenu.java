@@ -342,8 +342,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 super.touchUp(event, x, y, pointer, button);
                 event.stop();
                 setVisible(false);
-                stage.getActors().removeValue(mainTable, true);
-                GameData.shipInfoLocalMenu = null;
+                hide(stage);
             }
         });
 
@@ -368,6 +367,12 @@ public class ShipInfoLocalMenu extends Container<Table> {
             }
         });
 
+    }
+
+    public void hide(Stage stage) {
+        stage.getActors().removeValue(this, true);
+        GameData.shipInfoLocalMenu = null;
+        GameData.lockGameStage = false;
     }
 
     private void addEmptyClickListener(Actor actor) {

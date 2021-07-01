@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.world.Star;
+import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
@@ -20,10 +21,12 @@ public class StarLocalMenu extends Table {
     public ImageTextButton leaveButton;
 
     public Star star;
+    public Stage stage;
 
     public StarLocalMenu(Star star,
                          Stage stage) {
         this.star = star;
+        this.stage = stage;
 
         this.background(new AnimatedDrawable(AssetManagerV2.STAR_LOCAL_MENU, 450, 350, true, 0.1f));
         this.setSize(450, 350);
@@ -72,8 +75,7 @@ public class StarLocalMenu extends Table {
                                      float y,
                                      int pointer,
                                      int button) {
-                setVisible(false);
-                stage.getActors().removeValue(mainTable, true);
+
                 event.stop();
                 return true;
             }
@@ -86,8 +88,7 @@ public class StarLocalMenu extends Table {
                                      float y,
                                      int pointer,
                                      int button) {
-                setVisible(false);
-                stage.getActors().removeValue(mainTable, true);
+
                 event.stop();
                 return true;
             }
@@ -100,11 +101,18 @@ public class StarLocalMenu extends Table {
                                      float y,
                                      int pointer,
                                      int button) {
-                setVisible(false);
-                stage.getActors().removeValue(mainTable, true);
+
+                hide();
                 event.stop();
                 return true;
             }
         });
+    }
+
+    public void hide() {
+        stage.getActors().removeValue(GameData.starLocalMenu, true);
+        GameData.starLocalMenu = null;
+        GameData.lockGameStage = false;
+        setVisible(false);
     }
 }

@@ -7,7 +7,5 @@ public class Config {
 
     public static int SECTOR_SIZE = 128;
 
-    public static float SCALE = 4f;
-
     public static boolean SHOW_FPS = false;
 }

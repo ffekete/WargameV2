@@ -21,12 +21,14 @@ import com.mygdx.mechwargame.core.ship.SmallStarShip;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.ScrollController;
+import com.mygdx.mechwargame.screen.action.LockGameStageAction;
 import com.mygdx.mechwargame.screen.action.MainAction;
 import com.mygdx.mechwargame.screen.galaxy.event.MapClickEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.ScrollEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.ShipClickEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
@@ -141,7 +143,11 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                                                  int pointer,
                                                  int button) {
 
-                            clearStarLocalTable();
+                            if(GameData.lockGameStage) {
+                                super.touchDown(event, x, y, pointer, button);
+                                event.stop();
+                                return true;
+                            }
 
                             MainAction sequenceAction = new MainAction();
                             GameData.starShip.addAction(sequenceAction);
@@ -151,6 +157,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
                             MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y, stage);
                             StarClickEvent.handle(sequenceAction, star, uiStage, stageCoord.x, stageCoord.y);
+                            sequenceAction.addAction(new LockGameStageAction(true));
 
                             event.stop();
                             return true;
@@ -180,11 +187,17 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                                      float y,
                                      int pointer,
                                      int button) {
-                clearStarLocalTable();
+
+                if(GameData.lockGameStage) {
+                    super.touchDown(event, x, y, pointer, button);
+                    event.stop();
+                    return true;
+                }
+
                 MainAction sequenceAction = new MainAction();
                 MapClickEvent.check(sequenceAction, x, y, stage);
                 GameData.starShip.addAction(sequenceAction);
-                showTargetMarker(new Vector2(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
+                showTargetMarker(new Vector2(x - 64, y - 64));
                 event.stop();
                 return true;
             }
@@ -283,10 +296,10 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             GameData.isPaused = true;
             SequenceAction sequenceAction = new SequenceAction();
             ShipClickEvent.handle(sequenceAction, uiStage);
+            sequenceAction.addAction(new LockGameStageAction(true));
             uiStage.addAction(sequenceAction);
         } else {
-            uiStage.getActors().removeValue(GameData.shipInfoLocalMenu, true);
-            GameData.shipInfoLocalMenu = null;
+            GameData.shipInfoLocalMenu.hide(uiStage);
         }
     }
 
@@ -294,13 +307,6 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         targetMarker.setVisible(true);
         targetMarker.resetAnimations();
         targetMarker.setPosition(stageCoord.x, stageCoord.y);
-    }
-
-    private void clearStarLocalTable() {
-        if (GameData.starLocalMenu != null) {
-            uiStage.getActors().removeValue(GameData.starLocalMenu, true);
-            GameData.starLocalMenu = null;
-        }
     }
 
     @Override

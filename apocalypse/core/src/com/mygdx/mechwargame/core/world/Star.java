@@ -6,8 +6,6 @@ import com.mygdx.mechwargame.core.BaseActor;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
-import static com.mygdx.mechwargame.Config.SCALE;
-
 public class Star extends BaseActor {
 
     public Rectangle bounds;

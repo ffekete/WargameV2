@@ -21,4 +21,6 @@ public class GameData {
     public static ShipInfoLocalMenu shipInfoLocalMenu;
     public static MovementPathEffect movementPathEffect;
 
+    public static boolean lockGameStage = false;
+
 }

@@ -74,9 +74,9 @@ public class MapClickEvent {
             @Override
             public boolean act(float delta) {
                 float newDistance = (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
-                float fullLength = movementPathEffect.fullLength - 128;
+                float fullLength = movementPathEffect.fullLength - SECTOR_SIZE;
 
-                movementPathEffect.srcX = 64 + (int) (fullLength - fullLength * newDistance / distance);
+                movementPathEffect.srcX = SECTOR_SIZE / 2 + (int) (fullLength - fullLength * newDistance / distance);
                 return false;
             }
         });
