@@ -20,7 +20,7 @@ public class MoveShipAction extends MoveToAction {
             return true;
         }
 
-        if (fuelConsumptionDelay >= 0.5f) {
+        if (fuelConsumptionDelay >= 0.1f) {
             starShip.consumeFuel();
             fuelConsumptionDelay = 0;
         }

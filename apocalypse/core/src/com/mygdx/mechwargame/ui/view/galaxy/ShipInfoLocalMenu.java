@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.ship.BaseShip;
@@ -17,9 +16,13 @@ import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
+import java.text.DecimalFormat;
+
 public class ShipInfoLocalMenu extends Table {
 
-    public ImageTextButton statusInfoButton;
+    public ImageTextButton engineInfoButton;
+    public ImageTextButton armorInfoButton;
+    public ImageTextButton energyGridInfoButton;
     public ImageTextButton componentsInfoButton;
     public ImageTextButton cargoInfoButton;
 
@@ -83,16 +86,24 @@ public class ShipInfoLocalMenu extends Table {
                 .center()
                 .size(1000, 500);
 
-        statusInfoButton = UIFactoryCommon.getMenuButton("status");
-        buttonsTable.add(statusInfoButton)
+        engineInfoButton = UIFactoryCommon.getMenuButton("engine");
+        buttonsTable.add(engineInfoButton)
                 .size(400, 80)
                 .center()
                 .padBottom(10)
                 .padLeft(20)
                 .row();
 
-        componentsInfoButton = UIFactoryCommon.getMenuButton("component");
-        buttonsTable.add(componentsInfoButton)
+        armorInfoButton = UIFactoryCommon.getMenuButton("armor");
+        buttonsTable.add(armorInfoButton)
+                .size(400, 80)
+                .center()
+                .padBottom(10)
+                .padLeft(20)
+                .row();
+
+        energyGridInfoButton = UIFactoryCommon.getMenuButton("energy");
+        buttonsTable.add(energyGridInfoButton)
                 .size(400, 80)
                 .center()
                 .padBottom(10)
@@ -107,7 +118,15 @@ public class ShipInfoLocalMenu extends Table {
                 .padLeft(20)
                 .row();
 
-        statusInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+        componentsInfoButton = UIFactoryCommon.getMenuButton("component");
+        buttonsTable.add(componentsInfoButton)
+                .size(400, 80)
+                .center()
+                .padBottom(10)
+                .padLeft(20)
+                .row();
+
+        engineInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
 
             @Override
             public boolean touchDown(InputEvent event,
@@ -132,16 +151,137 @@ public class ShipInfoLocalMenu extends Table {
                 descriptionTable.clear();
 
                 Table table = new Table();
-                table.setSize(960, 500);
+                table.setSize(980, 500);
 
-                addLabels(table, "hull armor", ship.hullArmor.armor, ship.hullArmor.maxArmor);
-                addLabels(table, "energy output", ship.energyGrid.energyOutput, ship.energyGrid.maxEnergyOutput);
-                addLabels(table, "cargo capacity", ship.cargoBay.capacity, ship.cargoBay.maxCapacity);
-                addLabels(table, "fuel level", (int) ship.engine.fuel, (int) ship.engine.maxFuel);
-                addLabel(table, "fuel consumption", (int) ship.engine.fuelConsumption);
-                addLabel(table, "ship speed", (int) ship.engine.getSpeed());
+                DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
-                descriptionTable.add(table).size(960, 500);
+                addLabel(table, ship.engine.name, 700, "");
+                addLabel(table, "fuel level", 700, decimalFormat.format(ship.engine.fuel));
+                addLabel(table, "max fuel level", 700, decimalFormat.format(ship.engine.maxFuel));
+                addLabel(table, "fuel consumption", 700, decimalFormat.format(ship.engine.fuelConsumption));
+                addLabel(table, "ship speed", 700, decimalFormat.format(ship.engine.getSpeed()));
+                addLabel(table, "energy consumption", 700, decimalFormat.format(ship.engine.getEnergyConsumption()));
+
+                descriptionTable.add(table).size(980, 500);
+
+            }
+        });
+
+        armorInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+
+                descriptionTable.clear();
+
+                Table table = new Table();
+                table.setSize(980, 500);
+
+                addLabel(table, ship.hullArmor.name, 700, "");
+                addLabel(table, "armor value", 700, Integer.toString(ship.hullArmor.armor));
+                addLabel(table, "max armor value", 700, Integer.toString(ship.hullArmor.maxArmor));
+                addLabel(table, "", 600, "");
+                addLabel(table, "", 600, "");
+                addLabel(table, "", 600, "");
+
+                descriptionTable.add(table).size(980, 500);
+
+            }
+        });
+
+        energyGridInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+
+                descriptionTable.clear();
+
+                Table table = new Table();
+                table.setSize(980, 500);
+
+                addLabel(table, ship.energyGrid.name, 700, "");
+                addLabel(table, "energy level", 700, Integer.toString(ship.energyGrid.energyOutput));
+                addLabel(table, "max energy level", 700, Integer.toString(ship.energyGrid.maxEnergyOutput));
+                addLabel(table, "", 600, "");
+                addLabel(table, "", 600, "");
+                addLabel(table, "", 600, "");
+
+                descriptionTable.add(table).size(980, 500);
+
+            }
+        });
+
+        cargoInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+
+                descriptionTable.clear();
+
+                Table table = new Table();
+                table.setSize(980, 500);
+
+                DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
+                addLabel(table, ship.cargoBay.name, 700, "");
+                addLabel(table, "capacity", 700, decimalFormat.format(ship.cargoBay.capacity));
+                addLabel(table, "max capacity", 700, decimalFormat.format(ship.cargoBay.maxCapacity));
+                addLabel(table, "", 600, "");
+                addLabel(table, "", 600, "");
+                addLabel(table, "", 600, "");
+
+                descriptionTable.add(table).size(980, 500);
 
             }
         });
@@ -173,10 +313,12 @@ public class ShipInfoLocalMenu extends Table {
                 Table table = new Table();
                 table.setSize(960, 500);
 
-                addLabels(table, ship.engine.name, ship.engine.level, 10);
-                addLabels(table, ship.hullArmor.name, ship.hullArmor.level, 10);
-                addLabels(table, ship.energyGrid.name, ship.energyGrid.level, 10);
-                addLabels(table, ship.cargoBay.name, ship.cargoBay.level, 10);
+                addLabels(table, ship.engine.name, 600, "lv", Integer.toString(ship.engine.level), Integer.toString(10));
+                addLabels(table, ship.hullArmor.name, 600, "lv", Integer.toString(ship.hullArmor.level), Integer.toString(10));
+                addLabels(table, ship.energyGrid.name, 600, "lv", Integer.toString(ship.energyGrid.level), Integer.toString(10));
+                addLabels(table, ship.cargoBay.name, 600, "lv", Integer.toString(ship.cargoBay.level), Integer.toString(10));
+                addLabel(table, "", 600, "");
+                addLabel(table, "", 600, "");
 
                 descriptionTable.add(table).size(960, 500);
 
@@ -233,42 +375,55 @@ public class ShipInfoLocalMenu extends Table {
     }
 
     private void addLabel(Table table,
-                           String text,
-                           String value) {
-        Image helpIcon = new Image(new AnimatedDrawable(AssetManagerV2.HELP_ICON, 48, 48, 0.1f));
-        table.add(helpIcon)
-                .size(48)
-                .padRight(10);
+                          String text,
+                          int textSize,
+                          String value) {
 
         Label hpLabel = UIFactoryCommon.getTextLabel(text);
-        table.add(hpLabel).size(500, 60);
+        table.add(hpLabel).size(textSize, 60);
 
         Label hullLabel = UIFactoryCommon.getTextLabel(value);
-        hullLabel.setAlignment(Align.right);
+        hullLabel.setAlignment(Align.center);
         table.add(hullLabel)
                 .size(150, 60)
                 .padRight(10)
-                .right()
+                .colspan(3)
                 .row();
     }
 
     private void addLabels(Table table,
                            String text,
-                           int baseValue,
-                           int maxValue) {
+                           int textSize,
+                           String baseValue,
+                           String maxValue) {
+        addLabels(table, text, textSize, "", baseValue, maxValue);
+    }
 
-        Image helpIcon = new Image(new AnimatedDrawable(AssetManagerV2.HELP_ICON, 48, 48, 0.1f));
-        table.add(helpIcon)
-                .size(48)
-                .padRight(10);
+    private void addLabels(Table table,
+                           String text,
+                           int textSize,
+                           String prefix,
+                           String baseValue,
+                           String maxValue) {
 
         Label hpLabel = UIFactoryCommon.getTextLabel(text);
-        table.add(hpLabel).size(500, 60);
+        table.add(hpLabel).size(textSize, 60);
 
-        Label hullLabel = UIFactoryCommon.getTextLabel(Integer.toString(baseValue));
+        if (prefix != null && !prefix.isEmpty()) {
+            Label prefixLabel = UIFactoryCommon.getTextLabel(prefix);
+            prefixLabel.setAlignment(Align.center);
+            table.add(prefixLabel)
+                    .size(prefix.length() * 10, 60)
+                    .padRight(10)
+                    .center();
+        }
+
+        int lengthTrim = textSize - 510;
+
+        Label hullLabel = UIFactoryCommon.getTextLabel(baseValue);
         hullLabel.setAlignment(Align.right);
         table.add(hullLabel)
-                .size(125, 60)
+                .size(125 - lengthTrim / 2f, 60)
                 .padRight(10)
                 .right();
 
@@ -279,18 +434,19 @@ public class ShipInfoLocalMenu extends Table {
                 .padRight(10)
                 .center();
 
-        Label maxHullLabel = UIFactoryCommon.getTextLabel(Integer.toString(maxValue));
+        Label maxHullLabel = UIFactoryCommon.getTextLabel(maxValue);
         maxHullLabel.setAlignment(Align.left);
         table.add(maxHullLabel)
-                .size(125, 60)
+                .size(125 - lengthTrim / 2f, 60)
                 .left()
                 .row();
     }
 
     private void addLabel(Table table,
                           String text,
+                          int textSize,
                           int baseValue) {
-        addLabel(table, text, Integer.toString(baseValue));
+        addLabel(table, text, textSize, Integer.toString(baseValue));
     }
 
 }

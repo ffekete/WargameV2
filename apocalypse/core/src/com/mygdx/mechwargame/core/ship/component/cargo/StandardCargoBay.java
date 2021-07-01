@@ -5,7 +5,7 @@ public class StandardCargoBay extends CargoBay {
 
     public StandardCargoBay(int level) {
         super(level, "std cargo bay");
-        baseCapacity = 5;
+        baseCapacity = 16;
         adjustValues(level);
     }
 
