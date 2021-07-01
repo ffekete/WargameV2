@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -28,7 +29,6 @@ import com.mygdx.mechwargame.screen.galaxy.event.ScrollEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.ShipClickEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
-import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
@@ -81,8 +81,18 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             uiStage.addActor(fpsLabel);
         }
 
+        Table menuTable = new Table();
+        uiStage.addActor(menuTable);
+        menuTable.setPosition(10, 10);
+        menuTable.setSize(138, 64);
+
+        ImageTextButton mainMenuButton = UIFactoryCommon.getSmallRoundButton("m");
+        mainMenuButton.setSize(64, 64);
+        menuTable.add(mainMenuButton)
+                .size(64)
+                .padRight(10);
+
         ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
-        shipInfoButton.setPosition(10 ,10);
         shipInfoButton.setSize(64, 64);
         shipInfoButton.addListener(new InputListener() {
             @Override
@@ -107,8 +117,10 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                 showShipInfoLocalMenu();
             }
         });
+        menuTable.add(shipInfoButton)
+                .size(64);
 
-        uiStage.addActor(shipInfoButton);
+        uiStage.addActor(menuTable);
 
         pausedLabel = UIFactoryCommon.getDynamicTextLabel(() -> GameData.isPaused ? "paused" : "");
         stage.addActor(pausedLabel);

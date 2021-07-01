@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.MovementPathEffect;
 import com.mygdx.mechwargame.screen.action.MoveShipAction;
 import com.mygdx.mechwargame.state.GameData;
@@ -19,6 +20,11 @@ public class MapClickEvent {
                              float x,
                              float y,
                              Stage stage) {
+
+        if(x < 0 || y < 0 || x >= Config.SCREEN_WIDTH * SECTOR_SIZE || y >= Config.SCREEN_HEIGHT * SECTOR_SIZE) {
+            return;
+        }
+
         SequenceAction rotateAndMoveAction = new SequenceAction();
 
         float distance = (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX() , GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));

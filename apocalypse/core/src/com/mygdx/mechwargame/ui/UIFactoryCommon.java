@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.state.GameState;
 
@@ -218,6 +219,8 @@ public class UIFactoryCommon {
         textButtonStyle.font = bitmapFont;
 
         final ImageTextButton textButton = new ImageTextButton(text, textButtonStyle);
+
+        textButton.getLabel().setAlignment(Align.center);
 
         final TextureRegionDrawable buttonUp = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.ROUND_SMALL_BUTTON_UP, Texture.class));
         final TextureRegionDrawable buttonDown = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.ROUND_SMALL_BUTTON_DOWN, Texture.class));
