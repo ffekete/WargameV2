@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Attributes;
@@ -26,7 +28,9 @@ import com.mygdx.mechwargame.screen.galaxy.GalaxySetupScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
+import com.mygdx.mechwargame.ui.FrameTextureGenerator;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import org.w3c.dom.Text;
 
 public class MainMenuScreen extends GenericScreenAdapter {
 
@@ -103,8 +107,6 @@ public class MainMenuScreen extends GenericScreenAdapter {
         table.add(optionsButton).size(400, 80).pad(20).row();
         table.add(exitButton).size(400, 80).pad(20).row();
         table.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-
-        table.add(new Image(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_PARALLAX_ANIM))).size(577*2, 128*2);
 
         stage.addActor(table);
 

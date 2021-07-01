@@ -27,7 +27,6 @@ import com.mygdx.mechwargame.screen.galaxy.event.ScrollEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.ShipClickEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
-import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
@@ -73,6 +72,12 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
         uiViewPort = new FitViewport(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         uiStage = new Stage(uiViewPort);
+
+        if(Config.SHOW_FPS) {
+            Label fpsLabel = UIFactoryCommon.getDynamicTextLabel(() -> Float.toString(Gdx.graphics.getFramesPerSecond()));
+            fpsLabel.setPosition(10, Config.SCREEN_HEIGHT - 50);
+            uiStage.addActor(fpsLabel);
+        }
 
         ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
         shipInfoButton.setPosition(10 ,10);
