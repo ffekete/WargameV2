@@ -44,6 +44,8 @@ import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFr
 
 public class GalaxyViewScreen extends GenericScreenAdapter {
 
+    public boolean needsReloading = true;
+
     private Label starNameLabel;
     private Label pausedLabel;
     private Star selectedStar;
@@ -58,262 +60,267 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
     public void show() {
         super.show();
 
-        targetMarker = new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.TARGET_MARKER, 32, 32, false, 0.05f) {
-            @Override
-            public void draw(Batch batch,
-                             float x,
-                             float y,
-                             float width,
-                             float height) {
-                super.draw(batch, x, y, width, height);
-            }
-        });
-        stage.addActor(targetMarker);
-        targetMarker.setSize(128, 128);
-        targetMarker.setVisible(true);
+        if(needsReloading) {
+            targetMarker = new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.TARGET_MARKER, 32, 32, false, 0.05f) {
+                @Override
+                public void draw(Batch batch,
+                                 float x,
+                                 float y,
+                                 float width,
+                                 float height) {
+                    super.draw(batch, x, y, width, height);
+                }
+            });
+            stage.addActor(targetMarker);
+            targetMarker.setSize(128, 128);
+            targetMarker.setVisible(true);
 
-        uiViewPort = new FitViewport(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-        uiStage = new Stage(uiViewPort);
+            uiViewPort = new FitViewport(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+            uiStage = new Stage(uiViewPort);
 
-        if(Config.SHOW_FPS) {
-            Label fpsLabel = UIFactoryCommon.getDynamicTextLabel(() -> Float.toString(Gdx.graphics.getFramesPerSecond()));
-            fpsLabel.setPosition(10, Config.SCREEN_HEIGHT - 50);
-            uiStage.addActor(fpsLabel);
-        }
-
-        Table menuTable = new Table();
-        uiStage.addActor(menuTable);
-        menuTable.setPosition(10, 10);
-        menuTable.setSize(5 * 64 + 4 * 10, 64);
-
-        ImageTextButton mainMenuButton = UIFactoryCommon.getSmallRoundButton("m");
-        mainMenuButton.setSize(64, 64);
-        menuTable.add(mainMenuButton)
-                .size(64)
-                .padRight(10);
-
-        ImageTextButton questsButton = UIFactoryCommon.getSmallRoundButton("q");
-        questsButton.setSize(64, 64);
-        menuTable.add(questsButton)
-                .size(64)
-                .padRight(10);
-
-        ImageTextButton squadButton = UIFactoryCommon.getSmallRoundButton("s");
-        squadButton.setSize(64, 64);
-        menuTable.add(squadButton)
-                .size(64)
-                .padRight(10);
-
-        ImageTextButton cargoButton = UIFactoryCommon.getSmallRoundButton("c");
-        cargoButton.setSize(64, 64);
-        menuTable.add(cargoButton)
-                .size(64)
-                .padRight(10);
-
-        ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
-        shipInfoButton.setSize(64, 64);
-        shipInfoButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event,
-                                     float x,
-                                     float y,
-                                     int pointer,
-                                     int button) {
-                super.touchDown(event, x, y, pointer, button);
-                event.stop();
-                return true;
+            if (Config.SHOW_FPS) {
+                Label fpsLabel = UIFactoryCommon.getDynamicTextLabel(() -> Float.toString(Gdx.graphics.getFramesPerSecond()));
+                fpsLabel.setPosition(10, Config.SCREEN_HEIGHT - 50);
+                uiStage.addActor(fpsLabel);
             }
 
-            @Override
-            public void touchUp(InputEvent event,
-                                float x,
-                                float y,
-                                int pointer,
-                                int button) {
-                super.touchUp(event, x, y, pointer, button);
-                event.stop();
-                showShipInfoLocalMenu();
-            }
-        });
-        menuTable.add(shipInfoButton)
-                .size(64);
+            Table menuTable = new Table();
+            uiStage.addActor(menuTable);
+            menuTable.setPosition(10, 10);
+            menuTable.setSize(5 * 64 + 4 * 10, 64);
 
-        uiStage.addActor(menuTable);
+            ImageTextButton mainMenuButton = UIFactoryCommon.getSmallRoundButton("m");
+            mainMenuButton.setSize(64, 64);
+            menuTable.add(mainMenuButton)
+                    .size(64)
+                    .padRight(10);
 
-        pausedLabel = UIFactoryCommon.getDynamicTextLabel(() -> GameData.isPaused ? "paused" : "");
-        stage.addActor(pausedLabel);
+            ImageTextButton questsButton = UIFactoryCommon.getSmallRoundButton("q");
+            questsButton.setSize(64, 64);
+            menuTable.add(questsButton)
+                    .size(64)
+                    .padRight(10);
 
-        starNameLabel = UIFactoryCommon.getDynamicTextLabel(() -> selectedStar == null ? "" : selectedStar.name, UIFactoryCommon.fontSmall);
-        starNameLabel.setTouchable(Touchable.disabled);
-        starNameLabel.setSize(300, 80);
-        starNameLabel.setColor(Color.WHITE);
+            ImageTextButton squadButton = UIFactoryCommon.getSmallRoundButton("s");
+            squadButton.setSize(64, 64);
+            menuTable.add(squadButton)
+                    .size(64)
+                    .padRight(10);
 
-        for (int i = 0; i < GameData.galaxy.width; i++) {
-            for (int j = 0; j < GameData.galaxy.height; j++) {
-                GameData.galaxy.sectors[i][j].stars.forEach(star -> {
-                    stage.addActor(star);
-                    star.setSize(SECTOR_SIZE, SECTOR_SIZE);
+            ImageTextButton cargoButton = UIFactoryCommon.getSmallRoundButton("c");
+            cargoButton.setSize(64, 64);
+            menuTable.add(cargoButton)
+                    .size(64)
+                    .padRight(10);
 
-                    star.addListener(new InputListener() {
-                        @Override
-                        public void enter(InputEvent event,
-                                          float x,
-                                          float y,
-                                          int pointer,
-                                          Actor fromActor) {
-                            selectedStar = star;
-                            starNameLabel.setPosition(star.getX() + 20, star.getY() - 20);
-                            repositionToScreenIfNotInFrustum(stage.getCamera(), starNameLabel);
-                        }
-
-                        @Override
-                        public boolean touchDown(InputEvent event,
-                                                 float x,
-                                                 float y,
-                                                 int pointer,
-                                                 int button) {
-
-                            if(GameData.lockGameStage) {
-                                super.touchDown(event, x, y, pointer, button);
-                                event.stop();
-                                return true;
-                            }
-
-                            MainAction sequenceAction = new MainAction();
-                            GameData.starShip.addAction(sequenceAction);
-                            Vector2 stageCoord = new Vector2(star.getX() + SECTOR_SIZE / 2f, star.getY() + SECTOR_SIZE / 2f);
-
-                            showTargetMarker(new Vector2(star.getX(), star.getY()));
-
-                            MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y, stage);
-                            StarClickEvent.handle(sequenceAction, star, uiStage, stageCoord.x, stageCoord.y);
-                            sequenceAction.addAction(new LockGameStageAction(true));
-
-                            event.stop();
-                            return true;
-                        }
-
-                        @Override
-                        public void exit(InputEvent event,
+            ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
+            shipInfoButton.setSize(64, 64);
+            shipInfoButton.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event,
                                          float x,
                                          float y,
                                          int pointer,
-                                         Actor fromActor) {
-                            selectedStar = null;
-                        }
-                    });
-                });
-            }
-        }
-
-        ScrollController scrollController = new ScrollController(stage);
-        stage.addActor(scrollController);
-
-        stage.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event,
-                                     float x,
-                                     float y,
-                                     int pointer,
-                                     int button) {
-
-                if(GameData.lockGameStage) {
+                                         int button) {
                     super.touchDown(event, x, y, pointer, button);
                     event.stop();
                     return true;
                 }
 
-                MainAction sequenceAction = new MainAction();
-                MapClickEvent.check(sequenceAction, x, y, stage);
-                GameData.starShip.addAction(sequenceAction);
-                showTargetMarker(new Vector2(x - 64, y - 64));
-                event.stop();
-                return true;
-            }
-
-            @Override
-            public boolean keyDown(InputEvent event,
-                                   int keycode) {
-                if (Input.Keys.ESCAPE == keycode) {
-                    System.exit(1);
-                }
-
-                if (KeyMapping.UNPAUSE == keycode) {
-                    GameData.isPaused = !GameData.isPaused;
-                }
-
-                if(KeyMapping.SHIP_INFO == keycode) {
+                @Override
+                public void touchUp(InputEvent event,
+                                    float x,
+                                    float y,
+                                    int pointer,
+                                    int button) {
+                    super.touchUp(event, x, y, pointer, button);
+                    event.stop();
                     showShipInfoLocalMenu();
                 }
+            });
+            menuTable.add(shipInfoButton)
+                    .size(64);
 
-                return true;
-            }
+            uiStage.addActor(menuTable);
 
-            @Override
-            public boolean mouseMoved(InputEvent event,
-                                      float x,
-                                      float y) {
-                return ScrollEvent.check(x, y, stage, scrollController);
-            }
-        });
+            pausedLabel = UIFactoryCommon.getDynamicTextLabel(() -> GameData.isPaused ? "paused" : "");
+            stage.addActor(pausedLabel);
 
-        BaseShip starShip = new SmallStarShip();
-        starShip.setSize(SECTOR_SIZE, SECTOR_SIZE);
+            starNameLabel = UIFactoryCommon.getDynamicTextLabel(() -> selectedStar == null ? "" : selectedStar.name, UIFactoryCommon.fontSmall);
+            starNameLabel.setTouchable(Touchable.disabled);
+            starNameLabel.setSize(300, 80);
+            starNameLabel.setColor(Color.WHITE);
 
-        DynamicProgressBar fuelProgressBar = UIFactoryCommon.createProgressBar(128,
-                16,
-                () -> starShip.engine.fuel,
-                () -> starShip.engine.maxFuel,
-                Color.DARK_GRAY,
-                Color.LIGHT_GRAY);
+            for (int i = 0; i < GameData.galaxy.width; i++) {
+                for (int j = 0; j < GameData.galaxy.height; j++) {
+                    GameData.galaxy.sectors[i][j].stars.forEach(star -> {
+                        stage.addActor(star);
+                        star.setSize(SECTOR_SIZE, SECTOR_SIZE);
 
-        stage.addActor(fuelProgressBar);
-        fuelProgressBar.setSize(128, 16);
-        fuelProgressBar.addAction(new Action() {
-            @Override
-            public boolean act(float delta) {
-                fuelProgressBar.setPosition(starShip.getX(), starShip.getY() + 136);
-                return false;
-            }
-        });
+                        star.addListener(new InputListener() {
+                            @Override
+                            public void enter(InputEvent event,
+                                              float x,
+                                              float y,
+                                              int pointer,
+                                              Actor fromActor) {
+                                selectedStar = star;
+                                starNameLabel.setPosition(star.getX() + 20, star.getY() - 20);
+                                repositionToScreenIfNotInFrustum(stage.getCamera(), starNameLabel);
+                            }
 
-        DynamicProgressBar hullProgressBar = UIFactoryCommon.createProgressBar(128,
-                16,
-                () -> (float) starShip.hullArmor.armor,
-                () -> (float) starShip.hullArmor.maxArmor,
-                Color.SCARLET,
-                Color.CHARTREUSE);
+                            @Override
+                            public boolean touchDown(InputEvent event,
+                                                     float x,
+                                                     float y,
+                                                     int pointer,
+                                                     int button) {
 
-        stage.addActor(hullProgressBar);
-        hullProgressBar.setSize(128, 16);
-        hullProgressBar.addAction(new Action() {
-            @Override
-            public boolean act(float delta) {
-                hullProgressBar.setPosition(starShip.getX(), starShip.getY() + 128);
-                return false;
-            }
-        });
+                                if (GameData.lockGameStage) {
+                                    super.touchDown(event, x, y, pointer, button);
+                                    event.stop();
+                                    return true;
+                                }
 
-        List<Vector2> startingPoints = new ArrayList<>();
+                                MainAction sequenceAction = new MainAction();
+                                GameData.starShip.addAction(sequenceAction);
+                                Vector2 stageCoord = new Vector2(star.getX() + SECTOR_SIZE / 2f, star.getY() + SECTOR_SIZE / 2f);
 
-        for (int i = 0; i < GameData.galaxy.width; i++) {
-            for (int j = 0; j < GameData.galaxy.height; j++) {
-                if (GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null && !GameData.galaxy.sectors[i][j].stars.isEmpty()) {
-                    startingPoints.add(new Vector2(i * SECTOR_SIZE, j * SECTOR_SIZE));
+                                showTargetMarker(new Vector2(star.getX(), star.getY()));
+
+                                MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y, stage);
+                                StarClickEvent.handle(sequenceAction, star, uiStage, stageCoord.x, stageCoord.y);
+                                sequenceAction.addAction(new LockGameStageAction(true));
+
+                                event.stop();
+                                return true;
+                            }
+
+                            @Override
+                            public void exit(InputEvent event,
+                                             float x,
+                                             float y,
+                                             int pointer,
+                                             Actor fromActor) {
+                                selectedStar = null;
+                            }
+                        });
+                    });
                 }
             }
+
+            ScrollController scrollController = new ScrollController(stage);
+            stage.addActor(scrollController);
+
+            stage.addListener(new InputListener() {
+
+                @Override
+                public boolean touchDown(InputEvent event,
+                                         float x,
+                                         float y,
+                                         int pointer,
+                                         int button) {
+
+                    if (GameData.lockGameStage) {
+                        super.touchDown(event, x, y, pointer, button);
+                        event.stop();
+                        return true;
+                    }
+
+                    MainAction sequenceAction = new MainAction();
+                    MapClickEvent.check(sequenceAction, x, y, stage);
+                    GameData.starShip.addAction(sequenceAction);
+                    showTargetMarker(new Vector2(x - 64, y - 64));
+                    event.stop();
+                    return true;
+                }
+
+                @Override
+                public boolean keyDown(InputEvent event,
+                                       int keycode) {
+                    if (Input.Keys.ESCAPE == keycode) {
+                        System.exit(1);
+                    }
+
+                    if (KeyMapping.UNPAUSE == keycode) {
+                        GameData.isPaused = !GameData.isPaused;
+                    }
+
+                    if (KeyMapping.SHIP_INFO == keycode) {
+                        showShipInfoLocalMenu();
+                    }
+
+                    return true;
+                }
+
+                @Override
+                public boolean mouseMoved(InputEvent event,
+                                          float x,
+                                          float y) {
+                    return ScrollEvent.check(x, y, stage, scrollController);
+                }
+            });
+
+            BaseShip starShip = new SmallStarShip();
+            starShip.setSize(SECTOR_SIZE, SECTOR_SIZE);
+
+            DynamicProgressBar fuelProgressBar = UIFactoryCommon.createProgressBar(128,
+                    16,
+                    () -> starShip.engine.fuel,
+                    () -> starShip.engine.maxFuel,
+                    Color.DARK_GRAY,
+                    Color.LIGHT_GRAY);
+
+            stage.addActor(fuelProgressBar);
+            fuelProgressBar.setSize(128, 16);
+            fuelProgressBar.addAction(new Action() {
+                @Override
+                public boolean act(float delta) {
+                    fuelProgressBar.setPosition(starShip.getX(), starShip.getY() + 136);
+                    return false;
+                }
+            });
+
+            DynamicProgressBar hullProgressBar = UIFactoryCommon.createProgressBar(128,
+                    16,
+                    () -> (float) starShip.hullArmor.armor,
+                    () -> (float) starShip.hullArmor.maxArmor,
+                    Color.SCARLET,
+                    Color.CHARTREUSE);
+
+            stage.addActor(hullProgressBar);
+            hullProgressBar.setSize(128, 16);
+            hullProgressBar.addAction(new Action() {
+                @Override
+                public boolean act(float delta) {
+                    hullProgressBar.setPosition(starShip.getX(), starShip.getY() + 128);
+                    return false;
+                }
+            });
+
+            List<Vector2> startingPoints = new ArrayList<>();
+
+            for (int i = 0; i < GameData.galaxy.width; i++) {
+                for (int j = 0; j < GameData.galaxy.height; j++) {
+                    if (GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null && !GameData.galaxy.sectors[i][j].stars.isEmpty()) {
+                        startingPoints.add(new Vector2(i * SECTOR_SIZE, j * SECTOR_SIZE));
+                    }
+                }
+            }
+
+            Vector2 startingPoint = startingPoints.get(new Random().nextInt(startingPoints.size()));
+            starShip.setPosition(startingPoint.x, startingPoint.y);
+            starShip.setTouchable(Touchable.disabled);
+
+            stage.addActor(starShip);
+            GameData.starShip = starShip;
+
+            stage.addActor(starNameLabel);
+
+            this.needsReloading = false;
         }
 
-        Vector2 startingPoint = startingPoints.get(new Random().nextInt(startingPoints.size()));
-        starShip.setPosition(startingPoint.x, startingPoint.y);
-        starShip.setTouchable(Touchable.disabled);
-
-        stage.addActor(starShip);
-        GameData.starShip = starShip;
-
-        stage.addActor(starNameLabel);
-
+        this.firstRun = true;
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(uiStage);

@@ -8,7 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.world.Star;
+import com.mygdx.mechwargame.screen.galaxy.GalaxyViewScreen;
+import com.mygdx.mechwargame.screen.starsystem.StarSystemViewScreen;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
@@ -88,9 +91,20 @@ public class StarLocalMenu extends Table {
                                      float y,
                                      int pointer,
                                      int button) {
-
+                super.touchDown(event, x, y, pointer, button);
                 event.stop();
                 return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                GameData.lockGameStage = false;
+                GameState.game.setScreen(new StarSystemViewScreen());
             }
         });
 

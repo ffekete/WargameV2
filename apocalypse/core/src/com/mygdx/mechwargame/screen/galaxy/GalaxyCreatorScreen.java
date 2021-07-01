@@ -65,7 +65,8 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
         super.render(delta);
         refreshScreen();
         if(finishedGenerating) {
-            GameState.game.setScreen(new GalaxyViewScreen());
+            GameState.galaxyViewScreen = new GalaxyViewScreen();
+            GameState.game.setScreen(GameState.galaxyViewScreen);
         }
     }
 

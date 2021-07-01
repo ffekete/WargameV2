@@ -57,6 +57,8 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String SHIP = "ship/StarShip.png";
 
+    public static final String LARGE_VIEW_FRAME = "ui/ViewLarge.png";
+
     public List<String> logos = Arrays.asList(
             LOGO_01,
             LOGO_02
@@ -102,11 +104,9 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.POWER_ICON_EMPTY, Texture.class);
         load(AssetManagerV2.POWER_ICON_FULL, Texture.class);
         load(AssetManagerV2.SHIP_INFO_DESCRIPTION_PANEL, Texture.class);
-
         load(AssetManagerV2.BLACK_BEAR_IMAGE, Texture.class);
         load(AssetManagerV2.HELLFIRE_IMAGE, Texture.class);
         load(AssetManagerV2.INTERCEPTOR_IMAGE, Texture.class);
-
         load(AssetManagerV2.STAR_01, Texture.class);
         load(AssetManagerV2.STAR_02, Texture.class);
         load(AssetManagerV2.STAR_03, Texture.class);
@@ -114,17 +114,14 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.AREA_LAYER, Texture.class);
         load(AssetManagerV2.SECTOR_BOUNDARY, Texture.class);
         load(AssetManagerV2.TARGET_MARKER, Texture.class);
-
         load(AssetManagerV2.SHIP, Texture.class);
-
         load(STAR_LOCAL_MENU, Texture.class);
-
         load(MOUSE_POINTER, Texture.class);
         load(BACK_BUTTON_UP, Texture.class);
         load(BACK_BUTTON_DOWN, Texture.class);
-
         load(MOVEMENT_PATH_MID, Texture.class);
         load(MOVEMENT_PATH_END, Texture.class);
         load(HELP_ICON, Texture.class);
+        load(LARGE_VIEW_FRAME, Texture.class);
     }
 }
