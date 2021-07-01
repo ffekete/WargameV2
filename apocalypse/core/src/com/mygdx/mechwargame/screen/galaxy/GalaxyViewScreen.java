@@ -145,7 +145,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                             showTargetMarker(new Vector2(star.getX(), star.getY()));
 
                             MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y, stage);
-                            StarClickEvent.handle(sequenceAction, star, stage, stageCoord.x, stageCoord.y);
+                            StarClickEvent.handle(sequenceAction, star, uiStage, stageCoord.x, stageCoord.y);
 
                             event.stop();
                             return true;
@@ -277,10 +277,10 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         if (GameData.shipInfoLocalMenu == null) {
             GameData.isPaused = true;
             SequenceAction sequenceAction = new SequenceAction();
-            ShipClickEvent.handle(sequenceAction, stage);
-            stage.addAction(sequenceAction);
+            ShipClickEvent.handle(sequenceAction, uiStage);
+            uiStage.addAction(sequenceAction);
         } else {
-            stage.getActors().removeValue(GameData.shipInfoLocalMenu, true);
+            uiStage.getActors().removeValue(GameData.shipInfoLocalMenu, true);
             GameData.shipInfoLocalMenu = null;
         }
     }
@@ -293,7 +293,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
     private void clearStarLocalTable() {
         if (GameData.starLocalMenu != null) {
-            stage.getActors().removeValue(GameData.starLocalMenu, true);
+            uiStage.getActors().removeValue(GameData.starLocalMenu, true);
             GameData.starLocalMenu = null;
         }
     }

@@ -2,10 +2,7 @@ package com.mygdx.mechwargame.ui.view.galaxy;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -18,7 +15,7 @@ import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
 import java.text.DecimalFormat;
 
-public class ShipInfoLocalMenu extends Table {
+public class ShipInfoLocalMenu extends Container<Table> {
 
     public ImageTextButton engineInfoButton;
     public ImageTextButton armorInfoButton;
@@ -36,7 +33,7 @@ public class ShipInfoLocalMenu extends Table {
         this.setPosition(camera.position.x - 750f, camera.position.y - 300);
 
         this.setVisible(false);
-
+        addEmptyClickListener(this);
         stage.addActor(this);
 
         Table shipNameTable = new Table();
@@ -63,7 +60,7 @@ public class ShipInfoLocalMenu extends Table {
         Table mainTable = new Table();
         mainTable.setSize(1500, 500);
 
-        this.add(mainTable);
+        this.setActor(mainTable);
 
         mainTable.add(shipNameTable)
                 .width(1500)
@@ -85,6 +82,20 @@ public class ShipInfoLocalMenu extends Table {
         mainTable.add(descriptionTable)
                 .center()
                 .size(1000, 500);
+
+        addEmptyClickListener(mainTable);
+        addEmptyClickListener(buttonsTable);
+        addEmptyClickListener(descriptionTable);
+
+        componentsInfoButton = UIFactoryCommon.getMenuButton("components");
+        buttonsTable.add(componentsInfoButton)
+                .size(400, 80)
+                .center()
+                .padBottom(10)
+                .padLeft(20)
+                .row();
+
+        showComponentsInfo(descriptionTable, ship);
 
         engineInfoButton = UIFactoryCommon.getMenuButton("engine");
         buttonsTable.add(engineInfoButton)
@@ -118,14 +129,6 @@ public class ShipInfoLocalMenu extends Table {
                 .padLeft(20)
                 .row();
 
-        componentsInfoButton = UIFactoryCommon.getMenuButton("component");
-        buttonsTable.add(componentsInfoButton)
-                .size(400, 80)
-                .center()
-                .padBottom(10)
-                .padLeft(20)
-                .row();
-
         engineInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
 
             @Override
@@ -151,6 +154,7 @@ public class ShipInfoLocalMenu extends Table {
                 descriptionTable.clear();
 
                 Table table = new Table();
+                addEmptyClickListener(table);
                 table.setSize(980, 500);
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.00");
@@ -192,6 +196,7 @@ public class ShipInfoLocalMenu extends Table {
                 descriptionTable.clear();
 
                 Table table = new Table();
+                addEmptyClickListener(table);
                 table.setSize(980, 500);
 
                 addLabel(table, ship.hullArmor.name, 700, "");
@@ -231,6 +236,7 @@ public class ShipInfoLocalMenu extends Table {
                 descriptionTable.clear();
 
                 Table table = new Table();
+                addEmptyClickListener(table);
                 table.setSize(980, 500);
 
                 addLabel(table, ship.energyGrid.name, 700, "");
@@ -270,6 +276,7 @@ public class ShipInfoLocalMenu extends Table {
                 descriptionTable.clear();
 
                 Table table = new Table();
+                addEmptyClickListener(table);
                 table.setSize(980, 500);
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.00");
@@ -308,19 +315,7 @@ public class ShipInfoLocalMenu extends Table {
                 super.touchUp(event, x, y, pointer, button);
                 event.stop();
 
-                descriptionTable.clear();
-
-                Table table = new Table();
-                table.setSize(960, 500);
-
-                addLabels(table, ship.engine.name, 600, "lv", Integer.toString(ship.engine.level), Integer.toString(10));
-                addLabels(table, ship.hullArmor.name, 600, "lv", Integer.toString(ship.hullArmor.level), Integer.toString(10));
-                addLabels(table, ship.energyGrid.name, 600, "lv", Integer.toString(ship.energyGrid.level), Integer.toString(10));
-                addLabels(table, ship.cargoBay.name, 600, "lv", Integer.toString(ship.cargoBay.level), Integer.toString(10));
-                addLabel(table, "", 600, "");
-                addLabel(table, "", 600, "");
-
-                descriptionTable.add(table).size(960, 500);
+                showComponentsInfo(descriptionTable, ship);
 
             }
         });
@@ -373,6 +368,50 @@ public class ShipInfoLocalMenu extends Table {
             }
         });
 
+    }
+
+    private void addEmptyClickListener(Actor actor) {
+        actor.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                System.out.println("table " + actor);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+            }
+        });
+    }
+
+    private void showComponentsInfo(Table descriptionTable,
+                           BaseShip ship) {
+        descriptionTable.clear();
+
+        Table table = new Table();
+        addEmptyClickListener(table);
+        table.setSize(960, 500);
+
+        addLabels(table, ship.engine.name, 600, "lv", Integer.toString(ship.engine.level), Integer.toString(10));
+        addLabels(table, ship.hullArmor.name, 600, "lv", Integer.toString(ship.hullArmor.level), Integer.toString(10));
+        addLabels(table, ship.energyGrid.name, 600, "lv", Integer.toString(ship.energyGrid.level), Integer.toString(10));
+        addLabels(table, ship.cargoBay.name, 600, "lv", Integer.toString(ship.cargoBay.level), Integer.toString(10));
+        addLabel(table, "", 600, "");
+        addLabel(table, "", 600, "");
+
+        descriptionTable.add(table).size(960, 500);
     }
 
     private void addLabel(Table table,

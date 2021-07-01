@@ -27,7 +27,7 @@ public class StarLocalMenu extends Table {
 
         this.background(new AnimatedDrawable(AssetManagerV2.STAR_LOCAL_MENU, 450, 350, true, 0.1f));
         this.setSize(450, 350);
-        this.setPosition(star.getX(), star.getY());
+        this.setPosition(stage.getCamera().position.x - 225f, stage.getCamera().position.y - 175f);
 
         Camera camera = stage.getCamera();
 
