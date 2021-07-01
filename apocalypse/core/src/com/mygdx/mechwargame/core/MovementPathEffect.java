@@ -1,5 +1,6 @@
 package com.mygdx.mechwargame.core;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -55,6 +56,8 @@ public class MovementPathEffect extends Actor {
 
         Texture texture = new Texture(pixmap);
 
+        batch.setColor(Color.valueOf("00ff00AA"));
         batch.draw(texture, getX() - size / 2f, getY() - size / 2f, size / 2f, size / 2f, sprite.getWidth(), sprite.getHeight(), getScaleX(), getScaleY(), getRotation(), 0, 0, sprite.getWidth(), sprite.getHeight(), false, false);
+        batch.setColor(Color.WHITE);
     }
 }

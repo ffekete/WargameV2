@@ -84,11 +84,29 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         Table menuTable = new Table();
         uiStage.addActor(menuTable);
         menuTable.setPosition(10, 10);
-        menuTable.setSize(138, 64);
+        menuTable.setSize(5 * 64 + 4 * 10, 64);
 
         ImageTextButton mainMenuButton = UIFactoryCommon.getSmallRoundButton("m");
         mainMenuButton.setSize(64, 64);
         menuTable.add(mainMenuButton)
+                .size(64)
+                .padRight(10);
+
+        ImageTextButton questsButton = UIFactoryCommon.getSmallRoundButton("q");
+        questsButton.setSize(64, 64);
+        menuTable.add(questsButton)
+                .size(64)
+                .padRight(10);
+
+        ImageTextButton squadButton = UIFactoryCommon.getSmallRoundButton("s");
+        squadButton.setSize(64, 64);
+        menuTable.add(squadButton)
+                .size(64)
+                .padRight(10);
+
+        ImageTextButton cargoButton = UIFactoryCommon.getSmallRoundButton("c");
+        cargoButton.setSize(64, 64);
+        menuTable.add(cargoButton)
                 .size(64)
                 .padRight(10);
 
