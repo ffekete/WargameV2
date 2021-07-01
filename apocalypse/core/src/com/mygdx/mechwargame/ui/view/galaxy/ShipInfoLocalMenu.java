@@ -47,14 +47,14 @@ public class ShipInfoLocalMenu extends Table {
 
         Container<TextField> nameTextField = UIFactoryCommon.getTextField(ship.name, "", UIFactoryCommon.fontSmall);
         shipNameTable.add(nameTextField)
-                .size(700, 80)
+                .size(400, 80)
                 .padRight(10)
                 .center();
 
         Label modelNameLabel = UIFactoryCommon.getTextLabel(ship.modelName, UIFactoryCommon.fontSmall);
         modelNameLabel.setAlignment(Align.center);
         shipNameTable.add(modelNameLabel)
-                .size(700, 80)
+                .size(1000, 80)
                 .padRight(10)
                 .center();
 
@@ -348,6 +348,7 @@ public class ShipInfoLocalMenu extends Table {
                 event.stop();
                 setVisible(false);
                 stage.getActors().removeValue(mainTable, true);
+                GameData.shipInfoLocalMenu = null;
             }
         });
 

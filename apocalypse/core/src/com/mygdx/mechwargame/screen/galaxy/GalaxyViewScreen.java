@@ -2,6 +2,7 @@ package com.mygdx.mechwargame.screen.galaxy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -25,6 +27,7 @@ import com.mygdx.mechwargame.screen.galaxy.event.ScrollEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.ShipClickEvent;
 import com.mygdx.mechwargame.screen.galaxy.event.StarClickEvent;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
@@ -70,6 +73,35 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
         uiViewPort = new FitViewport(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         uiStage = new Stage(uiViewPort);
+
+        ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
+        shipInfoButton.setPosition(10 ,10);
+        shipInfoButton.setSize(64, 64);
+        shipInfoButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+                showShipInfoLocalMenu();
+            }
+        });
+
+        uiStage.addActor(shipInfoButton);
 
         pausedLabel = UIFactoryCommon.getDynamicTextLabel(() -> GameData.isPaused ? "paused" : "");
         stage.addActor(pausedLabel);
@@ -164,9 +196,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                 }
 
                 if(KeyMapping.SHIP_INFO == keycode) {
-                    SequenceAction sequenceAction = new SequenceAction();
-                    ShipClickEvent.handle(sequenceAction, stage);
-                    stage.addAction(sequenceAction);
+                    showShipInfoLocalMenu();
                 }
 
                 return true;
@@ -235,7 +265,24 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         GameData.starShip = starShip;
 
         stage.addActor(starNameLabel);
-        Gdx.input.setInputProcessor(stage);
+
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(uiStage);
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    private void showShipInfoLocalMenu() {
+        if (GameData.shipInfoLocalMenu == null) {
+            GameData.isPaused = true;
+            SequenceAction sequenceAction = new SequenceAction();
+            ShipClickEvent.handle(sequenceAction, stage);
+            stage.addAction(sequenceAction);
+        } else {
+            stage.getActors().removeValue(GameData.shipInfoLocalMenu, true);
+            GameData.shipInfoLocalMenu = null;
+        }
     }
 
     private void showTargetMarker(Vector2 stageCoord) {
