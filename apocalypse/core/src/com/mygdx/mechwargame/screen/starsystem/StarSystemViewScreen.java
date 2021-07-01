@@ -3,18 +3,13 @@ package com.mygdx.mechwargame.screen.starsystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
-import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
+import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
-import com.mygdx.mechwargame.screen.action.FlashingAction;
-import com.mygdx.mechwargame.screen.action.SetScreenAction;
-import com.mygdx.mechwargame.screen.galaxy.GalaxyCreatorScreen;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
@@ -22,6 +17,11 @@ import com.mygdx.mechwargame.ui.UIFactoryCommon;
 public class StarSystemViewScreen extends GenericScreenAdapter {
 
     private Table screenContentTable = new Table();
+    private Star star;
+
+    public StarSystemViewScreen(Star star) {
+        this.star = star;
+    }
 
     @Override
     public void show() {
@@ -29,6 +29,13 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         screenContentTable.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
+
+        Image image = new Image(star.background);
+        screenContentTable.add(image)
+                .size(800, 400)
+                .center()
+                .row();
+
 
         ImageButton backButton = UIFactoryCommon.getBackButton();
         backButton.setSize(64, 64);

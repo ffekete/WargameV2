@@ -46,8 +46,9 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
         GalaxyStarDistributor.random = random;
         FactionDistributor.random = random;
         PiratesDistributor.random = random;
+        StarBackgroundImageGenerator.random = random;
 
-        new Thread() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 GalaxyStarDistributor.distributeStars(galaxySetupParameters);
@@ -55,16 +56,23 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
                 StarSpreadGenerator.spread(galaxySetupParameters);
                 FactionDistributor.distribute(galaxySetupParameters);
                 PiratesDistributor.distribute(galaxySetupParameters);
-                finishedGenerating = true;
+
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        StarBackgroundImageGenerator.generate(galaxySetupParameters);
+                        finishedGenerating = true;
+                    }
+                });
             }
-        }.start();
+        }).start();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         refreshScreen();
-        if(finishedGenerating) {
+        if (finishedGenerating) {
             GameState.galaxyViewScreen = new GalaxyViewScreen();
             GameState.game.setScreen(GameState.galaxyViewScreen);
         }

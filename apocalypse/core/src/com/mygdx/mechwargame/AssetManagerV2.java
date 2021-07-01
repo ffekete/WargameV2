@@ -59,6 +59,28 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String LARGE_VIEW_FRAME = "ui/ViewLarge.png";
 
+    public static final String STAR_001 = "starsystem/background/star/Star001.png";
+    public static final String STAR_002 = "starsystem/background/star/Star002.png";
+    public static final String STAR_003 = "starsystem/background/star/Star003.png";
+    public static final String STAR_004 = "starsystem/background/star/Star004.png";
+    public static final String STAR_005 = "starsystem/background/star/Star005.png";
+    public static final String STAR_006 = "starsystem/background/star/Star006.png";
+    public static final String STAR_007 = "starsystem/background/star/Star007.png";
+    public static final String PLANET_001 = "starsystem/background/planet/Planet001.png";
+    public static final String PLANET_002 = "starsystem/background/planet/Planet002.png";
+    public static final String PLANET_003 = "starsystem/background/planet/Planet003.png";
+    public static final String STATION_001 = "starsystem/background/station/Station001.png";
+    public static final String STATION_002 = "starsystem/background/station/Station002.png";
+    public static final String STATION_003 = "starsystem/background/station/Station003.png";
+    public static final String DECORATION_001 = "starsystem/background/decoration/Decoration001.png";
+    public static final String DECORATION_002 = "starsystem/background/decoration/Decoration002.png";
+    public static final String DECORATION_003 = "starsystem/background/decoration/Decoration003.png";
+    public static final String DECORATION_004 = "starsystem/background/decoration/Decoration004.png";
+    public static final String DECORATION_005 = "starsystem/background/decoration/Decoration005.png";
+    public static final String DECORATION_006 = "starsystem/background/decoration/Decoration006.png";
+    public static final String DECORATION_007 = "starsystem/background/decoration/Decoration007.png";
+
+
     public List<String> logos = Arrays.asList(
             LOGO_01,
             LOGO_02
@@ -68,6 +90,38 @@ public class AssetManagerV2 extends AssetManager {
             PORTRAIT_01,
             PORTRAIT_02,
             PORTRAIT_03
+    );
+
+    public List<String> stars = Arrays.asList(
+            STAR_001,
+            STAR_002,
+            STAR_003,
+            STAR_004,
+            STAR_005,
+            STAR_006,
+            STAR_007
+    );
+
+    public List<String> planets = Arrays.asList(
+            PLANET_001,
+            PLANET_002,
+            PLANET_003
+    );
+
+    public List<String> stations = Arrays.asList(
+            STATION_001,
+            STATION_002,
+            STATION_003
+    );
+
+    public List<String> decorations = Arrays.asList(
+            DECORATION_001,
+            DECORATION_002,
+            DECORATION_003,
+            DECORATION_004,
+            DECORATION_005,
+            DECORATION_006,
+            DECORATION_007
     );
 
     @Override
@@ -123,5 +177,25 @@ public class AssetManagerV2 extends AssetManager {
         load(MOVEMENT_PATH_END, Texture.class);
         load(HELP_ICON, Texture.class);
         load(LARGE_VIEW_FRAME, Texture.class);
+        load(STAR_001, Texture.class);
+        load(STAR_002, Texture.class);
+        load(STAR_003, Texture.class);
+        load(STAR_004, Texture.class);
+        load(STAR_005, Texture.class);
+        load(STAR_006, Texture.class);
+        load(STAR_007, Texture.class);
+        load(STATION_001, Texture.class);
+        load(STATION_002, Texture.class);
+        load(STATION_003, Texture.class);
+        load(PLANET_001, Texture.class);
+        load(PLANET_002, Texture.class);
+        load(PLANET_003, Texture.class);
+        load(DECORATION_001, Texture.class);
+        load(DECORATION_002, Texture.class);
+        load(DECORATION_003, Texture.class);
+        load(DECORATION_004, Texture.class);
+        load(DECORATION_005, Texture.class);
+        load(DECORATION_006, Texture.class);
+        load(DECORATION_007, Texture.class);
     }
 }

@@ -1,5 +1,6 @@
 package com.mygdx.mechwargame.core.world;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.mechwargame.core.BaseActor;
@@ -10,6 +11,7 @@ public class Star extends BaseActor {
 
     public Rectangle bounds;
     public String name;
+    public Texture background;
 
     public Star() {
         super(null);
