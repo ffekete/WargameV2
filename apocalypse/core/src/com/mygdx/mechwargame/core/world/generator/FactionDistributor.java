@@ -52,6 +52,7 @@ public class FactionDistributor {
 
             Faction faction = new Faction("Faction " + i, color);
             GameData.galaxy.sectors[x][y].sectorOwnerArea.owner = faction;
+            GameData.galaxy.sectors[x][y].stars.get(0).capitol = true;
             factionStrengths.put(faction, random.nextInt(strength / 2) + strength / 2);
 
             startingPoints.add(new Vector2(x, y));

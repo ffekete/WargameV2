@@ -51,6 +51,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String AREA_LAYER = "galaxy/AreaLayer.png";
     public static final String SECTOR_BOUNDARY = "galaxy/SectorBoundary.png";
     public static final String TARGET_MARKER = "galaxy/TargetMarker.png";
+    public static final String CAPITOL_FRAME = "galaxy/CapitolFrame.png";
 
     public static final String MOVEMENT_PATH_MID = "effect/movementpath/PathMiddle.png";
     public static final String MOVEMENT_PATH_END = "effect/movementpath/PathEnd.png";
@@ -71,6 +72,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String PLANET_002 = "starsystem/background/planet/Planet002.png";
     public static final String PLANET_003 = "starsystem/background/planet/Planet003.png";
     public static final String PLANET_004 = "starsystem/background/planet/Planet004.png";
+    public static final String CAPITOL_STATION_001 = "starsystem/background/station/CapitolStation.png";
     public static final String STATION_001 = "starsystem/background/station/Station001.png";
     public static final String STATION_002 = "starsystem/background/station/Station002.png";
     public static final String STATION_003 = "starsystem/background/station/Station003.png";
@@ -195,6 +197,7 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_006, Texture.class);
         load(STAR_007, Texture.class);
         load(STAR_008, Texture.class);
+        load(CAPITOL_STATION_001, Texture.class);
         load(STATION_001, Texture.class);
         load(STATION_002, Texture.class);
         load(STATION_003, Texture.class);
@@ -210,5 +213,6 @@ public class AssetManagerV2 extends AssetManager {
         load(DECORATION_005, Texture.class);
         load(DECORATION_006, Texture.class);
         load(DECORATION_007, Texture.class);
+        load(CAPITOL_FRAME, Texture.class);
     }
 }

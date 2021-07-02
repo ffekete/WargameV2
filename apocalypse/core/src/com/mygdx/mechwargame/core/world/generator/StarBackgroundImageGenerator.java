@@ -2,6 +2,7 @@ package com.mygdx.mechwargame.core.world.generator;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
@@ -65,12 +66,16 @@ public class StarBackgroundImageGenerator {
                     planet.getTextureData().prepare();
                     pixmap.drawPixmap(planet.getTextureData().consumePixmap(), 0, 0);
 
-                    if(sector.sectorOwnerArea.owner != null) {
+                    if (sector.sectorOwnerArea.owner != null) {
                         // pick station
-                        String stationKey = GameState.assetManager.stations.get(random.nextInt(GameState.assetManager.stations.size()));
+                        String stationKey;
+                        if (star.capitol) {
+                            stationKey = AssetManagerV2.CAPITOL_STATION_001;
+                        } else {
+                            stationKey = GameState.assetManager.stations.get(random.nextInt(GameState.assetManager.stations.size()));
+                        }
                         textures.computeIfAbsent(stationKey, v -> GameState.assetManager.get(stationKey, Texture.class));
                         Texture station = textures.get(stationKey);
-
                         station.getTextureData().prepare();
                         pixmap.drawPixmap(station.getTextureData().consumePixmap(), 0, 0);
                     }

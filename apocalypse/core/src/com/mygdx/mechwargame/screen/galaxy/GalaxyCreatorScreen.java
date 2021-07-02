@@ -54,18 +54,18 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
             public void run() {
                 GalaxyStarDistributor.distributeStars(galaxySetupParameters);
                 StarDetailsGenerator.generate(galaxySetupParameters);
-                StarGMImageGenerator.generate(galaxySetupParameters);
-                StarSpreadGenerator.spread(galaxySetupParameters);
                 FactionDistributor.distribute(galaxySetupParameters);
                 PiratesDistributor.distribute(galaxySetupParameters);
-
+                StarGMImageGenerator.generate(galaxySetupParameters);
+                StarSpreadGenerator.spread(galaxySetupParameters);
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
                         StarBackgroundImageGenerator.generate(galaxySetupParameters);
-                        finishedGenerating = true;
                     }
                 });
+
+                finishedGenerating = true;
             }
         }).start();
     }
