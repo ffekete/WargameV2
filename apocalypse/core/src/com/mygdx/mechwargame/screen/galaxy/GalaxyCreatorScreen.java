@@ -41,18 +41,20 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         Random random = new Random(galaxySetupParameters.seed);
-        StarImageGenerator.random = random;
+        StarGMImageGenerator.random = random;
         StarSpreadGenerator.random = random;
         GalaxyStarDistributor.random = random;
         FactionDistributor.random = random;
         PiratesDistributor.random = random;
         StarBackgroundImageGenerator.random = random;
+        StarDetailsGenerator.random = random;
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 GalaxyStarDistributor.distributeStars(galaxySetupParameters);
-                StarImageGenerator.generate(galaxySetupParameters);
+                StarDetailsGenerator.generate(galaxySetupParameters);
+                StarGMImageGenerator.generate(galaxySetupParameters);
                 StarSpreadGenerator.spread(galaxySetupParameters);
                 FactionDistributor.distribute(galaxySetupParameters);
                 PiratesDistributor.distribute(galaxySetupParameters);

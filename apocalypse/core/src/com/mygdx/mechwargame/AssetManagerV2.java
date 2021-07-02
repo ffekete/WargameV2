@@ -44,10 +44,10 @@ public class AssetManagerV2 extends AssetManager {
     public static final String HELLFIRE_IMAGE = "mech/Hellfire.png";
     public static final String INTERCEPTOR_IMAGE = "mech/Interceptor.png";
 
-    public static final String STAR_01 = "galaxy/Star01.png";
-    public static final String STAR_02 = "galaxy/Star02.png";
-    public static final String STAR_03 = "galaxy/Star03.png";
-    public static final String STAR_04 = "galaxy/Star04.png";
+    public static final String GM_STAR_01 = "galaxy/Star01.png";
+    public static final String GM_STAR_02 = "galaxy/Star02.png";
+    public static final String GM_STAR_03 = "galaxy/Star03.png";
+    public static final String GM_STAR_04 = "galaxy/Star04.png";
     public static final String AREA_LAYER = "galaxy/AreaLayer.png";
     public static final String SECTOR_BOUNDARY = "galaxy/SectorBoundary.png";
     public static final String TARGET_MARKER = "galaxy/TargetMarker.png";
@@ -66,12 +66,15 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STAR_005 = "starsystem/background/star/Star005.png";
     public static final String STAR_006 = "starsystem/background/star/Star006.png";
     public static final String STAR_007 = "starsystem/background/star/Star007.png";
+    public static final String STAR_008 = "starsystem/background/star/Star008.png";
     public static final String PLANET_001 = "starsystem/background/planet/Planet001.png";
     public static final String PLANET_002 = "starsystem/background/planet/Planet002.png";
     public static final String PLANET_003 = "starsystem/background/planet/Planet003.png";
+    public static final String PLANET_004 = "starsystem/background/planet/Planet004.png";
     public static final String STATION_001 = "starsystem/background/station/Station001.png";
     public static final String STATION_002 = "starsystem/background/station/Station002.png";
     public static final String STATION_003 = "starsystem/background/station/Station003.png";
+    public static final String STATION_004 = "starsystem/background/station/Station004.png";
     public static final String DECORATION_001 = "starsystem/background/decoration/Decoration001.png";
     public static final String DECORATION_002 = "starsystem/background/decoration/Decoration002.png";
     public static final String DECORATION_003 = "starsystem/background/decoration/Decoration003.png";
@@ -92,26 +95,33 @@ public class AssetManagerV2 extends AssetManager {
             PORTRAIT_03
     );
 
+    public List<String> twinStars = Arrays.asList(
+            STAR_006,
+            STAR_007
+
+    );
+
     public List<String> stars = Arrays.asList(
             STAR_001,
             STAR_002,
             STAR_003,
             STAR_004,
             STAR_005,
-            STAR_006,
-            STAR_007
+            STAR_008
     );
 
     public List<String> planets = Arrays.asList(
             PLANET_001,
             PLANET_002,
-            PLANET_003
+            PLANET_003,
+            PLANET_004
     );
 
     public List<String> stations = Arrays.asList(
             STATION_001,
             STATION_002,
-            STATION_003
+            STATION_003,
+            STATION_004
     );
 
     public List<String> decorations = Arrays.asList(
@@ -161,10 +171,10 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.BLACK_BEAR_IMAGE, Texture.class);
         load(AssetManagerV2.HELLFIRE_IMAGE, Texture.class);
         load(AssetManagerV2.INTERCEPTOR_IMAGE, Texture.class);
-        load(AssetManagerV2.STAR_01, Texture.class);
-        load(AssetManagerV2.STAR_02, Texture.class);
-        load(AssetManagerV2.STAR_03, Texture.class);
-        load(AssetManagerV2.STAR_04, Texture.class);
+        load(AssetManagerV2.GM_STAR_01, Texture.class);
+        load(AssetManagerV2.GM_STAR_02, Texture.class);
+        load(AssetManagerV2.GM_STAR_03, Texture.class);
+        load(AssetManagerV2.GM_STAR_04, Texture.class);
         load(AssetManagerV2.AREA_LAYER, Texture.class);
         load(AssetManagerV2.SECTOR_BOUNDARY, Texture.class);
         load(AssetManagerV2.TARGET_MARKER, Texture.class);
@@ -184,12 +194,15 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_005, Texture.class);
         load(STAR_006, Texture.class);
         load(STAR_007, Texture.class);
+        load(STAR_008, Texture.class);
         load(STATION_001, Texture.class);
         load(STATION_002, Texture.class);
         load(STATION_003, Texture.class);
+        load(STATION_004, Texture.class);
         load(PLANET_001, Texture.class);
         load(PLANET_002, Texture.class);
         load(PLANET_003, Texture.class);
+        load(PLANET_004, Texture.class);
         load(DECORATION_001, Texture.class);
         load(DECORATION_002, Texture.class);
         load(DECORATION_003, Texture.class);

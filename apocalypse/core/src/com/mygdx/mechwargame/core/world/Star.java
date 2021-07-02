@@ -13,6 +13,11 @@ public class Star extends BaseActor {
     public String name;
     public Texture background;
 
+    public int population;
+    public int wealth;
+    public int nrOfPlanets;
+    public boolean twin;
+
     public Star() {
         super(null);
     }

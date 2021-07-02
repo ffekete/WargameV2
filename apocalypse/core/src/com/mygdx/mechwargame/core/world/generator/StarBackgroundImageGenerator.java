@@ -3,11 +3,13 @@ package com.mygdx.mechwargame.core.world.generator;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
+import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -32,13 +34,14 @@ public class StarBackgroundImageGenerator {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
 
-                int x = i;
-                int y = j;
+                Sector sector = GameData.galaxy.sectors[i][j];
 
-                GameData.galaxy.sectors[i][j].stars.forEach(star -> {
+                sector.stars.forEach(star -> {
 
                     // pick background
-                    String starKey = GameState.assetManager.stars.get(random.nextInt(GameState.assetManager.stars.size()));
+                    List<String> stars = star.twin ? GameState.assetManager.twinStars : GameState.assetManager.stars;
+
+                    String starKey = stars.get(random.nextInt(stars.size()));
 
                     textures.computeIfAbsent(starKey, v -> GameState.assetManager.get(starKey, Texture.class));
                     Texture bg = textures.get(starKey);
@@ -62,13 +65,15 @@ public class StarBackgroundImageGenerator {
                     planet.getTextureData().prepare();
                     pixmap.drawPixmap(planet.getTextureData().consumePixmap(), 0, 0);
 
-                    // pick planet
-                    String stationKey = GameState.assetManager.stations.get(random.nextInt(GameState.assetManager.stations.size()));
-                    textures.computeIfAbsent(stationKey, v -> GameState.assetManager.get(stationKey, Texture.class));
-                    Texture station = textures.get(stationKey);
+                    if(sector.sectorOwnerArea.owner != null) {
+                        // pick station
+                        String stationKey = GameState.assetManager.stations.get(random.nextInt(GameState.assetManager.stations.size()));
+                        textures.computeIfAbsent(stationKey, v -> GameState.assetManager.get(stationKey, Texture.class));
+                        Texture station = textures.get(stationKey);
 
-                    station.getTextureData().prepare();
-                    pixmap.drawPixmap(station.getTextureData().consumePixmap(), 0, 0);
+                        station.getTextureData().prepare();
+                        pixmap.drawPixmap(station.getTextureData().consumePixmap(), 0, 0);
+                    }
 
                     star.background = new Texture(pixmap);
                 });

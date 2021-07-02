@@ -12,7 +12,7 @@ import java.util.Random;
 
 import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
 
-public class StarImageGenerator {
+public class StarGMImageGenerator {
 
     public static Random random;
 
@@ -49,22 +49,26 @@ public class StarImageGenerator {
 
                     switch (index) {
                         case 0:
-                            star.setStarAnimation(AssetManagerV2.STAR_01, 32, 32);
+                            star.setStarAnimation(AssetManagerV2.GM_STAR_01, 32, 32);
                             star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
 
                         case 1:
-                            star.setStarAnimation(AssetManagerV2.STAR_02, 32, 32);
+                            star.setStarAnimation(AssetManagerV2.GM_STAR_02, 32, 32);
                             star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
 
                         case 2:
-                            star.setStarAnimation(AssetManagerV2.STAR_03, 32, 32);
+                            if(star.twin) {
+                                star.setStarAnimation(AssetManagerV2.GM_STAR_03, 32, 32);
+                            } else {
+                                star.setStarAnimation(AssetManagerV2.GM_STAR_02, 32, 32);
+                            }
                             star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
 
                         case 3:
-                            star.setStarAnimation(AssetManagerV2.STAR_04, 32, 32);
+                            star.setStarAnimation(AssetManagerV2.GM_STAR_04, 32, 32);
                             star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
                     }
