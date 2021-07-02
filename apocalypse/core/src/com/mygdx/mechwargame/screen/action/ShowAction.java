@@ -6,7 +6,6 @@ public class ShowAction extends VisibleAction {
 
     @Override
     public boolean act(float delta) {
-        System.out.println("Triggered");
         return super.act(delta);
     }
 }

@@ -22,6 +22,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
     public ImageTextButton energyGridInfoButton;
     public ImageTextButton componentsInfoButton;
     public ImageTextButton cargoInfoButton;
+    public TextField nameTextField;
 
     public ShipInfoLocalMenu(Stage stage) {
 
@@ -42,11 +43,12 @@ public class ShipInfoLocalMenu extends Container<Table> {
         shipNameTable.add(backButton)
                 .size(80);
 
-        Container<TextField> nameTextField = UIFactoryCommon.getTextField(ship.name, "", UIFactoryCommon.fontSmall);
-        shipNameTable.add(nameTextField)
+        Container<TextField> nameTextFieldContainer = UIFactoryCommon.getTextField(ship.name, "", UIFactoryCommon.fontSmall);
+        shipNameTable.add(nameTextFieldContainer)
                 .size(400, 80)
                 .padRight(10)
                 .center();
+        this.nameTextField = nameTextFieldContainer.getActor();
 
         Label modelNameLabel = UIFactoryCommon.getTextLabel(ship.modelName, UIFactoryCommon.fontSmall);
         modelNameLabel.setAlignment(Align.center);
@@ -346,7 +348,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
             }
         });
 
-        nameTextField.addListener(new InputListener() {
+        nameTextFieldContainer.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event,
                                      float x,
@@ -359,11 +361,11 @@ public class ShipInfoLocalMenu extends Container<Table> {
             }
         });
 
-        nameTextField.getActor().addListener(new ChangeListener() {
+        nameTextFieldContainer.getActor().addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event,
                                 Actor actor) {
-                ship.name = nameTextField.getActor().getText();
+                ship.name = nameTextFieldContainer.getActor().getText();
             }
         });
 
@@ -371,6 +373,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
 
     public void hide(Stage stage) {
         stage.getActors().removeValue(this, true);
+        stage.setKeyboardFocus(null);
         GameData.shipInfoLocalMenu = null;
         GameData.lockGameStage = false;
     }
@@ -384,7 +387,6 @@ public class ShipInfoLocalMenu extends Container<Table> {
                                      int pointer,
                                      int button) {
                 super.touchDown(event, x, y, pointer, button);
-                System.out.println("table " + actor);
                 event.stop();
                 return true;
             }
