@@ -18,21 +18,6 @@ public class StarGMImageGenerator {
 
     public static void generate(GalaxySetupParameters galaxySetupParameters) {
 
-        List<Color> colors = Arrays.asList(Color.YELLOW,
-                Color.CYAN,
-                Color.WHITE,
-                Color.WHITE,
-                Color.WHITE,
-                Color.WHITE,
-                Color.WHITE,
-                Color.WHITE,
-                Color.WHITE,
-                Color.WHITE,
-                Color.CORAL,
-                Color.GOLD,
-                Color.GOLD,
-                Color.RED);
-
         GalaxyGeneratorState.state = "generating star images";
         int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
         int height = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
@@ -72,8 +57,6 @@ public class StarGMImageGenerator {
                             star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
                             break;
                     }
-
-                    star.layeredAnimatedImage.setColor(colors.get(random.nextInt(colors.size())));
                 });
             }
         }

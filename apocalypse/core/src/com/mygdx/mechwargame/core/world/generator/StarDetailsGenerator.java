@@ -30,7 +30,7 @@ public class StarDetailsGenerator {
                     } else {
                         star.nrOfPlanets = random.nextInt(14);
                     }
-                    star.twin = random.nextInt(20) > 10;
+                    star.twin = random.nextInt(20) == 0;
 
                 });
             }
