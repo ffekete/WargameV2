@@ -31,11 +31,14 @@ public class PiratesDistributor {
                 x = random.nextInt(galaxyWidth);
                 y = random.nextInt(galaxyHeight);
 
-            } while (startingPoints.contains(new Vector2(x, y)) || GameData.galaxy.sectors[x][y].stars.isEmpty());
+            } while (startingPoints.contains(new Vector2(x, y))
+                    || GameData.galaxy.sectors[x][y].stars.isEmpty()
+                    || GameData.galaxy.sectors[x][y].sectorOwnerArea.owner != null);
 
             Faction faction = new Faction("Pirates " + i, Color.WHITE);
             faction.isPirate = true;
             GameData.galaxy.sectors[x][y].sectorOwnerArea.owner = faction;
+            GameData.galaxy.sectors[x][y].stars.get(0).capitol = true;
             factionStrengths.put(faction, Math.max(random.nextInt(Math.max(strength / 2, 1) + strength / 2), 1));
 
             startingPoints.add(new Vector2(x, y));

@@ -1,5 +1,6 @@
 package com.mygdx.mechwargame.core.world;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -51,10 +52,11 @@ public class Star extends BaseActor {
     @Override
     public void draw(Batch batch,
                      float parentAlpha) {
-        layeredAnimatedImage.draw(batch, parentAlpha);
         if (capitolFrameImage != null) {
+            capitolFrameImage.setColor(Color.valueOf("FFFFFF11"));
             capitolFrameImage.draw(batch, parentAlpha);
         }
+        layeredAnimatedImage.draw(batch, parentAlpha);
     }
 
     @Override
