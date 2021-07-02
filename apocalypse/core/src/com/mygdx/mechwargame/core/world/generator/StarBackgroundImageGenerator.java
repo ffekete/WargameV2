@@ -69,11 +69,16 @@ public class StarBackgroundImageGenerator {
                     if (sector.sectorOwnerArea.owner != null) {
                         // pick station
                         String stationKey;
-                        if (star.capitol) {
-                            stationKey = AssetManagerV2.CAPITOL_STATION_001;
+                        if(sector.sectorOwnerArea.owner.isPirate) {
+                            stationKey = AssetManagerV2.PIRATE_STATION_001;
                         } else {
-                            stationKey = GameState.assetManager.stations.get(random.nextInt(GameState.assetManager.stations.size()));
+                            if (star.capitol) {
+                                stationKey = AssetManagerV2.CAPITOL_STATION_001;
+                            } else {
+                                stationKey = GameState.assetManager.stations.get(random.nextInt(GameState.assetManager.stations.size()));
+                            }
                         }
+
                         textures.computeIfAbsent(stationKey, v -> GameState.assetManager.get(stationKey, Texture.class));
                         Texture station = textures.get(stationKey);
                         station.getTextureData().prepare();

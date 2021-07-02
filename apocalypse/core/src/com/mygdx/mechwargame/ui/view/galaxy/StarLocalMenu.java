@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.starsystem.StarSystemViewScreen;
 import com.mygdx.mechwargame.state.GameData;
@@ -23,9 +24,11 @@ public class StarLocalMenu extends Table {
     public ImageTextButton leaveButton;
 
     public Star star;
+    public Sector sector;
     public Stage stage;
 
     public StarLocalMenu(Star star,
+                         Sector sector,
                          Stage stage) {
         this.star = star;
         this.stage = stage;
@@ -103,7 +106,7 @@ public class StarLocalMenu extends Table {
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
                 hide();
-                GameState.game.setScreen(new StarSystemViewScreen(star));
+                GameState.game.setScreen(new StarSystemViewScreen(star, sector));
             }
         });
 

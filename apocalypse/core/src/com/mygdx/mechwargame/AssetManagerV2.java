@@ -77,6 +77,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STATION_002 = "starsystem/background/station/Station002.png";
     public static final String STATION_003 = "starsystem/background/station/Station003.png";
     public static final String STATION_004 = "starsystem/background/station/Station004.png";
+    public static final String PIRATE_STATION_001 = "starsystem/background/station/PirateStation.png";
     public static final String DECORATION_001 = "starsystem/background/decoration/Decoration001.png";
     public static final String DECORATION_002 = "starsystem/background/decoration/Decoration002.png";
     public static final String DECORATION_003 = "starsystem/background/decoration/Decoration003.png";
@@ -214,5 +215,6 @@ public class AssetManagerV2 extends AssetManager {
         load(DECORATION_006, Texture.class);
         load(DECORATION_007, Texture.class);
         load(CAPITOL_FRAME, Texture.class);
+        load(PIRATE_STATION_001, Texture.class);
     }
 }

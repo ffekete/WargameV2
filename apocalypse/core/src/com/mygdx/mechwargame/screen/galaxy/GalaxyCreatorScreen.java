@@ -53,9 +53,9 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
             @Override
             public void run() {
                 GalaxyStarDistributor.distributeStars(galaxySetupParameters);
-                StarDetailsGenerator.generate(galaxySetupParameters);
                 FactionDistributor.distribute(galaxySetupParameters);
                 PiratesDistributor.distribute(galaxySetupParameters);
+                StarDetailsGenerator.generate(galaxySetupParameters);
                 StarGMImageGenerator.generate(galaxySetupParameters);
                 StarSpreadGenerator.spread(galaxySetupParameters);
                 Gdx.app.postRunnable(new Runnable() {
@@ -73,15 +73,9 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
     @Override
     public void render(float delta) {
         super.render(delta);
-        refreshScreen();
         if (finishedGenerating) {
             GameState.galaxyViewScreen = new GalaxyViewScreen();
             GameState.game.setScreen(GameState.galaxyViewScreen);
         }
-    }
-
-    private void refreshScreen() {
-        stage.act();
-        stage.draw();
     }
 }

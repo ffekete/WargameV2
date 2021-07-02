@@ -2,6 +2,7 @@ package com.mygdx.mechwargame.screen.galaxy.event;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.action.ConditionalAction;
 import com.mygdx.mechwargame.screen.action.ShowAction;
@@ -14,11 +15,12 @@ public class StarClickEvent {
 
     public static void handle(SequenceAction sequenceAction,
                               Star star,
+                              Sector sector,
                               Stage stage,
                               float x,
                               float y) {
 
-        StarLocalMenu starLocalMenu = new StarLocalMenu(star, stage);
+        StarLocalMenu starLocalMenu = new StarLocalMenu(star, sector, stage);
         GameData.starLocalMenu = starLocalMenu;
 
         ShowAction visibleAction = new ShowAction();

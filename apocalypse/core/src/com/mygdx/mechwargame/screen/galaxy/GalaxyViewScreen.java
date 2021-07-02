@@ -19,6 +19,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.SmallStarShip;
+import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.ScrollController;
@@ -153,6 +154,9 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
             for (int i = 0; i < GameData.galaxy.width; i++) {
                 for (int j = 0; j < GameData.galaxy.height; j++) {
+
+                    Sector sector = GameData.galaxy.sectors[i][j];
+
                     GameData.galaxy.sectors[i][j].stars.forEach(star -> {
                         stage.addActor(star);
                         star.setSize(SECTOR_SIZE, SECTOR_SIZE);
@@ -189,7 +193,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                                 showTargetMarker(new Vector2(star.getX(), star.getY()));
 
                                 MapClickEvent.check(sequenceAction, stageCoord.x, stageCoord.y, stage);
-                                StarClickEvent.handle(sequenceAction, star, uiStage, stageCoord.x, stageCoord.y);
+                                StarClickEvent.handle(sequenceAction, star, sector, uiStage, stageCoord.x, stageCoord.y);
                                 sequenceAction.addAction(new LockGameStageAction(true));
 
                                 event.stop();

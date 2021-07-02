@@ -24,9 +24,16 @@ public class StarDetailsGenerator {
 
                 sector.stars.forEach(star -> {
                     if(sector.sectorOwnerArea.owner != null) {
-                        star.population = random.nextInt(100000000) + 2500;
-                        star.wealth = random.nextInt(4) + 1;
-                        star.nrOfPlanets = random.nextInt(8) + 4;
+
+                        if(sector.sectorOwnerArea.owner.isPirate) {
+                            star.population = random.nextInt(300) + 100;
+                            star.wealth = random.nextInt(2) + 1;
+                            star.nrOfPlanets = random.nextInt(2) + 1;
+                        } else {
+                            star.population = random.nextInt(100000000) + 2500;
+                            star.wealth = random.nextInt(4) + 1;
+                            star.nrOfPlanets = random.nextInt(8) + 4;
+                        }
                     } else {
                         star.nrOfPlanets = random.nextInt(14);
                     }
