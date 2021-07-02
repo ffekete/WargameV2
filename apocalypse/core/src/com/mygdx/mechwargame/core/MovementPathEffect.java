@@ -6,13 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.state.GameState;
 
 public class MovementPathEffect extends Actor {
 
     private int size = 128;
 
-    private Texture middleTexture = new Texture(AssetManagerV2.MOVEMENT_PATH_MID);
-    private Texture endTexture = new Texture(AssetManagerV2.MOVEMENT_PATH_END);
+    private Texture middleTexture = GameState.assetManager.get(AssetManagerV2.MOVEMENT_PATH_MID);
+    private Texture endTexture = GameState.assetManager.get(AssetManagerV2.MOVEMENT_PATH_END);
 
     private Texture sprite;
 

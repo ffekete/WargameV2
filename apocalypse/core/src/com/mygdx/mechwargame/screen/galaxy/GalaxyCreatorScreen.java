@@ -48,6 +48,7 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
         PiratesDistributor.random = random;
         StarBackgroundImageGenerator.random = random;
         StarDetailsGenerator.random = random;
+        StarFacilitiesGenerator.random = random;
 
         new Thread(new Runnable() {
             @Override
@@ -56,6 +57,7 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
                 FactionDistributor.distribute(galaxySetupParameters);
                 PiratesDistributor.distribute(galaxySetupParameters);
                 StarDetailsGenerator.generate(galaxySetupParameters);
+                StarFacilitiesGenerator.generate(galaxySetupParameters);
                 StarGMImageGenerator.generate(galaxySetupParameters);
                 StarSpreadGenerator.spread(galaxySetupParameters);
                 Gdx.app.postRunnable(new Runnable() {

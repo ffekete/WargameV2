@@ -1,17 +1,25 @@
 package com.mygdx.mechwargame.screen.starsystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.starsystem.Marketplace;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
+import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
+import com.mygdx.mechwargame.text.MarketplaceDialogueCreator;
+import com.mygdx.mechwargame.text.StarViewDescriptionCreator;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.UIFactoryCommon;
 
@@ -25,7 +33,8 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
     private Star star;
     private Sector sector;
 
-    public StarSystemViewScreen(Star star, Sector sector) {
+    public StarSystemViewScreen(Star star,
+                                Sector sector) {
         this.star = star;
         this.sector = sector;
     }
@@ -52,12 +61,10 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
         detailTable.add(UIFactoryCommon.getTextLabel("star system"))
                 .size(400, 80)
-                .padBottom(10)
                 .left();
 
         detailTable.add(UIFactoryCommon.getTextLabel(star.name))
                 .size(400, 80)
-                .padBottom(10)
                 .left()
                 .row();
 
@@ -66,7 +73,6 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
             detailTable.add(UIFactoryCommon.getTextLabel("capitol of " + sector.sectorOwnerArea.owner.name))
                     .size(800, 80)
                     .colspan(2)
-                    .padBottom(10)
                     .center()
                     .row();
         } else {
@@ -76,12 +82,12 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
         detailTable.add(UIFactoryCommon.getTextLabel("planets"))
                 .size(400, 80)
-                .padBottom(10)
+
                 .center();
 
         detailTable.add(UIFactoryCommon.getTextLabel(Integer.toString(star.nrOfPlanets)))
                 .size(400, 80)
-                .padBottom(10)
+
                 .center()
                 .row();
 
@@ -89,7 +95,7 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
             detailTable.add(UIFactoryCommon.getTextLabel("population"))
                     .size(400, 80)
-                    .padBottom(10)
+
                     .center();
 
             detailTable.add(UIFactoryCommon.getTextLabel(formatter.format(star.population)))
@@ -103,12 +109,12 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
         if (star.population > 0) {
             detailTable.add(UIFactoryCommon.getTextLabel("wealth"))
                     .size(400, 80)
-                    .padBottom(10)
+
                     .center();
 
             detailTable.add(UIFactoryCommon.getTextLabel(wealthMapper.get(star.wealth)))
                     .size(400, 80)
-                    .padBottom(10)
+
                     .center()
                     .row();
         } else {
@@ -116,7 +122,7 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
         }
 
         detailTable.add()
-                .size(800, 500 - 90 - 90 - rowsToAdd * 90)
+                .size(800, 400 - 90 - 90 - rowsToAdd * 90)
                 .colspan(2);
 
         screenContentTable.add(detailTable)
@@ -132,13 +138,49 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                 .top()
                 .row();
 
-        imageTable.add()
-                .size(800, 100)
-                .top();
-
         screenContentTable
                 .add(imageTable)
                 .size(800, 500)
+                .row();
+
+        Table dialogueTable = new Table();
+        ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
+        scrollPaneStyle.background = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_SCROLL_PANE_BG, Texture.class));
+
+        ScrollPane scrollPane = new ScrollPane(dialogueTable, scrollPaneStyle);
+        scrollPane.setSize(1600, 400);
+        scrollPane.setScrollbarsVisible(true);
+        scrollPane.setScrollingDisabled(false, false);
+
+        dialogueTable.add(UIFactoryCommon.getTextLabel(StarViewDescriptionCreator.generate(star, sector), UIFactoryCommon.fontSmall))
+                .width(1500)
+                .colspan(2)
+                .padBottom(30)
+                .row();
+
+        if (star.facilities.stream().anyMatch(facility -> facility instanceof Marketplace)) {
+
+            ClickListener clickListener = new ClickListener() {
+                @Override
+                public boolean touchDown(InputEvent event,
+                                         float x,
+                                         float y,
+                                         int pointer,
+                                         int button) {
+                    // show market screen
+                    System.exit(1);
+                    return true;
+                }
+            };
+
+            addTextToDialogueBox(dialogueTable, "1", MarketplaceDialogueCreator.generate(star, sector), clickListener);
+
+        }
+
+        screenContentTable
+                .add(scrollPane)
+                .colspan(2)
+                .size(1600, 400)
                 .row();
 
 
@@ -176,4 +218,57 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
         Gdx.input.setInputProcessor(stage);
     }
+
+    private Label addTextToDialogueBox(Table dialogueTable, String buttonText, String text, ClickListener clickListener) {
+
+        ImageTextButton button = UIFactoryCommon.getSmallRoundButton(buttonText);
+        button.addListener(clickListener);
+        dialogueTable.add(button)
+                .size(64, 64)
+                .padRight(20);
+
+        Label textLabel = UIFactoryCommon.getTextLabel(text, UIFactoryCommon.fontSmall);
+
+        textLabel.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event,
+                              float x,
+                              float y,
+                              int pointer,
+                              Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                textLabel.setColor(Color.GREEN);
+            }
+
+            @Override
+            public void exit(InputEvent event,
+                             float x,
+                             float y,
+                             int pointer,
+                             Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+                textLabel.setColor(Color.WHITE);
+            }
+        });
+
+        textLabel.addListener(clickListener);
+
+        dialogueTable.add(textLabel)
+                .width(1500 - 64 - 25)
+                .row();
+
+        return textLabel;
+    }
+
+    @Override
+    public void render(float delta) {
+        stage.getViewport().apply(true);
+
+        Gdx.graphics.getGL20().glClearColor(0, 0, 0, 1);
+        Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        stage.act();
+        stage.draw();
+    }
+
 }

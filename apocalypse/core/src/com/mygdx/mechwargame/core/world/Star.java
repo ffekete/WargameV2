@@ -6,8 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.BaseActor;
+import com.mygdx.mechwargame.core.starsystem.Facility;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
 
@@ -22,6 +26,8 @@ public class Star extends BaseActor {
     public int nrOfPlanets;
     public boolean twin;
     public boolean capitol;
+
+    public List<Facility> facilities = new ArrayList<>();
 
     public LayeredAnimatedImage capitolFrameImage = null;
 
