@@ -13,7 +13,7 @@ import com.mygdx.mechwargame.screen.starsystem.StarSystemViewScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFrustum;
 

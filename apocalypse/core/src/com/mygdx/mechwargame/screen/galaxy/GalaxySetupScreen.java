@@ -14,7 +14,7 @@ import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.FlashingAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 public class GalaxySetupScreen extends GenericScreenAdapter {
 

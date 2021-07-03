@@ -21,6 +21,11 @@ public class AssetManagerV2 extends AssetManager {
     public static final String MECH_DESCRIPTION_FRAME = "ui/gearselection/MechDescriptionFrame.png";
     public static final String SHIP_INFO_DESCRIPTION_PANEL = "ui/ship/ShipInfoDescriptionPanel.png";
     public static final String HELP_ICON = "ui/HelpIcon.png";
+    public static final String CARGO_ITEM_BG = "ui/cargo/CargoItemBg.png";
+    public static final String BARTER_PANEL = "ui/market/BarterPanel.png";
+    public static final String SCROLL_PANE_KNOB = "ui/ScrollPaneKnob.png";
+
+    public static final String HYDROGEN_CELL = "item/HydrogenCell.png";
 
     public static final String POWER_ICON_EMPTY = "ui/PowerIconEmpty.png";
     public static final String POWER_ICON_FULL = "ui/PowerIconFull.png";
@@ -219,5 +224,9 @@ public class AssetManagerV2 extends AssetManager {
         load(CAPITOL_FRAME, Texture.class);
         load(PIRATE_STATION_001, Texture.class);
         load(STAR_SYSTEM_SCROLL_PANE_BG, Texture.class);
+        load(HYDROGEN_CELL, Texture.class);
+        load(CARGO_ITEM_BG, Texture.class);
+        load(BARTER_PANEL, Texture.class);
+        load(SCROLL_PANE_KNOB, Texture.class);
     }
 }

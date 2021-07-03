@@ -16,7 +16,7 @@ import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 public class CharacterCreationScreen extends GenericScreenAdapter {
 

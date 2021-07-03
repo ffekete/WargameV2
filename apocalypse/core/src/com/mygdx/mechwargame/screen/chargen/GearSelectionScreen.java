@@ -25,7 +25,7 @@ import com.mygdx.mechwargame.screen.galaxy.GalaxySetupScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.util.Arrays;
 import java.util.List;

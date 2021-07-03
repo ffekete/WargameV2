@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.ui;
+package com.mygdx.mechwargame.ui.factory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.state.GameState;
+import com.mygdx.mechwargame.ui.AnimatedDrawable;
+import com.mygdx.mechwargame.ui.DynamicProgressBar;
+import com.mygdx.mechwargame.ui.DynamicTextLabel;
+import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
 import java.util.function.Supplier;
 
@@ -115,6 +119,14 @@ public class UIFactoryCommon {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = bitmapFont;
         return new Label(text, labelStyle);
+    }
+
+    public static Label getTextLabel(String text, int align) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = fontMedium;
+        Label label = new Label(text, labelStyle);
+        label.setAlignment(align);
+        return label;
     }
 
     public static Label getTextLabel(String text) {

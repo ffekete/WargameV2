@@ -9,7 +9,7 @@ import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.view.galaxy.StarLocalMenu;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 
 public class StarClickEvent {
 
@@ -28,8 +28,8 @@ public class StarClickEvent {
 
         ConditionalAction conditionalAction = new ConditionalAction(visibleAction, () -> {
 
-            float a = Math.abs((GameData.starShip.getX() + SECTOR_SIZE / 2f) - x);
-            float b = Math.abs((GameData.starShip.getY() + SECTOR_SIZE / 2f) - y);
+            float a = Math.abs((GameData.starShip.getX() + UNIT_SIZE / 2f) - x);
+            float b = Math.abs((GameData.starShip.getY() + UNIT_SIZE / 2f) - y);
 
             return (Math.sqrt(a * a + b * b) < 128);
         });

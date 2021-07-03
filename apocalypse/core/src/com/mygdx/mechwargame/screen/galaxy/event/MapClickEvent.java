@@ -12,7 +12,7 @@ import com.mygdx.mechwargame.screen.action.MoveShipAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.util.MathUtils;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 
 public class MapClickEvent {
 
@@ -21,14 +21,14 @@ public class MapClickEvent {
                              float y,
                              Stage stage) {
 
-        if(x < 0 || y < 0 || x >= Config.SCREEN_WIDTH * SECTOR_SIZE || y >= Config.SCREEN_HEIGHT * SECTOR_SIZE) {
+        if(x < 0 || y < 0 || x >= Config.SCREEN_WIDTH * UNIT_SIZE || y >= Config.SCREEN_HEIGHT * UNIT_SIZE) {
             return;
         }
 
         SequenceAction rotateAndMoveAction = new SequenceAction();
 
-        float distance = (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX() , GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
-        float angle = MathUtils.getAngle(new Vector2(GameData.starShip.getX(), GameData.starShip.getY()), new Vector2(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
+        float distance = (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX() , GameData.starShip.getY(), x - UNIT_SIZE / 2f, y - UNIT_SIZE / 2f));
+        float angle = MathUtils.getAngle(new Vector2(GameData.starShip.getX(), GameData.starShip.getY()), new Vector2(x - UNIT_SIZE / 2f, y - UNIT_SIZE / 2f));
 
         addMovementPathEffect(x, y, stage, distance, angle);
 
@@ -42,7 +42,7 @@ public class MapClickEvent {
         MoveShipAction moveToAction = new MoveShipAction(GameData.starShip);
         moveToAction.setActor(GameData.starShip);
         moveToAction.setDuration(GameData.starShip.engine.getSpeed() * 0.01f * distance);
-        moveToAction.setPosition(x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f);
+        moveToAction.setPosition(x - UNIT_SIZE / 2f, y - UNIT_SIZE / 2f);
 
         doThemTogetherAction.addAction(rotateToAction);
         doThemTogetherAction.addAction(moveToAction);
@@ -68,8 +68,8 @@ public class MapClickEvent {
         movementPathEffect.setRotation(angle);
         stage.addActor(movementPathEffect);
         movementPathEffect.toBack();
-        movementPathEffect.setSize(distance, SECTOR_SIZE);
-        movementPathEffect.setPosition(GameData.starShip.getX() + SECTOR_SIZE / 2f, GameData.starShip.getY() + SECTOR_SIZE / 2f);
+        movementPathEffect.setSize(distance, UNIT_SIZE);
+        movementPathEffect.setPosition(GameData.starShip.getX() + UNIT_SIZE / 2f, GameData.starShip.getY() + UNIT_SIZE / 2f);
 
         if (GameData.movementPathEffect != null) {
             stage.getActors().removeValue(GameData.movementPathEffect, true);
@@ -79,10 +79,10 @@ public class MapClickEvent {
         movementPathEffect.addAction(new Action() {
             @Override
             public boolean act(float delta) {
-                float newDistance = (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x - SECTOR_SIZE / 2f, y - SECTOR_SIZE / 2f));
-                float fullLength = movementPathEffect.fullLength - SECTOR_SIZE;
+                float newDistance = (float) Math.abs(MathUtils.getDistance(GameData.starShip.getX(), GameData.starShip.getY(), x - UNIT_SIZE / 2f, y - UNIT_SIZE / 2f));
+                float fullLength = movementPathEffect.fullLength - UNIT_SIZE;
 
-                movementPathEffect.srcX = SECTOR_SIZE / 2 + (int) (fullLength - fullLength * newDistance / distance);
+                movementPathEffect.srcX = UNIT_SIZE / 2 + (int) (fullLength - fullLength * newDistance / distance);
                 return false;
             }
         });

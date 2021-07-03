@@ -13,7 +13,7 @@ import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 
 public class Star extends BaseActor {
 
@@ -50,7 +50,7 @@ public class Star extends BaseActor {
         this.layeredAnimatedImage = new LayeredAnimatedImage(animatedDrawable);
 
         if(this.capitolFrameImage != null) {
-            this.capitolFrameImage.setPosition(getX() / SECTOR_SIZE * SECTOR_SIZE, getY() / SECTOR_SIZE * SECTOR_SIZE);
+            this.capitolFrameImage.setPosition(getX() / UNIT_SIZE * UNIT_SIZE, getY() / UNIT_SIZE * UNIT_SIZE);
         }
         this.layeredAnimatedImage.setPosition(getX(), getY());
     }
@@ -71,7 +71,7 @@ public class Star extends BaseActor {
         super.setPosition(x, y);
         layeredAnimatedImage.setPosition(x, y);
         if(this.capitolFrameImage != null) {
-            this.capitolFrameImage.setPosition(getX() / SECTOR_SIZE * SECTOR_SIZE, getY() / SECTOR_SIZE * SECTOR_SIZE);
+            this.capitolFrameImage.setPosition(getX() / UNIT_SIZE * UNIT_SIZE, getY() / UNIT_SIZE * UNIT_SIZE);
         }
     }
 
@@ -91,8 +91,8 @@ public class Star extends BaseActor {
         layeredAnimatedImage.setHeight(height);
 
         if(this.capitolFrameImage != null) {
-            this.capitolFrameImage.setWidth(SECTOR_SIZE);
-            this.capitolFrameImage.setHeight(SECTOR_SIZE);
+            this.capitolFrameImage.setWidth(UNIT_SIZE);
+            this.capitolFrameImage.setHeight(UNIT_SIZE);
         }
     }
 }

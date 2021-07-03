@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 
 public class BaseActor extends Actor {
 
@@ -12,7 +12,7 @@ public class BaseActor extends Actor {
 
     public BaseActor(LayeredAnimatedImage layeredAnimatedImage) {
         this.layeredAnimatedImage = layeredAnimatedImage;
-        super.setOrigin(SECTOR_SIZE / 2f, SECTOR_SIZE / 2f);
+        super.setOrigin(UNIT_SIZE / 2f, UNIT_SIZE / 2f);
     }
 
     @Override

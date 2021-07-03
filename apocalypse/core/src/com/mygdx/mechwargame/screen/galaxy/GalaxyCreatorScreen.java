@@ -10,7 +10,7 @@ import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.util.Random;
 
@@ -58,6 +58,7 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
                 PiratesDistributor.distribute(galaxySetupParameters);
                 StarDetailsGenerator.generate(galaxySetupParameters);
                 StarFacilitiesGenerator.generate(galaxySetupParameters);
+                MarketItemsGenerator.generate(galaxySetupParameters);
                 StarGMImageGenerator.generate(galaxySetupParameters);
                 StarSpreadGenerator.spread(galaxySetupParameters);
                 Gdx.app.postRunnable(new Runnable() {

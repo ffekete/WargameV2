@@ -1,16 +1,13 @@
 package com.mygdx.mechwargame.core.world.generator;
 
-import com.badlogic.gdx.graphics.Color;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 
 public class StarGMImageGenerator {
 
@@ -35,12 +32,12 @@ public class StarGMImageGenerator {
                     switch (index) {
                         case 0:
                             star.setStarAnimation(AssetManagerV2.GM_STAR_01, 32, 32);
-                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
+                            star.setBounds(x * UNIT_SIZE, y * UNIT_SIZE, 32, 32);
                             break;
 
                         case 1:
                             star.setStarAnimation(AssetManagerV2.GM_STAR_02, 32, 32);
-                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
+                            star.setBounds(x * UNIT_SIZE, y * UNIT_SIZE, 32, 32);
                             break;
 
                         case 2:
@@ -49,12 +46,12 @@ public class StarGMImageGenerator {
                             } else {
                                 star.setStarAnimation(AssetManagerV2.GM_STAR_02, 32, 32);
                             }
-                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
+                            star.setBounds(x * UNIT_SIZE, y * UNIT_SIZE, 32, 32);
                             break;
 
                         case 3:
                             star.setStarAnimation(AssetManagerV2.GM_STAR_04, 32, 32);
-                            star.setBounds(x * SECTOR_SIZE, y * SECTOR_SIZE, 32, 32);
+                            star.setBounds(x * UNIT_SIZE, y * UNIT_SIZE, 32, 32);
                             break;
                     }
                 });

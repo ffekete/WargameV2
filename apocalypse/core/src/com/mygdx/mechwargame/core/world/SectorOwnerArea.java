@@ -8,7 +8,7 @@ import com.mygdx.mechwargame.core.faction.Faction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 
 public class SectorOwnerArea {
 
@@ -115,7 +115,7 @@ public class SectorOwnerArea {
             }
         }
 
-        spriteBatch.draw(textureRegion, x * SECTOR_SIZE, y * SECTOR_SIZE, SECTOR_SIZE, SECTOR_SIZE);
+        spriteBatch.draw(textureRegion, x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
 
 }

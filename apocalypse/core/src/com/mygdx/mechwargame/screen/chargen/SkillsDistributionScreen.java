@@ -13,10 +13,9 @@ import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.character.Skills;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
-import com.mygdx.mechwargame.screen.chargen.GearSelectionScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 public class SkillsDistributionScreen extends GenericScreenAdapter {
 

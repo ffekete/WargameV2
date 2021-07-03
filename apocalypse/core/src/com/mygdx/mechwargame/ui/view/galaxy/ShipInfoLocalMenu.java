@@ -11,7 +11,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.text.DecimalFormat;
 

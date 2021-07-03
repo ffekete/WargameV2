@@ -6,8 +6,6 @@ import com.mygdx.mechwargame.state.GameData;
 
 import java.util.Random;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
-
 public class StarSpreadGenerator {
 
     public static Random random;

@@ -34,13 +34,13 @@ import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
-import com.mygdx.mechwargame.ui.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.mygdx.mechwargame.Config.SECTOR_SIZE;
+import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFrustum;
 
 public class GalaxyViewScreen extends GenericScreenAdapter {
@@ -159,7 +159,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
                     GameData.galaxy.sectors[i][j].stars.forEach(star -> {
                         stage.addActor(star);
-                        star.setSize(SECTOR_SIZE, SECTOR_SIZE);
+                        star.setSize(UNIT_SIZE, UNIT_SIZE);
 
                         star.addListener(new InputListener() {
                             @Override
@@ -188,7 +188,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
                                 MainAction sequenceAction = new MainAction();
                                 GameData.starShip.addAction(sequenceAction);
-                                Vector2 stageCoord = new Vector2(star.getX() + SECTOR_SIZE / 2f, star.getY() + SECTOR_SIZE / 2f);
+                                Vector2 stageCoord = new Vector2(star.getX() + UNIT_SIZE / 2f, star.getY() + UNIT_SIZE / 2f);
 
                                 showTargetMarker(new Vector2(star.getX(), star.getY()));
 
@@ -266,7 +266,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             });
 
             BaseShip starShip = new SmallStarShip();
-            starShip.setSize(SECTOR_SIZE, SECTOR_SIZE);
+            starShip.setSize(UNIT_SIZE, UNIT_SIZE);
 
             DynamicProgressBar fuelProgressBar = UIFactoryCommon.createProgressBar(128,
                     16,
@@ -307,7 +307,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             for (int i = 0; i < GameData.galaxy.width; i++) {
                 for (int j = 0; j < GameData.galaxy.height; j++) {
                     if (GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null && !GameData.galaxy.sectors[i][j].stars.isEmpty()) {
-                        startingPoints.add(new Vector2(i * SECTOR_SIZE, j * SECTOR_SIZE));
+                        startingPoints.add(new Vector2(i * UNIT_SIZE, j * UNIT_SIZE));
                     }
                 }
             }
@@ -370,9 +370,9 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
         for (int i = 0; i < GameData.galaxy.width; i++) {
             for (int j = 0; j < GameData.galaxy.height; j++) {
-                if (stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE + SECTOR_SIZE, j * SECTOR_SIZE + SECTOR_SIZE, 0) ||
-                        stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE, j * SECTOR_SIZE, 0)) {
-                    spriteBatch.draw(GameData.galaxy.sectors[i][j].background, i * SECTOR_SIZE, j * SECTOR_SIZE, SECTOR_SIZE, SECTOR_SIZE);
+                if (stage.getViewport().getCamera().frustum.pointInFrustum(i * UNIT_SIZE + UNIT_SIZE, j * UNIT_SIZE + UNIT_SIZE, 0) ||
+                        stage.getViewport().getCamera().frustum.pointInFrustum(i * UNIT_SIZE, j * UNIT_SIZE, 0)) {
+                    spriteBatch.draw(GameData.galaxy.sectors[i][j].background, i * UNIT_SIZE, j * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
                 }
             }
         }
@@ -382,8 +382,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         // ownership
         for (int i = 0; i < GameData.galaxy.width; i++) {
             for (int j = 0; j < GameData.galaxy.height; j++) {
-                if (stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE + SECTOR_SIZE, j * SECTOR_SIZE + SECTOR_SIZE, 0) ||
-                        stage.getViewport().getCamera().frustum.pointInFrustum(i * SECTOR_SIZE, j * SECTOR_SIZE, 0)) {
+                if (stage.getViewport().getCamera().frustum.pointInFrustum(i * UNIT_SIZE + UNIT_SIZE, j * UNIT_SIZE + UNIT_SIZE, 0) ||
+                        stage.getViewport().getCamera().frustum.pointInFrustum(i * UNIT_SIZE, j * UNIT_SIZE, 0)) {
 
                     // change color alpha
                     if (GameData.galaxy.sectors[i][j].sectorOwnerArea.owner != null) {
