@@ -12,18 +12,18 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.item.Item;
-import com.mygdx.mechwargame.core.ship.component.Component;
 import com.mygdx.mechwargame.core.starsystem.Marketplace;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
+import com.mygdx.mechwargame.ui.DynamicTextLabel;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 import com.mygdx.mechwargame.ui.view.market.BarterWindow;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class MarketViewScreen extends GenericScreenAdapter {
 
@@ -31,10 +31,31 @@ public class MarketViewScreen extends GenericScreenAdapter {
     private Star star;
     private Sector sector;
 
+    int barterPrice = 0;
+
+    Map<Item, List> itemsOriginalList = new HashMap<>();
+
+    Table playerItems = new Table();
+    Table marketItems = new Table();
+    Table barterItems = new Table();
+
+    List<Item> itemsToSell;
+    List<Item> barterList = new LinkedList<>();
+    Consumer<Item> barterItemsConsumer;
+    Consumer<Item> playerItemsConsumer;
+    Consumer<Item> itemsToSellConsumer;
+
     public MarketViewScreen(Star star,
                             Sector sector) {
         this.star = star;
         this.sector = sector;
+
+        itemsToSell = star.facilities.stream()
+                .filter(f -> f instanceof Marketplace)
+                .map(f -> (Marketplace) f)
+                .findAny()
+                .get()
+                .itemsToSell;
     }
 
     public void show() {
@@ -60,32 +81,47 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         screenContentTable.row();
 
-
-        Table playerItems = new Table();
         screenContentTable.add(new BarterWindow(playerItems, stage))
                 .size(620, 800)
                 .padRight(10);
 
-        Table barterItems = new Table();
         screenContentTable.add(new BarterWindow(barterItems, stage))
                 .size(620, 800)
                 .padRight(10);
 
-        Table marketItems = new Table();
+
         screenContentTable.add(new BarterWindow(marketItems, stage))
                 .size(620, 800)
                 .padRight(10);
 
-        refreshWindow(Company.items, playerItems);
-        refreshWindow(Collections.emptyList(), barterItems);
-        refreshWindow(star.facilities.stream()
-                        .filter(f -> f instanceof Marketplace)
-                        .map(f -> (Marketplace) f)
-                        .findAny()
-                        .get()
-                        .itemsToSell
-                , marketItems);
+        playerItemsConsumer = (Item item) -> {
+            barterItems.add(item);
+            itemsOriginalList.put(item, Company.items);
+            barterPrice -= item.price;
+            Company.items.remove(item);
+        };
 
+        barterItemsConsumer = (Item item) -> {
+            List<Item> list = itemsOriginalList.get(item);
+
+            if (list == Company.items) {
+                barterPrice += item.price;
+                Company.items.add(item);
+            } else {
+                barterPrice -= item.price;
+                itemsToSell.add(item);
+            }
+            barterList.remove(item);
+        };
+
+        itemsToSellConsumer = (Item item) -> {
+            barterList.add(item);
+            itemsOriginalList.put(item, itemsToSell);
+            barterPrice += item.price;
+            itemsToSell.remove(item);
+        };
+
+        refreshWindows();
 
         screenContentTable.row();
 
@@ -100,33 +136,81 @@ public class MarketViewScreen extends GenericScreenAdapter {
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
                 GameState.game.setScreen(GameState.previousScreen);
+                itemsToSell.addAll(barterList);
             }
         });
 
-        screenContentTable.add(backButton)
+        Table menuTable = new Table();
+
+        menuTable.add(backButton)
                 .size(64, 64)
+                .padRight(20)
                 .left();
+
+        menuTable.add(UIFactoryCommon.getDynamicTextLabel(() -> barterPrice < 0 ? "sell for" : "pay"))
+        .padRight(30);
+        menuTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(barterPrice)));
+
+        menuTable.add(UIFactoryCommon.getTextLabel(", your money:"))
+                .padRight(30);
+        menuTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(Company.money)));
+
+        screenContentTable.add(menuTable)
+                .left()
+                .colspan(3);
 
         stage.addActor(screenContentTable);
         Gdx.input.setInputProcessor(stage);
     }
 
+    private void refreshWindows() {
+        refreshWindow(Company.items,
+                playerItems,
+                playerItemsConsumer);
+
+        refreshWindow(barterList,
+                barterItems,
+                barterItemsConsumer);
+
+        refreshWindow(itemsToSell,
+                marketItems,
+                itemsToSellConsumer);
+    }
+
     private void refreshWindow(List<Item> itemsToSell,
-                               Table itemsTable) {
+                               Table itemsTable,
+                               Consumer<Item> consumer) {
 
         int max = 60;
 
         itemsTable.clear();
 
+        Deque<Item> itemQueue = new ArrayDeque<>(itemsToSell);
+
         for (int i = 0; i < max; i++) {
 
             if (i < itemsToSell.size()) {
                 Table container = new Table();
+                Item item = itemQueue.pop();
                 container.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
-                container.add(itemsToSell.get(i))
+                container.add(item)
                         .size(128);
                 itemsTable.add(container)
                         .size(128);
+
+                item.getListeners().clear();
+                item.addListener(new ClickListener() {
+                    @Override
+                    public void touchUp(InputEvent event,
+                                        float x,
+                                        float y,
+                                        int pointer,
+                                        int button) {
+                        super.touchUp(event, x, y, pointer, button);
+                        consumer.accept(item);
+                        refreshWindows();
+                    }
+                });
             } else {
                 Table container = new Table();
                 container.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));

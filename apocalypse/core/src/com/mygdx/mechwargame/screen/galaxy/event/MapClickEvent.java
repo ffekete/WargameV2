@@ -67,7 +67,8 @@ public class MapClickEvent {
         MovementPathEffect movementPathEffect = new MovementPathEffect((int) distance);
         movementPathEffect.setRotation(angle);
         stage.addActor(movementPathEffect);
-        movementPathEffect.toBack();
+        movementPathEffect.toFront();
+        GameData.starShip.toFront();
         movementPathEffect.setSize(distance, UNIT_SIZE);
         movementPathEffect.setPosition(GameData.starShip.getX() + UNIT_SIZE / 2f, GameData.starShip.getY() + UNIT_SIZE / 2f);
 
