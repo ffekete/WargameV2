@@ -231,11 +231,10 @@ public class MarketViewScreen extends GenericScreenAdapter {
                 .left();
 
         Table buyButtonTable = new Table();
-        ImageTextButton buyButton = UIFactoryCommon.getMenuButton("finalize");
+        ImageTextButton buyButton = UIFactoryCommon.getMenuButton("trade");
         ImageTextButton resetButton = UIFactoryCommon.getMenuButton("reset");
 
         // ************    BUY BUTTON   ************************
-
         buyButton.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event,

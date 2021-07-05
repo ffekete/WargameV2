@@ -24,8 +24,6 @@ public class AssetManagerV2 extends AssetManager {
     public static final String BACK_BUTTON_UP = "ui/ship/BackButtonUp.png";
     public static final String BACK_BUTTON_DOWN = "ui/ship/BackButtonDown.png";
 
-    public static final String STAR_LOCAL_MENU = "ui/StarLocalMenu.png";
-
     public static final String LOGO_01 = "company/logo/Logo01.png";
     public static final String LOGO_02 = "company/logo/Logo02.png";
 
@@ -52,8 +50,6 @@ public class AssetManagerV2 extends AssetManager {
     public static final String MOVEMENT_PATH_END = "effect/movementpath/PathEnd.png";
 
     public static final String SHIP = "ship/StarShip.png";
-
-    public static final String LARGE_VIEW_FRAME = "ui/ViewLarge.png";
 
     public static final String STAR_001 = "starsystem/background/star/Star001.png";
     public static final String STAR_002 = "starsystem/background/star/Star002.png";
@@ -172,14 +168,12 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.SECTOR_BOUNDARY, Texture.class);
         load(AssetManagerV2.TARGET_MARKER, Texture.class);
         load(AssetManagerV2.SHIP, Texture.class);
-        load(STAR_LOCAL_MENU, Texture.class);
         load(MOUSE_POINTER, Texture.class);
         load(BACK_BUTTON_UP, Texture.class);
         load(BACK_BUTTON_DOWN, Texture.class);
         load(MOVEMENT_PATH_MID, Texture.class);
         load(MOVEMENT_PATH_END, Texture.class);
         load(HELP_ICON, Texture.class);
-        load(LARGE_VIEW_FRAME, Texture.class);
         load(STAR_001, Texture.class);
         load(STAR_002, Texture.class);
         load(STAR_003, Texture.class);
