@@ -38,12 +38,13 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
     Map<Item, List> itemsOriginalList = new HashMap<>();
 
-    Table playerItems = new Table();
-    Table marketItems = new Table();
-    Table barterItems = new Table();
+    Table playerItemsTable = new Table();
+    Table marketItemsTable = new Table();
+    Table barterItemsTable = new Table();
 
-    List<Item> itemsToSell;
-    List<Item> barterList = new LinkedList<>();
+    List<Item> marketItems;
+    List<Item> playerItems;
+    List<Item> barterItems = new LinkedList<>();
     Consumer<Item> barterItemsConsumer;
     Consumer<Item> playerItemsConsumer;
     Consumer<Item> itemsToSellConsumer;
@@ -53,7 +54,9 @@ public class MarketViewScreen extends GenericScreenAdapter {
         this.star = star;
         this.sector = sector;
 
-        itemsToSell = star.facilities.stream()
+        playerItems = GameData.starShip.cargoBay.getItems();
+
+        marketItems = star.facilities.stream()
                 .filter(f -> f instanceof Marketplace)
                 .map(f -> (Marketplace) f)
                 .findAny()
@@ -107,44 +110,44 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         screenContentTable.row();
 
-        screenContentTable.add(new BarterWindow(playerItems, stage))
+        screenContentTable.add(new BarterWindow(playerItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
-        screenContentTable.add(new BarterWindow(barterItems, stage))
+        screenContentTable.add(new BarterWindow(barterItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
 
-        screenContentTable.add(new BarterWindow(marketItems, stage))
+        screenContentTable.add(new BarterWindow(marketItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
         playerItemsConsumer = (Item item) -> {
-            barterList.add(item);
-            itemsOriginalList.put(item, GameData.starShip.cargoBay.items);
+            barterItems.add(item);
+            itemsOriginalList.put(item, playerItems);
             barterPrice -= item.price;
-            GameData.starShip.cargoBay.items.remove(item);
+            GameData.starShip.cargoBay.removeItem(item);
         };
 
         barterItemsConsumer = (Item item) -> {
             List<Item> list = itemsOriginalList.get(item);
 
-            if (list == GameData.starShip.cargoBay.items) {
+            if (list == playerItems) {
                 barterPrice += item.price;
-                GameData.starShip.cargoBay.items.add(item);
+                GameData.starShip.cargoBay.addItem(item);
             } else {
                 barterPrice -= item.price;
-                itemsToSell.add(item);
+                marketItems.add(item);
             }
-            barterList.remove(item);
+            barterItems.remove(item);
         };
 
         itemsToSellConsumer = (Item item) -> {
-            barterList.add(item);
-            itemsOriginalList.put(item, itemsToSell);
+            barterItems.add(item);
+            itemsOriginalList.put(item, marketItems);
             barterPrice += item.price;
-            itemsToSell.remove(item);
+            marketItems.remove(item);
         };
 
         refreshWindows();
@@ -194,25 +197,25 @@ public class MarketViewScreen extends GenericScreenAdapter {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
-                if (Company.money >= barterPrice && !barterList.isEmpty()) {
+                if (Company.money >= barterPrice && !barterItems.isEmpty()) {
                     Company.money -= barterPrice;
                     barterPrice = 0;
 
                     itemsOriginalList.entrySet().forEach(entry -> {
-                        if (entry.getValue() == GameData.starShip.cargoBay.items) {
-                            itemsToSell.add(entry.getKey());
+                        if (entry.getValue() == playerItems) {
+                            marketItems.add(entry.getKey());
                         } else {
-                            GameData.starShip.cargoBay.items.add(entry.getKey());
+                            GameData.starShip.cargoBay.addItem(entry.getKey());
                         }
-                        barterList.remove(entry.getKey());
+                        barterItems.remove(entry.getKey());
 
-                        sortItems(GameData.starShip.cargoBay.items);
-                        sortItems(itemsToSell);
+                        sortItems(playerItems);
+                        sortItems(marketItems);
                     });
 
                     itemsOriginalList.clear();
 
-                    barterList.clear();
+                    barterItems.clear();
                     refreshWindows();
                 }
             }
@@ -256,26 +259,41 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
     private void resetBarter() {
         itemsOriginalList.entrySet().forEach(entry -> {
-            entry.getValue().add(entry.getKey());
-            barterList.remove(entry.getKey());
+            List<Item> list = itemsOriginalList.get(entry.getKey());
+
+            if (list == playerItems) {
+                barterPrice += entry.getKey().price;
+                GameData.starShip.cargoBay.addItem(entry.getKey());
+            } else {
+                barterPrice -= entry.getKey().price;
+                marketItems.add(entry.getKey());
+            }
+            barterItems.remove(entry.getKey());
         });
+
+        itemsOriginalList.clear();
+
+        sortItems(playerItems);
+        sortItems(marketItems);
+        sortItems(barterItems);
+
     }
 
     private void refreshWindows() {
-        sortItems(GameData.starShip.cargoBay.items);
-        sortItems(itemsToSell);
-        sortItems(barterList);
+        sortItems(playerItems);
+        sortItems(marketItems);
+        sortItems(barterItems);
 
-        refreshWindow(GameData.starShip.cargoBay.items,
-                playerItems,
+        refreshWindow(playerItems,
+                playerItemsTable,
                 playerItemsConsumer);
 
-        refreshWindow(barterList,
-                barterItems,
+        refreshWindow(barterItems,
+                barterItemsTable,
                 barterItemsConsumer);
 
-        refreshWindow(itemsToSell,
-                marketItems,
+        refreshWindow(marketItems,
+                marketItemsTable,
                 itemsToSellConsumer);
     }
 

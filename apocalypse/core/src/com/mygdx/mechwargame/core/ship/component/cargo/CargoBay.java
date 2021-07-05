@@ -12,7 +12,24 @@ public abstract class CargoBay extends Component {
     public int capacity;
     public int maxCapacity;
 
-    public List<Item> items = new LinkedList<>();
+    protected List<Item> items = new LinkedList<>();
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void removeItem(Item item) {
+        if(items.remove(item)) {
+            capacity++;
+        }
+    }
+
+    public void addItem(Item item) {
+        if(capacity > 0) {
+            items.add(item);
+            capacity--;
+        }
+    }
 
     public CargoBay(int level,
                     String name) {
