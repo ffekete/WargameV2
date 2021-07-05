@@ -58,6 +58,9 @@ public class MarketViewScreen extends GenericScreenAdapter {
     Consumer<Item> playerItemsConsumer;
     Consumer<Item> itemsToSellConsumer;
 
+    Map<Class<? extends Item>, Integer> itemPrices = new HashMap<>();
+    Map<Class<? extends Item>, Integer> marketPrices = new HashMap<>();
+
     public MarketViewScreen(Star star,
                             Sector sector) {
         this.star = star;
@@ -67,12 +70,23 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         playerItems = GameData.starShip.cargoBay.getItems();
 
+        playerItems.forEach(item -> {
+            itemPrices.computeIfAbsent(item.getClass(), v -> (int)(item.price * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
+            marketPrices.computeIfAbsent(item.getClass(), v -> (int)(item.price * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
+        });
+
         marketItems = star.facilities.stream()
                 .filter(f -> f instanceof Marketplace)
                 .map(f -> (Marketplace) f)
                 .findAny()
                 .get()
                 .itemsToSell;
+
+        marketItems.forEach(item -> {
+            itemPrices.computeIfAbsent(item.getClass(), v -> (int)(item.price * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
+            marketPrices.computeIfAbsent(item.getClass(), v -> (int)(item.price * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
+        });
+
     }
 
     public void show() {
@@ -176,7 +190,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
         playerItemsConsumer = (Item item) -> {
             barterItems.add(item);
             itemsOriginalList.put(item, playerItems);
-            barterPrice -= item.price;
+            barterPrice -= itemPrices.get(item.getClass());
             GameData.starShip.cargoBay.removeItem(item);
             initialCapacity++;
         };
@@ -185,11 +199,11 @@ public class MarketViewScreen extends GenericScreenAdapter {
             List<Item> list = itemsOriginalList.remove(item);
 
             if (list == playerItems) {
-                barterPrice += item.price;
+                barterPrice += itemPrices.get(item.getClass());
                 GameData.starShip.cargoBay.addItem(item);
                 initialCapacity--;
             } else {
-                barterPrice -= item.price;
+                barterPrice -= marketPrices.get(item.getClass());
                 marketItems.add(item);
                 initialCapacity++;
             }
@@ -199,7 +213,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
         itemsToSellConsumer = (Item item) -> {
             barterItems.add(item);
             itemsOriginalList.put(item, marketItems);
-            barterPrice += item.price;
+            barterPrice += marketPrices.get(item.getClass());
             marketItems.remove(item);
             initialCapacity--;
         };
@@ -334,10 +348,10 @@ public class MarketViewScreen extends GenericScreenAdapter {
             List<Item> list = itemsOriginalList.get(entry.getKey());
 
             if (list == playerItems) {
-                barterPrice += entry.getKey().price;
+                barterPrice += itemPrices.get(entry.getKey().getClass());
                 GameData.starShip.cargoBay.addItem(entry.getKey());
             } else {
-                barterPrice -= entry.getKey().price;
+                barterPrice -= marketPrices.get(entry.getKey().getClass());
                 marketItems.add(entry.getKey());
             }
             barterItems.remove(entry.getKey());

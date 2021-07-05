@@ -29,7 +29,7 @@ public class MarketItemsGenerator {
                                 .filter(f -> f instanceof Marketplace)
                                 .map(f -> (Marketplace)f)
                                 .forEach(marketplace -> {
-                                    for(int k = 0; k < star.wealth + 50 + new Random().nextInt(5); k++) {
+                                    for(int k = 0; k < star.wealth + new Random().nextInt(5 * star.wealth); k++) {
                                         marketplace.itemsToSell.add(new HydrogenCell());
                                     }
                                 });

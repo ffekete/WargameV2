@@ -176,8 +176,6 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .padBottom(30)
                     .row();
 
-            // todo next: demand
-
             if (star.facilities.stream().anyMatch(facility -> facility instanceof Marketplace)) {
 
                 ClickListener clickListener = new ClickListener() {

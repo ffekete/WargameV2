@@ -39,6 +39,8 @@ public class FactionDistributor {
                 Color.OLIVE,
                 Color.ORANGE));
 
+        GameData.factions = new ArrayList<>();
+
         // assign starting stars
         for (int i = 0; i < galaxySetupParameters.defaultNumberOfFactions; i++) {
             int x, y;
@@ -57,6 +59,9 @@ public class FactionDistributor {
 
             startingPoints.add(new Vector2(x, y));
             factions.put(faction, new Vector2(x, y));
+
+            GameData.factions.add(faction);
+            faction.areas.add(new Vector2(x, y));
         }
 
         // expand
@@ -122,6 +127,7 @@ public class FactionDistributor {
 
             if (possibilities.size() > 0) {
                 Vector2 selected = possibilities.get(random.nextInt(possibilities.size()));
+                faction.areas.add(selected);
                 GameData.galaxy.sectors[(int) selected.x][(int) selected.y].sectorOwnerArea.owner = faction;
                 return;
             }

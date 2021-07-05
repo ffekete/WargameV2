@@ -11,7 +11,7 @@ public class HydrogenCell extends Item {
     public HydrogenCell() {
         super(AssetManagerV2.HYDROGEN_CELL);
         order = FUEL_ORDER;
-        price = 5;
+        price = 50;
         name = "hydrogen cell";
         description = String.format("Simple fuel cell used to power ships.\n" +
                 "Fuel capacity: %s", fuelCapacity);

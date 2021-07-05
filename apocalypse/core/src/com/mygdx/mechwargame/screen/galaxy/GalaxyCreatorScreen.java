@@ -59,6 +59,7 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
                 StarDetailsGenerator.generate(galaxySetupParameters);
                 StarFacilitiesGenerator.generate(galaxySetupParameters);
                 MarketItemsGenerator.generate(galaxySetupParameters);
+                MarketItemsDemandGenerator.generate(galaxySetupParameters);
                 StarGMImageGenerator.generate(galaxySetupParameters);
                 StarSpreadGenerator.spread(galaxySetupParameters);
                 Gdx.app.postRunnable(new Runnable() {
