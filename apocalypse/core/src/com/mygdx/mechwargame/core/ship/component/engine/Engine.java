@@ -1,6 +1,8 @@
 package com.mygdx.mechwargame.core.ship.component.engine;
 
 import com.mygdx.mechwargame.core.ship.component.Component;
+import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 
 public abstract class Engine extends Component {
 
@@ -16,7 +18,8 @@ public abstract class Engine extends Component {
     public float maxFuel;
     public float fuelConsumption;
 
-    public Engine(int level, String name) {
+    public Engine(int level,
+                  String name) {
         super(level, name);
         adjustValues(level);
     }
@@ -40,6 +43,9 @@ public abstract class Engine extends Component {
         fuel -= fuelConsumption;
         if (fuel < 0) {
             fuel = 0;
+
+
+
         }
     }
 

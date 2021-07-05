@@ -121,6 +121,14 @@ public class UIFactoryCommon {
         return new Label(text, labelStyle);
     }
 
+    public static Label getTextLabel(String text, BitmapFont bitmapFont, int align) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = bitmapFont;
+        Label label = new Label(text, labelStyle);
+        label.setAlignment(align);
+        return label;
+    }
+
     public static Label getTextLabel(String text, int align) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = fontMedium;

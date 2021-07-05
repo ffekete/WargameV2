@@ -92,6 +92,8 @@ public class AssetManagerV2 extends AssetManager {
     public static final String DECORATION_007 = "starsystem/background/decoration/Decoration007.png";
 
     public static final String STAR_SYSTEM_SCROLL_PANE_BG = "ui/StarSystemScrollPaneBg.png";
+    public static final String TOOLTIP_BG = "ui/ToolTipBg.png";
+
 
 
     public List<String> logos = Arrays.asList(
@@ -228,5 +230,6 @@ public class AssetManagerV2 extends AssetManager {
         load(CARGO_ITEM_BG, Texture.class);
         load(BARTER_PANEL, Texture.class);
         load(SCROLL_PANE_KNOB, Texture.class);
+        load(TOOLTIP_BG, Texture.class);
     }
 }

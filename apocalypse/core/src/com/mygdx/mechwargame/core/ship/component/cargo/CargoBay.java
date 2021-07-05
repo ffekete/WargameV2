@@ -1,12 +1,18 @@
 package com.mygdx.mechwargame.core.ship.component.cargo;
 
+import com.mygdx.mechwargame.core.item.Item;
 import com.mygdx.mechwargame.core.ship.component.Component;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class CargoBay extends Component {
 
     protected int baseCapacity;
     public int capacity;
     public int maxCapacity;
+
+    public List<Item> items = new LinkedList<>();
 
     public CargoBay(int level,
                     String name) {
