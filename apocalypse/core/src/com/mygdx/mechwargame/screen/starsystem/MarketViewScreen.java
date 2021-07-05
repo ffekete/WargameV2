@@ -23,7 +23,6 @@ import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 import com.mygdx.mechwargame.ui.view.market.BarterWindow;
 
@@ -142,12 +141,12 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
 
         screenContentTable.add(barterInfoTable)
-                .size(620, 70)
+                .size(620, 140)
                 .center()
                 .padRight(10);
 
         screenContentTable.add(UIFactoryCommon.getTextLabel("marketplace", Align.center))
-                .size(620, 70)
+                .size(620, 140)
                 .center()
                 .padRight(10);
 
@@ -286,10 +285,14 @@ public class MarketViewScreen extends GenericScreenAdapter {
             }
         });
 
-        buyButtonTable.add(resetButton).padRight(30);
-        buyButtonTable.add(buyButton);
+        buyButtonTable.add(resetButton)
+                .width(400)
+                .padRight(30);
+        buyButtonTable.add(buyButton)
+                .width(400);
 
-        menuTable.add(buyButtonTable).padRight(30);
+        menuTable.add(buyButtonTable)
+                .padRight(30);
 
         screenContentTable.add(menuTable)
                 .left()

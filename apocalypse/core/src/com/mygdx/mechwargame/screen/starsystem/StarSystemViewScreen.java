@@ -148,6 +148,8 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .row();
 
             Table dialogueTable = new Table();
+            dialogueTable.setSize(1600, 550);
+
             ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
 
             NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
@@ -157,7 +159,7 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
             scrollPaneStyle.background = ninePatchDrawable;
 
             ScrollPane scrollPane = new ScrollPane(dialogueTable, scrollPaneStyle);
-            scrollPane.setSize(1600, 400);
+            scrollPane.setSize(1600, 550);
             scrollPane.setScrollbarsVisible(true);
             scrollPane.setScrollingDisabled(false, false);
 
@@ -186,10 +188,34 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
             }
 
+            dialogueTable.add().expandY();
+
+            scrollPane.addListener(new InputListener() {
+                @Override
+                public void enter(InputEvent event,
+                                  float x,
+                                  float y,
+                                  int pointer,
+                                  Actor fromActor) {
+                    super.enter(event, x, y, pointer, fromActor);
+                    stage.setScrollFocus(scrollPane);
+                }
+
+                @Override
+                public void exit(InputEvent event,
+                                 float x,
+                                 float y,
+                                 int pointer,
+                                 Actor toActor) {
+                    super.exit(event, x, y, pointer, toActor);
+                    stage.setScrollFocus(null);
+                }
+            });
+
             screenContentTable
                     .add(scrollPane)
                     .colspan(2)
-                    .size(1600, 400)
+                    .size(1600, 550)
                     .row();
 
 

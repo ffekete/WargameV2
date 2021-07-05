@@ -15,7 +15,6 @@ import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.starsystem.StarSystemViewScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import static com.mygdx.mechwargame.util.ScreenUtils.repositionToScreenIfNotInFrustum;
@@ -36,7 +35,7 @@ public class StarLocalMenu extends Table {
         this.star = star;
         this.stage = stage;
 
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
         this.background(ninePatchDrawable);
@@ -86,7 +85,6 @@ public class StarLocalMenu extends Table {
                                      float y,
                                      int pointer,
                                      int button) {
-
                 event.stop();
                 return true;
             }
