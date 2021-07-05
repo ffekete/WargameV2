@@ -1,11 +1,14 @@
 package com.mygdx.mechwargame.screen.starsystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -27,6 +30,7 @@ import com.mygdx.mechwargame.ui.view.market.BarterWindow;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class MarketViewScreen extends GenericScreenAdapter {
 
@@ -35,6 +39,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
     private Sector sector;
 
     int barterPrice = 0;
+    int initialCapacity;
 
     Map<Item, List> itemsOriginalList = new HashMap<>();
 
@@ -67,6 +72,8 @@ public class MarketViewScreen extends GenericScreenAdapter {
     public void show() {
         super.show();
 
+        initialCapacity = GameData.starShip.cargoBay.capacity;
+
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         screenContentTable.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
 
@@ -95,7 +102,19 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         barterInfoTable.add(UIFactoryCommon.getDynamicTextLabel(priceMessage))
                 .padRight(30);
-        barterInfoTable.add(UIFactoryCommon.getDynamicTextLabel(() -> barterPrice == 0 ? "" : (barterPrice + "c")));
+        Label barterPriceLabel = UIFactoryCommon.getDynamicTextLabel(() -> barterPrice == 0 ? "" : (barterPrice + "c"));
+        barterInfoTable.add(barterPriceLabel);
+        barterPriceLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                if(barterPrice > Company.money) {
+                    barterPriceLabel.setColor(Color.RED);
+                } else {
+                    barterPriceLabel.setColor(Color.GREEN);
+                }
+                return false;
+            }
+        });
 
 
         screenContentTable.add(barterInfoTable)
@@ -128,17 +147,20 @@ public class MarketViewScreen extends GenericScreenAdapter {
             itemsOriginalList.put(item, playerItems);
             barterPrice -= item.price;
             GameData.starShip.cargoBay.removeItem(item);
+            initialCapacity++;
         };
 
         barterItemsConsumer = (Item item) -> {
-            List<Item> list = itemsOriginalList.get(item);
+            List<Item> list = itemsOriginalList.remove(item);
 
             if (list == playerItems) {
                 barterPrice += item.price;
                 GameData.starShip.cargoBay.addItem(item);
+                initialCapacity--;
             } else {
                 barterPrice -= item.price;
                 marketItems.add(item);
+                initialCapacity++;
             }
             barterItems.remove(item);
         };
@@ -148,6 +170,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
             itemsOriginalList.put(item, marketItems);
             barterPrice += item.price;
             marketItems.remove(item);
+            initialCapacity--;
         };
 
         refreshWindows();
@@ -184,7 +207,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
                 .left();
 
         Table buyButtonTable = new Table();
-        ImageTextButton buyButton = UIFactoryCommon.getMenuButton("finish");
+        ImageTextButton buyButton = UIFactoryCommon.getMenuButton("finalize");
         ImageTextButton resetButton = UIFactoryCommon.getMenuButton("reset");
 
         // ************    BUY BUTTON   ************************
@@ -198,25 +221,31 @@ public class MarketViewScreen extends GenericScreenAdapter {
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
                 if (Company.money >= barterPrice && !barterItems.isEmpty()) {
-                    Company.money -= barterPrice;
-                    barterPrice = 0;
 
-                    itemsOriginalList.entrySet().forEach(entry -> {
-                        if (entry.getValue() == playerItems) {
-                            marketItems.add(entry.getKey());
-                        } else {
-                            GameData.starShip.cargoBay.addItem(entry.getKey());
-                        }
-                        barterItems.remove(entry.getKey());
+                    if (initialCapacity < 0) {
+                        // todo show message
+                    } else {
 
-                        sortItems(playerItems);
-                        sortItems(marketItems);
-                    });
+                        Company.money -= barterPrice;
+                        barterPrice = 0;
 
-                    itemsOriginalList.clear();
+                        itemsOriginalList.entrySet().forEach(entry -> {
+                            if (entry.getValue() == playerItems) {
+                                marketItems.add(entry.getKey());
+                            } else {
+                                GameData.starShip.cargoBay.addItem(entry.getKey());
+                            }
+                            barterItems.remove(entry.getKey());
 
-                    barterItems.clear();
-                    refreshWindows();
+                            sortItems(playerItems);
+                            sortItems(marketItems);
+                        });
+
+                        itemsOriginalList.clear();
+
+                        barterItems.clear();
+                        refreshWindows();
+                    }
                 }
             }
         });
@@ -237,7 +266,23 @@ public class MarketViewScreen extends GenericScreenAdapter {
         buyButtonTable.add(resetButton).padRight(30);
         buyButtonTable.add(buyButton);
 
-        menuTable.add(buyButtonTable);
+        menuTable.add(buyButtonTable).padRight(30);
+
+        menuTable.add(UIFactoryCommon.getTextLabel("capacity:")).padRight(30);
+
+        Label capacityLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(initialCapacity));
+        menuTable.add(capacityLabel);
+        capacityLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                if(initialCapacity < 0) {
+                    capacityLabel.setColor(Color.RED);
+                } else {
+                    capacityLabel.setColor(Color.GREEN);
+                }
+                return false;
+            }
+        });
 
         screenContentTable.add(menuTable)
                 .left()
@@ -272,6 +317,8 @@ public class MarketViewScreen extends GenericScreenAdapter {
         });
 
         itemsOriginalList.clear();
+
+        initialCapacity = GameData.starShip.cargoBay.capacity;
 
         sortItems(playerItems);
         sortItems(marketItems);
@@ -351,6 +398,10 @@ public class MarketViewScreen extends GenericScreenAdapter {
                 itemsTable.row();
             }
         }
+    }
 
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 }
