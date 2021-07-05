@@ -9,20 +9,10 @@ import java.util.List;
 
 public class AssetManagerV2 extends AssetManager {
 
-    public static final String MAIN_MENU_BUTTON_BG_FRAME = "mainmenu/MainMenuButtonBgUp.png";
-    public static final String MAIN_MENU_BUTTON_BG_DOWN_FRAME = "mainmenu/MainMenuButtonBgDown.png";
-    public static final String MAIN_MENU_BACKGROUND = "mainmenu/Background.png";
     public static final String TEXT_CURSOR = "ui/TextCursor.png";
-    public static final String ROUND_SMALL_BUTTON_UP = "ui/RoundSmallButtonUp.png";
-    public static final String ROUND_SMALL_BUTTON_DOWN = "ui/RoundSmallButtonDown.png";
-    public static final String CHARACTER_INFO_FRAME = "ui/CharacterInfoFrame.png";
-    public static final String CHARACTER_ATTRIBUTES_FRAME = "ui/CharacterAttributesFrame.png";
-    public static final String TEXT_FIELD_BG = "ui/TextFieldBg.png";
-    public static final String MECH_DESCRIPTION_FRAME = "ui/gearselection/MechDescriptionFrame.png";
-    public static final String SHIP_INFO_DESCRIPTION_PANEL = "ui/ship/ShipInfoDescriptionPanel.png";
     public static final String HELP_ICON = "ui/HelpIcon.png";
     public static final String CARGO_ITEM_BG = "ui/cargo/CargoItemBg.png";
-    public static final String BARTER_PANEL = "ui/market/BarterPanel.png";
+
     public static final String SCROLL_PANE_KNOB = "ui/ScrollPaneKnob.png";
 
     public static final String HYDROGEN_CELL = "item/HydrogenCell.png";
@@ -91,8 +81,9 @@ public class AssetManagerV2 extends AssetManager {
     public static final String DECORATION_006 = "starsystem/background/decoration/Decoration006.png";
     public static final String DECORATION_007 = "starsystem/background/decoration/Decoration007.png";
 
-    public static final String STAR_SYSTEM_SCROLL_PANE_BG = "ui/StarSystemScrollPaneBg.png";
     public static final String TOOLTIP_BG = "ui/ToolTipBg.png";
+    public static final String FRAME_BG = "ui/FrameBg.png";
+    public static final String FRAME_BG_SMALL = "ui/FrameBgSmall.png";
 
 
 
@@ -161,9 +152,6 @@ public class AssetManagerV2 extends AssetManager {
     }
 
     public void loadAll() {
-        load(AssetManagerV2.MAIN_MENU_BUTTON_BG_FRAME, Texture.class);
-        load(AssetManagerV2.MAIN_MENU_BUTTON_BG_DOWN_FRAME, Texture.class);
-        load(AssetManagerV2.MAIN_MENU_BACKGROUND, Texture.class);
         load(AssetManagerV2.TEXT_CURSOR, Texture.class);
         load(AssetManagerV2.LOGO_01, Texture.class);
         load(AssetManagerV2.LOGO_02, Texture.class);
@@ -171,15 +159,8 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.PORTRAIT_02, Texture.class);
         load(AssetManagerV2.PORTRAIT_03, Texture.class);
         load(AssetManagerV2.PORTRAIT_FRAME, Texture.class);
-        load(AssetManagerV2.CHARACTER_INFO_FRAME, Texture.class);
-        load(AssetManagerV2.CHARACTER_ATTRIBUTES_FRAME, Texture.class);
-        load(AssetManagerV2.ROUND_SMALL_BUTTON_UP, Texture.class);
-        load(AssetManagerV2.ROUND_SMALL_BUTTON_DOWN, Texture.class);
-        load(AssetManagerV2.TEXT_FIELD_BG, Texture.class);
-        load(AssetManagerV2.MECH_DESCRIPTION_FRAME, Texture.class);
         load(AssetManagerV2.POWER_ICON_EMPTY, Texture.class);
         load(AssetManagerV2.POWER_ICON_FULL, Texture.class);
-        load(AssetManagerV2.SHIP_INFO_DESCRIPTION_PANEL, Texture.class);
         load(AssetManagerV2.BLACK_BEAR_IMAGE, Texture.class);
         load(AssetManagerV2.HELLFIRE_IMAGE, Texture.class);
         load(AssetManagerV2.INTERCEPTOR_IMAGE, Texture.class);
@@ -225,11 +206,11 @@ public class AssetManagerV2 extends AssetManager {
         load(DECORATION_007, Texture.class);
         load(CAPITOL_FRAME, Texture.class);
         load(PIRATE_STATION_001, Texture.class);
-        load(STAR_SYSTEM_SCROLL_PANE_BG, Texture.class);
         load(HYDROGEN_CELL, Texture.class);
         load(CARGO_ITEM_BG, Texture.class);
-        load(BARTER_PANEL, Texture.class);
         load(SCROLL_PANE_KNOB, Texture.class);
         load(TOOLTIP_BG, Texture.class);
+        load(FRAME_BG, Texture.class);
+        load(FRAME_BG_SMALL, Texture.class);
     }
 }

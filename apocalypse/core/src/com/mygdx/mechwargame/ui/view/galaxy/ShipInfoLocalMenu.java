@@ -2,14 +2,18 @@ package com.mygdx.mechwargame.ui.view.galaxy;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
@@ -29,7 +33,10 @@ public class ShipInfoLocalMenu extends Container<Table> {
         BaseShip ship = GameData.starShip;
         Camera camera = stage.getCamera();
 
-        this.background(new AnimatedDrawable(AssetManagerV2.CHARACTER_ATTRIBUTES_FRAME, 1500, 600, true, 0.1f));
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
+
+        this.background(ninePatchDrawable);
         this.setSize(1500, 600);
         this.setPosition(camera.position.x - 750f, camera.position.y - 300);
 
@@ -75,7 +82,8 @@ public class ShipInfoLocalMenu extends Container<Table> {
 
         buttonsTable.setSize(450, 500);
         descriptionTable.setSize(1000, 500);
-        descriptionTable.background(new AnimatedDrawable(AssetManagerV2.SHIP_INFO_DESCRIPTION_PANEL, 1000, 500, true, 0.1f));
+
+        descriptionTable.background(ninePatchDrawable);
 
         mainTable.add(buttonsTable)
                 .padRight(50)

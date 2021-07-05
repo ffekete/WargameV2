@@ -1,11 +1,13 @@
 package com.mygdx.mechwargame.core.item;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -33,12 +35,15 @@ public abstract class Item extends Image {
         tooltipManager.initialTime = 0.5f;
         tooltipManager.subsequentTime = 0.5f;
 
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class), 16 ,16, 16, 16);
+
         Table table = new Table();
         table.pad(30);
         Sprite sprite = new Sprite(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class));
         sprite.setColor(TOOLTIP_COLOR);
-        SpriteDrawable tooltipBackground = new SpriteDrawable(sprite);
-        table.background(tooltipBackground);
+
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
+        table.setBackground(ninePatchDrawable);
         Tooltip<Table> tooltip = new Tooltip<>(table, tooltipManager);
 
         table.add(UIFactoryCommon.getTextLabel("name", UIFactoryCommon.fontSmall, Align.left))

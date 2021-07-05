@@ -74,7 +74,6 @@ public class MarketViewScreen extends GenericScreenAdapter {
         initialCapacity = GameData.starShip.cargoBay.capacity;
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-        screenContentTable.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
 
         Table playerInfoTable = new Table();
         playerInfoTable.add(UIFactoryCommon.getTextLabel("your money "))

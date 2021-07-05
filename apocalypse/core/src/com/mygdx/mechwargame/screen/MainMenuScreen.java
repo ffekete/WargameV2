@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Attributes;
@@ -83,8 +86,6 @@ public class MainMenuScreen extends GenericScreenAdapter {
 
     private void finishedLoading() {
         Table table = new Table();
-
-        table.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
 
         final ImageTextButton quickStartButton = UIFactoryCommon.getMenuButton("Quick Start");
         final ImageTextButton newGameButton = UIFactoryCommon.getMenuButton("Start");

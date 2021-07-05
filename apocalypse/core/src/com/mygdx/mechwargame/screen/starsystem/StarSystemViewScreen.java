@@ -4,12 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.starsystem.Marketplace;
@@ -19,7 +20,6 @@ import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.text.MarketplaceDialogueCreator;
 import com.mygdx.mechwargame.text.StarViewDescriptionCreator;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.text.DecimalFormat;
@@ -46,10 +46,9 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
         GameState.previousScreen = this;
 
-        if(reloadNeeded) {
+        if (reloadNeeded) {
 
             screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-            screenContentTable.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
 
             Map<Integer, String> wealthMapper = new HashMap<>();
             wealthMapper.put(1, "poor");
@@ -150,7 +149,12 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
             Table dialogueTable = new Table();
             ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
-            scrollPaneStyle.background = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_SCROLL_PANE_BG, Texture.class));
+
+            NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
+            NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
+
+
+            scrollPaneStyle.background = ninePatchDrawable;
 
             ScrollPane scrollPane = new ScrollPane(dialogueTable, scrollPaneStyle);
             scrollPane.setSize(1600, 400);
@@ -226,7 +230,10 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
         Gdx.input.setInputProcessor(stage);
     }
 
-    private Label addTextToDialogueBox(Table dialogueTable, String buttonText, String text, ClickListener clickListener) {
+    private Label addTextToDialogueBox(Table dialogueTable,
+                                       String buttonText,
+                                       String text,
+                                       ClickListener clickListener) {
 
         ImageTextButton button = UIFactoryCommon.getSmallRoundButton(buttonText);
         button.addListener(clickListener);

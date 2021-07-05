@@ -3,6 +3,8 @@ package com.mygdx.mechwargame.screen.chargen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
@@ -23,6 +26,7 @@ import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.screen.galaxy.GalaxySetupScreen;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
@@ -46,8 +50,6 @@ public class GearSelectionScreen extends GenericScreenAdapter {
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
-        screenContentTable.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
-
         screenContentTable.add(UIFactoryCommon.getTextLabel("create your character", UIFactoryCommon.fontMedium)).colspan(6).padBottom(50).row();
 
         screenContentTable.add(UIFactoryCommon.getTextLabel("4. select gear", UIFactoryCommon.fontSmall)).colspan(6).padBottom(20).row();
@@ -64,8 +66,11 @@ public class GearSelectionScreen extends GenericScreenAdapter {
         ImageTextButton scrollMechRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
         screenContentTable.add(scrollMechRightButton).size(64).left().row();
 
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
+
         Table gearDescriptionTable = new Table();
-        gearDescriptionTable.background(new AnimatedDrawable(AssetManagerV2.MECH_DESCRIPTION_FRAME, 800, 600, true, 0.1f));
+        gearDescriptionTable.background(ninePatchDrawable);
         gearDescriptionTable.setSize(800, 600);
 
         Label mechDescriptionLabel = UIFactoryCommon.getDynamicTextLabel(() -> mech.getDescription(), UIFactoryCommon.fontSmall);

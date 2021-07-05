@@ -1,12 +1,15 @@
 package com.mygdx.mechwargame.screen.chargen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Character;
@@ -14,6 +17,7 @@ import com.mygdx.mechwargame.core.character.Skills;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
@@ -36,17 +40,20 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
-        screenContentTable.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
-
         screenContentTable.add(UIFactoryCommon.getTextLabel("create your character", UIFactoryCommon.fontMedium)).colspan(6).padBottom(50).row();
 
         screenContentTable.add(UIFactoryCommon.getTextLabel("3. skills", UIFactoryCommon.fontSmall)).colspan(6).padBottom(50).row();
 
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
+
         Table characterInfoTable = new Table();
-        characterInfoTable.background(new AnimatedDrawable(AssetManagerV2.CHARACTER_INFO_FRAME, 1500, 128, true, 0.15f));
+        characterInfoTable.background(ninePatchDrawable);
+        characterInfoTable.setSize(1500, 128);
         characterInfoTable.pad(10);
         Table skillsTable = new Table();
-        skillsTable.background(new AnimatedDrawable(AssetManagerV2.CHARACTER_ATTRIBUTES_FRAME, 1500, 600, true, 0.15f));
+        skillsTable.background(ninePatchDrawable);
+        skillsTable.setSize(1500, 600);
 
         Table innerTable = new Table();
 

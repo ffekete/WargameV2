@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -177,7 +180,10 @@ public class UIFactoryCommon {
 
     public static <T extends Actor> Container<T> getInputContainer(T t) {
         Container<T> container = new Container<>(t);
-        container.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.TEXT_FIELD_BG, Texture.class)));
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
+        ninePatch.setColor(Color.GREEN);
+        container.background(ninePatchDrawable);
         return container;
     }
 
@@ -218,11 +224,14 @@ public class UIFactoryCommon {
 
         final ImageTextButton textButton = new ImageTextButton(text, textButtonStyle);
 
-        final TextureRegionDrawable buttonUp = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.MAIN_MENU_BUTTON_BG_FRAME, Texture.class));
-        final TextureRegionDrawable buttonDown = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.MAIN_MENU_BUTTON_BG_DOWN_FRAME, Texture.class));
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        textButton.getStyle().up = buttonUp;
-        textButton.getStyle().down = buttonDown;
+        NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawableSmall = new NinePatchDrawable(ninePatchSmall);
+
+        textButton.getStyle().up = ninePatchDrawable;
+        textButton.getStyle().down = ninePatchDrawableSmall;
 
         return textButton;
     }
@@ -242,13 +251,16 @@ public class UIFactoryCommon {
 
         textButton.getLabel().setAlignment(Align.center);
 
-        final TextureRegionDrawable buttonUp = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.ROUND_SMALL_BUTTON_UP, Texture.class));
-        final TextureRegionDrawable buttonDown = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.ROUND_SMALL_BUTTON_DOWN, Texture.class));
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        textButton.getStyle().up = buttonUp;
+        NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16 ,16, 16, 16);
+        NinePatchDrawable ninePatchDrawableSmall = new NinePatchDrawable(ninePatchSmall);
 
-        textButton.getStyle().up = buttonUp;
-        textButton.getStyle().down = buttonDown;
+        textButton.getStyle().up = ninePatchDrawable;
+        textButton.getStyle().down = ninePatchDrawableSmall;
+
+        textButton.pack();
 
         return textButton;
     }

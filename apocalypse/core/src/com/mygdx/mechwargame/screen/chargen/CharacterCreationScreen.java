@@ -3,11 +3,14 @@ package com.mygdx.mechwargame.screen.chargen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Character;
@@ -31,8 +34,6 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
         super.show();
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-
-        screenContentTable.background(new AnimatedDrawable(AssetManagerV2.MAIN_MENU_BACKGROUND, 1920, 1080, true, 0.15f));
 
         screenContentTable.add(UIFactoryCommon.getTextLabel("create your character", UIFactoryCommon.fontMedium)).colspan(6).padBottom(50).row();
 
