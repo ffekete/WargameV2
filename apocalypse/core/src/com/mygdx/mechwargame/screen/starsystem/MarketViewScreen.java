@@ -30,7 +30,6 @@ import com.mygdx.mechwargame.ui.view.market.BarterWindow;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class MarketViewScreen extends GenericScreenAdapter {
 
@@ -83,7 +82,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
         playerInfoTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Company.money + "c"));
 
         screenContentTable.add(playerInfoTable)
-                .size(620, 70)
+                .size(620, 140)
                 .center()
                 .padRight(10);
 
@@ -100,14 +99,40 @@ public class MarketViewScreen extends GenericScreenAdapter {
             }
         };
 
-        barterInfoTable.add(UIFactoryCommon.getDynamicTextLabel(priceMessage))
+        barterInfoTable.add(UIFactoryCommon.getTextLabel("capacity:"))
+                .width(300)
                 .padRight(30);
-        Label barterPriceLabel = UIFactoryCommon.getDynamicTextLabel(() -> barterPrice == 0 ? "" : (barterPrice + "c"));
-        barterInfoTable.add(barterPriceLabel);
+
+        Label capacityLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(initialCapacity));
+        barterInfoTable.add(capacityLabel)
+                .width(280)
+                .left()
+                .colspan(2)
+                .row();
+
+        capacityLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                if (initialCapacity < 0) {
+                    capacityLabel.setColor(Color.RED);
+                } else {
+                    capacityLabel.setColor(Color.GREEN);
+                }
+                return false;
+            }
+        });
+
+
+        barterInfoTable.add(UIFactoryCommon.getDynamicTextLabel(priceMessage))
+                .width(300)
+                .padRight(30);
+        Label barterPriceLabel = UIFactoryCommon.getDynamicTextLabel(() -> barterPrice == 0 ? "" : (Math.abs(barterPrice) + "c"));
+        barterInfoTable.add(barterPriceLabel)
+                .width(280);
         barterPriceLabel.addAction(new Action() {
             @Override
             public boolean act(float delta) {
-                if(barterPrice > Company.money) {
+                if (barterPrice > Company.money) {
                     barterPriceLabel.setColor(Color.RED);
                 } else {
                     barterPriceLabel.setColor(Color.GREEN);
@@ -267,22 +292,6 @@ public class MarketViewScreen extends GenericScreenAdapter {
         buyButtonTable.add(buyButton);
 
         menuTable.add(buyButtonTable).padRight(30);
-
-        menuTable.add(UIFactoryCommon.getTextLabel("capacity:")).padRight(30);
-
-        Label capacityLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(initialCapacity));
-        menuTable.add(capacityLabel);
-        capacityLabel.addAction(new Action() {
-            @Override
-            public boolean act(float delta) {
-                if(initialCapacity < 0) {
-                    capacityLabel.setColor(Color.RED);
-                } else {
-                    capacityLabel.setColor(Color.GREEN);
-                }
-                return false;
-            }
-        });
 
         screenContentTable.add(menuTable)
                 .left()
