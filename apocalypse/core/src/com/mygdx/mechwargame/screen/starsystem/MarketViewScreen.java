@@ -95,7 +95,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
                     return "no payment";
                 }
 
-                return barterPrice < 0 ? "sell for" : "pay";
+                return barterPrice < 0 ? "you get" : "you pay";
             }
         };
 
