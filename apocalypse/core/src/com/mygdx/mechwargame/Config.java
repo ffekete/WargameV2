@@ -11,6 +11,7 @@ public class Config {
 
     public static boolean SHOW_FPS = false;
 
+    public static float SCREEN_TRANSITION_DELAY = 0.25f;
 
     // orders
     public static final int FUEL_ORDER = 1;

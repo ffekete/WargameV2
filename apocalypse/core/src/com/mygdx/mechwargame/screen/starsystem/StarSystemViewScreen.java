@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -17,6 +19,7 @@ import com.mygdx.mechwargame.core.starsystem.Marketplace;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
+import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.text.MarketplaceDialogueCreator;
 import com.mygdx.mechwargame.text.StarViewDescriptionCreator;
@@ -25,6 +28,8 @@ import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
 public class StarSystemViewScreen extends GenericScreenAdapter {
 
@@ -45,6 +50,8 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
         super.show();
 
         GameState.previousScreen = this;
+
+        screenContentTable.setColor(1,1,1,1);
 
         if (reloadNeeded) {
 
@@ -169,6 +176,8 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .padBottom(30)
                     .row();
 
+            // todo next: demand
+
             if (star.facilities.stream().anyMatch(facility -> facility instanceof Marketplace)) {
 
                 ClickListener clickListener = new ClickListener() {
@@ -179,7 +188,16 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                                              int pointer,
                                              int button) {
                         // show market screen
-                        GameState.game.setScreen(new MarketViewScreen(star, sector));
+                        SequenceAction sequenceAction = new SequenceAction();
+                        AlphaAction alphaAction = new AlphaAction();
+                        sequenceAction.addAction(alphaAction);
+                        alphaAction.setAlpha(0);
+                        alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                        alphaAction.setActor(screenContentTable);
+
+                        sequenceAction.addAction(new SetScreenAction(new MarketViewScreen(star, sector)));
+
+                        stage.addAction(sequenceAction);
                         return true;
                     }
                 };
@@ -224,17 +242,7 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
             screenContentTable.addActor(backButton);
 
-            backButton.addListener(new InputListener() {
-                @Override
-                public boolean touchDown(InputEvent event,
-                                         float x,
-                                         float y,
-                                         int pointer,
-                                         int button) {
-                    super.touchDown(event, x, y, pointer, button);
-                    event.stop();
-                    return true;
-                }
+            backButton.addListener(new ClickListener() {
 
                 @Override
                 public void touchUp(InputEvent event,
@@ -244,7 +252,16 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                                     int button) {
                     super.touchUp(event, x, y, pointer, button);
                     event.stop();
-                    GameState.game.setScreen(GameState.galaxyViewScreen);
+                    SequenceAction sequenceAction = new SequenceAction();
+                    AlphaAction alphaAction = new AlphaAction();
+                    sequenceAction.addAction(alphaAction);
+                    alphaAction.setAlpha(0);
+                    alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                    alphaAction.setActor(screenContentTable);
+
+                    sequenceAction.addAction(new SetScreenAction(GameState.galaxyViewScreen));
+
+                    stage.addAction(sequenceAction);
                 }
             });
 

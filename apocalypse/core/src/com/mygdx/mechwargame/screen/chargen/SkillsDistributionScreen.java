@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,10 +17,13 @@ import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.character.Skills;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.screen.galaxy.GalaxyCreatorScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
+
+import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
 public class SkillsDistributionScreen extends GenericScreenAdapter {
 
@@ -37,6 +41,8 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
     @Override
     public void show() {
         super.show();
+
+        screenContentTable.setColor(1, 1, 1, 1);
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
@@ -132,8 +138,14 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
                                      int button) {
                 GameData.mainCharacter = character;
                 SequenceAction sequenceAction = new SequenceAction();
-                sequenceAction.addAction(Actions.delay(0.15f));
+                AlphaAction alphaAction = new AlphaAction();
+                sequenceAction.addAction(alphaAction);
+                alphaAction.setAlpha(0);
+                alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                alphaAction.setActor(screenContentTable);
+
                 sequenceAction.addAction(new SetScreenAction(new GearSelectionScreen()));
+
                 stage.addAction(sequenceAction);
                 return true;
             }

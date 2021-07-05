@@ -22,6 +22,7 @@ public class LayeredAnimatedImage extends Image {
                      float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setColor(getColor());
+        batch.getColor().a = parentAlpha;
         animatedDrawables.forEach(animatedDrawable -> {
             animatedDrawable.rotation = getRotation();
             animatedDrawable.scale = getScaleX();
@@ -29,6 +30,7 @@ public class LayeredAnimatedImage extends Image {
         });
 
         batch.setColor(Color.WHITE);
+        batch.getColor().a = 1f;
     }
 
     public void resetAnimations() {

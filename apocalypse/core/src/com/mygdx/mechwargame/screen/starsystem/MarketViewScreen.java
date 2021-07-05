@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -21,6 +23,7 @@ import com.mygdx.mechwargame.core.starsystem.Marketplace;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
+import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
@@ -30,8 +33,11 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
+
 public class MarketViewScreen extends GenericScreenAdapter {
 
+    private static final int HEADER_HEIGHT = 120;
     private Table screenContentTable = new Table();
     private Star star;
     private Sector sector;
@@ -57,6 +63,8 @@ public class MarketViewScreen extends GenericScreenAdapter {
         this.star = star;
         this.sector = sector;
 
+        screenContentTable.setColor(1, 1, 1, 1);
+
         playerItems = GameData.starShip.cargoBay.getItems();
 
         marketItems = star.facilities.stream()
@@ -75,12 +83,12 @@ public class MarketViewScreen extends GenericScreenAdapter {
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
         Table playerInfoTable = new Table();
-        playerInfoTable.add(UIFactoryCommon.getTextLabel("your money "))
+        playerInfoTable.add(UIFactoryCommon.getTextLabel("your money ", UIFactoryCommon.fontSmall))
                 .padRight(30);
-        playerInfoTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Company.money + "c"));
+        playerInfoTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Company.money + "c", UIFactoryCommon.fontSmall));
 
         screenContentTable.add(playerInfoTable)
-                .size(620, 140)
+                .size(620, HEADER_HEIGHT)
                 .center()
                 .padRight(10);
 
@@ -97,11 +105,11 @@ public class MarketViewScreen extends GenericScreenAdapter {
             }
         };
 
-        barterInfoTable.add(UIFactoryCommon.getTextLabel("capacity:"))
+        barterInfoTable.add(UIFactoryCommon.getTextLabel("capacity:", UIFactoryCommon.fontSmall))
                 .width(300)
                 .padRight(30);
 
-        Label capacityLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(initialCapacity));
+        Label capacityLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(initialCapacity), UIFactoryCommon.fontSmall);
         barterInfoTable.add(capacityLabel)
                 .width(280)
                 .left()
@@ -121,10 +129,10 @@ public class MarketViewScreen extends GenericScreenAdapter {
         });
 
 
-        barterInfoTable.add(UIFactoryCommon.getDynamicTextLabel(priceMessage))
+        barterInfoTable.add(UIFactoryCommon.getDynamicTextLabel(priceMessage, UIFactoryCommon.fontSmall))
                 .width(300)
                 .padRight(30);
-        Label barterPriceLabel = UIFactoryCommon.getDynamicTextLabel(() -> barterPrice == 0 ? "" : (Math.abs(barterPrice) + "c"));
+        Label barterPriceLabel = UIFactoryCommon.getDynamicTextLabel(() -> barterPrice == 0 ? "" : (Math.abs(barterPrice) + "c"), UIFactoryCommon.fontSmall);
         barterInfoTable.add(barterPriceLabel)
                 .width(280);
         barterPriceLabel.addAction(new Action() {
@@ -141,12 +149,12 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
 
         screenContentTable.add(barterInfoTable)
-                .size(620, 140)
+                .size(620, HEADER_HEIGHT)
                 .center()
                 .padRight(10);
 
-        screenContentTable.add(UIFactoryCommon.getTextLabel("marketplace", Align.center))
-                .size(620, 140)
+        screenContentTable.add(UIFactoryCommon.getTextLabel("marketplace", UIFactoryCommon.fontSmall, Align.center))
+                .size(620, HEADER_HEIGHT)
                 .center()
                 .padRight(10);
 
@@ -201,7 +209,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
         screenContentTable.row();
         screenContentTable
                 .add()
-                .size(30)
+                .size(15)
                 .row();
 
         ImageButton backButton = UIFactoryCommon.getBackButton();
@@ -216,15 +224,24 @@ public class MarketViewScreen extends GenericScreenAdapter {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
-                GameState.game.setScreen(GameState.previousScreen);
+                SequenceAction sequenceAction = new SequenceAction();
+                AlphaAction alphaAction = new AlphaAction();
+                sequenceAction.addAction(alphaAction);
+                alphaAction.setAlpha(0);
+                alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                alphaAction.setActor(screenContentTable);
+
+                sequenceAction.addAction(new SetScreenAction(GameState.previousScreen));
+
+                stage.addAction(sequenceAction);
 
                 resetBarter();
             }
         });
 
-        Table menuTable = new Table();
+        Table footerMenuTable = new Table();
 
-        menuTable.add(backButton)
+        footerMenuTable.add(backButton)
                 .size(64, 64)
                 .padRight(620 - 64 - 100)
                 .left();
@@ -291,10 +308,10 @@ public class MarketViewScreen extends GenericScreenAdapter {
         buyButtonTable.add(buyButton)
                 .width(400);
 
-        menuTable.add(buyButtonTable)
+        footerMenuTable.add(buyButtonTable)
                 .padRight(30);
 
-        screenContentTable.add(menuTable)
+        screenContentTable.add(footerMenuTable)
                 .left()
                 .colspan(3);
 

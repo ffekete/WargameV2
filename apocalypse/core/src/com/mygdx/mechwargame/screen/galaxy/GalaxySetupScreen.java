@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -20,6 +21,8 @@ import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
+import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
+
 public class GalaxySetupScreen extends GenericScreenAdapter {
 
     private Table screenContentTable = new Table();
@@ -27,6 +30,8 @@ public class GalaxySetupScreen extends GenericScreenAdapter {
     @Override
     public void show() {
         super.show();
+
+        screenContentTable.setColor(1, 1, 1, 1);
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
@@ -255,9 +260,16 @@ public class GalaxySetupScreen extends GenericScreenAdapter {
                                      float y,
                                      int pointer,
                                      int button) {
+
                 SequenceAction sequenceAction = new SequenceAction();
-                sequenceAction.addAction(new FlashingAction(0.1f, 8, finishButton.getLabel()));
+                AlphaAction alphaAction = new AlphaAction();
+                sequenceAction.addAction(alphaAction);
+                alphaAction.setAlpha(0);
+                alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                alphaAction.setActor(screenContentTable);
+
                 sequenceAction.addAction(new SetScreenAction(new GalaxyCreatorScreen(galaxySetupParameters)));
+
                 stage.addAction(sequenceAction);
 
                 return true;
