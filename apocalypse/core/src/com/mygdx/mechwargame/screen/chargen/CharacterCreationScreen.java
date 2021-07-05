@@ -3,13 +3,11 @@ package com.mygdx.mechwargame.screen.chargen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Character;
@@ -38,78 +36,147 @@ public class CharacterCreationScreen extends GenericScreenAdapter {
 
         screenContentTable.setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
-        screenContentTable.add(UIFactoryCommon.getTextLabel("create your character", UIFactoryCommon.fontMedium)).colspan(6).padBottom(50).row();
+        screenContentTable.add(UIFactoryCommon.getTextLabel("create your character", UIFactoryCommon.fontMedium))
+                .height(70)
+                .colspan(6)
+                .padBottom(50)
+                .row();
 
-        screenContentTable.add(UIFactoryCommon.getTextLabel("1. appearance", UIFactoryCommon.fontSmall)).colspan(6).padBottom(50).row();
+        screenContentTable.add(UIFactoryCommon.getTextLabel("1. appearance", UIFactoryCommon.fontSmall))
+                .height(50)
+                .colspan(6)
+                .padBottom(50)
+                .row();
 
         screenContentTable.add(UIFactoryCommon.getTextLabel("first name", UIFactoryCommon.fontSmall))
-                .left()
-                .width(250);
+                .size(250, 50)
+                .left();
 
         Container<TextField> firstNameTextField = UIFactoryCommon.getTextField("first name", "", UIFactoryCommon.fontSmall);
         screenContentTable.add(firstNameTextField)
-                .width(600)
+                .size(600, 50)
                 .pad(10)
                 .colspan(5)
                 .row();
 
+        // h: 120
+
         screenContentTable.add(UIFactoryCommon.getTextLabel("last name", UIFactoryCommon.fontSmall))
-                .left()
-                .width(250);
+                .size(250, 50)
+                .left();
 
         Container<TextField> lastNameTextField = UIFactoryCommon.getTextField("last name", "", UIFactoryCommon.fontSmall);
         screenContentTable.add(lastNameTextField)
-                .width(600)
+                .size(600, 50)
                 .pad(10)
                 .colspan(5)
                 .row();
 
         screenContentTable.add(UIFactoryCommon.getTextLabel("nickname", UIFactoryCommon.fontSmall)).left()
-                .width(250);
+                .size(250, 50);
 
         Container<TextField> nickNameTextField = UIFactoryCommon.getTextField("enter nickname", "", UIFactoryCommon.fontSmall);
 
         screenContentTable.add(nickNameTextField)
-                .width(600)
-                .pad(10, 10, 50, 10)
+                .size(600, 50)
+                .pad(10, 10, 20, 10)
                 .colspan(5)
                 .row();
 
+        // h: 190
+
         // select portrait
-        screenContentTable.add(UIFactoryCommon.getTextLabel("choose portrait", UIFactoryCommon.fontSmall)).width(300);
-        screenContentTable.add().size(128, 128);
+        screenContentTable.add(UIFactoryCommon.getTextLabel("portrait", UIFactoryCommon.fontSmall))
+                .size(400, 128);
+
+        Table portraitTable = new Table();
+        portraitTable.setSize(276, 128);
+
         ImageTextButton scrollPortraitLeftButton = UIFactoryCommon.getSmallRoundButton("-", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollPortraitLeftButton).size(64).right();
+        portraitTable.add(scrollPortraitLeftButton)
+                .size(64)
+                .padRight(10)
+                .right();
 
         final AnimatedDrawable portraitFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
         final AnimatedDrawable portraitDrawable = new AnimatedDrawable(GameState.assetManager.portraits.get(portraitIndex), 32, 32, true, FRAME_ANIM_SPEED);
         final Image portraitImage = new LayeredAnimatedImage(portraitDrawable, portraitFrameAnimation);
 
-        final Cell<Image> portraitImgeCell = screenContentTable.add(portraitImage).size(128, 128).center();
+        final Cell<Image> portraitImgeCell = portraitTable.add(portraitImage)
+                .size(128)
+                .padRight(10)
+                .center();
         ImageTextButton scrollPortraitRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollPortraitRightButton).size(64).left().row();
+        portraitTable.add(scrollPortraitRightButton)
+                .size(64)
+                .left()
+                .row();
 
-        // separator
-        screenContentTable.add().size(32).row();
+        // h: 328
+
+        screenContentTable.add()
+                .fillX();
+
+        screenContentTable.add(portraitTable)
+                .size(276, 128)
+                .right()
+                .row();
+
+        // h: 328
 
         // select logo
-        screenContentTable.add(UIFactoryCommon.getTextLabel("choose logo", UIFactoryCommon.fontSmall)).width(300);
-        screenContentTable.add().size(128, 128);
+        Table logoTable = new Table();
+        logoTable.setSize(276, 128);
+
+        screenContentTable.add(UIFactoryCommon.getTextLabel("logo", UIFactoryCommon.fontSmall))
+                .size(400, 128);
+
         ImageTextButton scrollLogoLeftButton = UIFactoryCommon.getSmallRoundButton("-", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollLogoLeftButton).size(64).right();
+
+        logoTable.add(scrollLogoLeftButton)
+                .size(64)
+                .padRight(10)
+                .right();
 
         final AnimatedDrawable logoFrameAnimation = new AnimatedDrawable(AssetManagerV2.PORTRAIT_FRAME, PORTRAIT_SIZE, PORTRAIT_SIZE, true, FRAME_ANIM_SPEED);
         final AnimatedDrawable logoDrawable = new AnimatedDrawable(GameState.assetManager.logos.get(logoIndex), 32, 32, true, FRAME_ANIM_SPEED);
         final Image logoImage = new LayeredAnimatedImage(logoFrameAnimation, logoDrawable);
-        final Cell<Image> logoImgeCell = screenContentTable.add(logoImage).size(128, 128).center();
-        ImageTextButton scrollLogoRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
-        screenContentTable.add(scrollLogoRightButton).size(64).left().row();
+        final Cell<Image> logoImgeCell = logoTable.add(logoImage)
+                .size(128, 128)
+                .padRight(10)
+                .center();
 
-        screenContentTable.add().size(128, 92).row();
+        ImageTextButton scrollLogoRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
+        logoTable.add(scrollLogoRightButton)
+                .size(64)
+                .left();
+
+        screenContentTable.add()
+                .width(600 - 276);
+
+        screenContentTable.add(logoTable)
+                .size(276, 128)
+                .right()
+                .row();
+
+        // h: 456
+
+        screenContentTable.add()
+                .size(128, 92)
+                .row();
+
+        // h: 548
 
         ImageTextButton attributesButton = UIFactoryCommon.getMenuButton("attributes");
 
-        screenContentTable.add(attributesButton).colspan(6).center().size(450, 80);
+        screenContentTable.add(attributesButton)
+                .colspan(6)
+                .center()
+                .padTop(212)
+                .size(450, 80)
+                .row();
+
+        // h: 628 + 272
 
         scrollLogoLeftButton.addListener(new ClickListener(Input.Buttons.LEFT) {
             @Override

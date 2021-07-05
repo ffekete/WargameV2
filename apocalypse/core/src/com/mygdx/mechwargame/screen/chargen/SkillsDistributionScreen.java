@@ -59,12 +59,12 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
         characterInfoTable.pad(10);
         Table skillsTable = new Table();
         skillsTable.background(ninePatchDrawable);
-        skillsTable.setSize(1500, 600);
+        skillsTable.setSize(1500, 575);
 
         Table innerTable = new Table();
 
         screenContentTable.add(characterInfoTable).width(1500).padBottom(30).row();
-        screenContentTable.add(skillsTable).width(1500).height(500).center().row();
+        screenContentTable.add(skillsTable).width(1500).height(575).center().row();
 
         characterInfoTable.add(character.portrait).size(128).padRight(20);
         innerTable.add(UIFactoryCommon.getTextLabel(character.firstName, UIFactoryCommon.fontSmall)).left().padRight(20);
@@ -126,7 +126,7 @@ public class SkillsDistributionScreen extends GenericScreenAdapter {
         skillsTable.row();
 
         ImageTextButton gearButton = UIFactoryCommon.getMenuButton("gear");
-        screenContentTable.add(gearButton).colspan(6).center().size(450, 80).padTop(5);
+        screenContentTable.add(gearButton).colspan(6).center().size(450, 80).padTop(25);
 
         // add click action
         gearButton.addListener(new InputListener() {
