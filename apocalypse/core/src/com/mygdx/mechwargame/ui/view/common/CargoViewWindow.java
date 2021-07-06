@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.ui.view.market;
+package com.mygdx.mechwargame.ui.view.common;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -9,16 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 
-public class BarterWindow extends ScrollPane {
+public class CargoViewWindow extends ScrollPane {
 
     public Table container;
     public Stage stage;
 
-    public BarterWindow(Table table, Stage stage) {
+    public CargoViewWindow(Table table, Stage stage) {
         super(table);
         this.stage = stage;
 
@@ -27,9 +27,12 @@ public class BarterWindow extends ScrollPane {
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
+        NinePatch knobNinePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.SCROLL_PANE_KNOB, Texture.class), 8 ,8, 8, 8);
+        NinePatchDrawable knobNinePatchDrawable = new NinePatchDrawable(knobNinePatch);
+
         ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle();
         scrollPaneStyle.background = ninePatchDrawable;
-        scrollPaneStyle.vScrollKnob = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.SCROLL_PANE_KNOB, Texture.class));
+        scrollPaneStyle.vScrollKnob = knobNinePatchDrawable;
         this.setStyle(scrollPaneStyle);
 
         container.setSize(800, 620);
@@ -59,5 +62,12 @@ public class BarterWindow extends ScrollPane {
                 stage.setScrollFocus(null);
             }
         });
+    }
+
+    public void hide(Stage stage) {
+        stage.getActors().removeValue(this, true);
+        stage.setKeyboardFocus(null);
+        GameData.cargoViewWindow = null;
+        GameData.lockGameStage = false;
     }
 }

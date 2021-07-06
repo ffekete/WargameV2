@@ -27,7 +27,7 @@ import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
-import com.mygdx.mechwargame.ui.view.market.BarterWindow;
+import com.mygdx.mechwargame.ui.view.common.CargoViewWindow;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -174,16 +174,16 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         screenContentTable.row();
 
-        screenContentTable.add(new BarterWindow(playerItemsTable, stage))
+        screenContentTable.add(new CargoViewWindow(playerItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
-        screenContentTable.add(new BarterWindow(barterItemsTable, stage))
+        screenContentTable.add(new CargoViewWindow(barterItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
 
-        screenContentTable.add(new BarterWindow(marketItemsTable, stage))
+        screenContentTable.add(new CargoViewWindow(marketItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
@@ -248,6 +248,16 @@ public class MarketViewScreen extends GenericScreenAdapter {
                 sequenceAction.addAction(new SetScreenAction(GameState.previousScreen));
 
                 stage.addAction(sequenceAction);
+
+                playerItems.forEach(item -> {
+                    List<EventListener> toClear = new ArrayList<>();
+                    item.getListeners().forEach(eventListener -> {
+                        if (eventListener instanceof ClickListener) {
+                            toClear.add(eventListener);
+                        }
+                    });
+                    toClear.forEach(l -> item.getListeners().removeValue(l, true));
+                });
 
                 resetBarter();
             }

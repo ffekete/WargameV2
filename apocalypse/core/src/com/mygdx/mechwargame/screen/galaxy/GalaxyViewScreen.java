@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -25,10 +26,7 @@ import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.ScrollController;
 import com.mygdx.mechwargame.screen.action.LockGameStageAction;
 import com.mygdx.mechwargame.screen.action.MainAction;
-import com.mygdx.mechwargame.screen.galaxy.event.MapClickEvent;
-import com.mygdx.mechwargame.screen.galaxy.event.ScrollEvent;
-import com.mygdx.mechwargame.screen.galaxy.event.ShipClickEvent;
-import com.mygdx.mechwargame.screen.galaxy.event.StarClickEvent;
+import com.mygdx.mechwargame.screen.galaxy.inputevent.*;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
@@ -116,18 +114,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
             ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
             shipInfoButton.setSize(64, 64);
-            shipInfoButton.addListener(new InputListener() {
-                @Override
-                public boolean touchDown(InputEvent event,
-                                         float x,
-                                         float y,
-                                         int pointer,
-                                         int button) {
-                    super.touchDown(event, x, y, pointer, button);
-                    event.stop();
-                    return true;
-                }
-
+            shipInfoButton.addListener(new ClickListener() {
                 @Override
                 public void touchUp(InputEvent event,
                                     float x,
@@ -139,6 +126,20 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     showShipInfoLocalMenu();
                 }
             });
+
+            cargoButton.addListener(new ClickListener() {
+                @Override
+                public void touchUp(InputEvent event,
+                                    float x,
+                                    float y,
+                                    int pointer,
+                                    int button) {
+                    super.touchUp(event, x, y, pointer, button);
+                    event.stop();
+                    showCargoLocalMenu();
+                }
+            });
+
             menuTable.add(shipInfoButton)
                     .size(64);
 
@@ -254,6 +255,10 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                         showShipInfoLocalMenu();
                     }
 
+                    if(KeyMapping.CARGO_MENU == keycode) {
+                        showCargoLocalMenu();
+                    }
+
                     return true;
                 }
 
@@ -330,6 +335,18 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         inputMultiplexer.addProcessor(uiStage);
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    private void showCargoLocalMenu() {
+        if (GameData.cargoViewWindow == null) {
+            GameData.isPaused = true;
+            SequenceAction sequenceAction = new SequenceAction();
+            CargoClickEvent.handle(sequenceAction, uiStage);
+            sequenceAction.addAction(new LockGameStageAction(true));
+            uiStage.addAction(sequenceAction);
+        } else {
+            GameData.cargoViewWindow.hide(uiStage);
+        }
     }
 
     private void showShipInfoLocalMenu() {
