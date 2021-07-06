@@ -270,7 +270,9 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     }
 
                     if (KeyMapping.UNPAUSE == keycode) {
-                        GameData.isPaused = !GameData.isPaused;
+                        if(!GameData.lockGameStage) {
+                            GameData.isPaused = !GameData.isPaused;
+                        }
                     }
 
                     if (KeyMapping.SHIP_INFO == keycode) {
