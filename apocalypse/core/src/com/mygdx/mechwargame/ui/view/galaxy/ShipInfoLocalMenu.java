@@ -4,7 +4,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -14,7 +17,6 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.text.DecimalFormat;
@@ -22,6 +24,7 @@ import java.text.DecimalFormat;
 public class ShipInfoLocalMenu extends Container<Table> {
 
     public ImageTextButton engineInfoButton;
+    public ImageTextButton mechBayInfoButton;
     public ImageTextButton armorInfoButton;
     public ImageTextButton energyGridInfoButton;
     public ImageTextButton componentsInfoButton;
@@ -33,65 +36,66 @@ public class ShipInfoLocalMenu extends Container<Table> {
         BaseShip ship = GameData.starShip;
         Camera camera = stage.getCamera();
 
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
         this.background(ninePatchDrawable);
-        this.setSize(1500, 600);
-        this.setPosition(camera.position.x - 750f, camera.position.y - 300);
+        this.setSize(1500, 700);
+        this.setPosition(camera.position.x - 750f, camera.position.y - 350);
 
         this.setVisible(false);
         addEmptyClickListener(this);
         stage.addActor(this);
 
-        Table shipNameTable = new Table();
-        ImageButton backButton = UIFactoryCommon.getBackButton();
-
-        shipNameTable.add(backButton)
-                .size(80);
+        Table mainTable = new Table();
+        mainTable.setSize(1450, 500);
 
         Container<TextField> nameTextFieldContainer = UIFactoryCommon.getTextField(ship.name, "", UIFactoryCommon.fontSmall);
-        shipNameTable.add(nameTextFieldContainer)
+        mainTable.add(nameTextFieldContainer)
                 .size(400, 80)
                 .padRight(10)
+                .padLeft(20)
                 .center();
+
         this.nameTextField = nameTextFieldContainer.getActor();
+        nameTextField.addListener(new InputListener() {
+            @Override
+            public boolean keyUp(InputEvent event,
+                                 int keycode) {
 
-        Label modelNameLabel = UIFactoryCommon.getTextLabel(ship.modelName, UIFactoryCommon.fontSmall);
-        modelNameLabel.setAlignment(Align.center);
-        shipNameTable.add(modelNameLabel)
+                if (keycode == Input.Keys.ENTER) {
+                    stage.setKeyboardFocus(null);
+                }
+                return true;
+            }
+        });
+
+        Label modelNameLabel = UIFactoryCommon.getTextLabel(ship.modelName, UIFactoryCommon.fontSmall, Align.center);
+        mainTable.add(modelNameLabel)
                 .size(1000, 80)
-                .padRight(10)
-                .center();
-
-        shipNameTable.setSize(1500, 80);
-
-        Table mainTable = new Table();
-        mainTable.setSize(1500, 500);
+                .center()
+                .row();
 
         this.setActor(mainTable);
-
-        mainTable.add(shipNameTable)
-                .width(1500)
-                .center()
-                .colspan(2)
-                .row();
 
         Table buttonsTable = new Table();
         Table descriptionTable = new Table();
 
         buttonsTable.setSize(450, 500);
-        descriptionTable.setSize(920, 480);
+        descriptionTable.setSize(920, 580);
 
         descriptionTable.background(ninePatchDrawable);
 
         mainTable.add(buttonsTable)
-                .padRight(50)
+                .padRight(30)
+                .padLeft(20)
                 .center()
                 .size(450, 500);
+
         mainTable.add(descriptionTable)
                 .center()
-                .size(920, 480);
+                .padLeft(40)
+                .size(920, 580);
 
         addEmptyClickListener(mainTable);
         addEmptyClickListener(buttonsTable);
@@ -99,6 +103,14 @@ public class ShipInfoLocalMenu extends Container<Table> {
 
         componentsInfoButton = UIFactoryCommon.getMenuButton("components");
         buttonsTable.add(componentsInfoButton)
+                .size(400, 80)
+                .center()
+                .padBottom(10)
+                .padLeft(20)
+                .row();
+
+        mechBayInfoButton = UIFactoryCommon.getMenuButton("mech bay");
+        buttonsTable.add(mechBayInfoButton)
                 .size(400, 80)
                 .center()
                 .padBottom(10)
@@ -139,6 +151,49 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 .padLeft(20)
                 .row();
 
+        mechBayInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
+
+            @Override
+            public boolean touchDown(InputEvent event,
+                                     float x,
+                                     float y,
+                                     int pointer,
+                                     int button) {
+                super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                event.stop();
+
+                descriptionTable.clear();
+
+                Table table = new Table();
+                addEmptyClickListener(table);
+                table.setSize(980, 500);
+
+                addLabel(table, ship.mechBay.name, 700, "");
+                addLabel(table, "capacity", 700, ship.mechBay.capacity);
+                addLabel(table, "max capacity", 700, ship.mechBay.maxCapacity);
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+
+                descriptionTable.add(table).size(980, 500);
+
+            }
+        });
+
         engineInfoButton.addListener(new ClickListener(Input.Buttons.LEFT) {
 
             @Override
@@ -175,6 +230,9 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 addLabel(table, "fuel consumption", 700, decimalFormat.format(ship.engine.fuelConsumption));
                 addLabel(table, "ship speed", 700, decimalFormat.format(ship.engine.getSpeed()));
                 addLabel(table, "energy consumption", 700, decimalFormat.format(ship.engine.getEnergyConsumption()));
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
 
                 descriptionTable.add(table).size(980, 500);
 
@@ -215,6 +273,9 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 addLabel(table, "", 600, "");
                 addLabel(table, "", 600, "");
                 addLabel(table, "", 600, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
 
                 descriptionTable.add(table).size(980, 500);
 
@@ -255,6 +316,9 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 addLabel(table, "", 600, "");
                 addLabel(table, "", 600, "");
                 addLabel(table, "", 600, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
 
                 descriptionTable.add(table).size(980, 500);
 
@@ -297,6 +361,9 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 addLabel(table, "", 600, "");
                 addLabel(table, "", 600, "");
                 addLabel(table, "", 600, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
+                addLabel(table, "", 700, "");
 
                 descriptionTable.add(table).size(980, 500);
 
@@ -327,32 +394,6 @@ public class ShipInfoLocalMenu extends Container<Table> {
 
                 showComponentsInfo(descriptionTable, ship);
 
-            }
-        });
-
-        backButton.addListener(new ClickListener(Input.Buttons.LEFT) {
-
-            @Override
-            public boolean touchDown(InputEvent event,
-                                     float x,
-                                     float y,
-                                     int pointer,
-                                     int button) {
-                super.touchDown(event, x, y, pointer, button);
-                event.stop();
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event,
-                                float x,
-                                float y,
-                                int pointer,
-                                int button) {
-                super.touchUp(event, x, y, pointer, button);
-                event.stop();
-                setVisible(false);
-                hide(stage);
             }
         });
 
@@ -412,7 +453,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
     }
 
     private void showComponentsInfo(Table descriptionTable,
-                           BaseShip ship) {
+                                    BaseShip ship) {
         descriptionTable.clear();
 
         Table table = new Table();
@@ -423,6 +464,9 @@ public class ShipInfoLocalMenu extends Container<Table> {
         addLabels(table, ship.hullArmor.name, 600, "lv", Integer.toString(ship.hullArmor.level), Integer.toString(10));
         addLabels(table, ship.energyGrid.name, 600, "lv", Integer.toString(ship.energyGrid.level), Integer.toString(10));
         addLabels(table, ship.cargoBay.name, 600, "lv", Integer.toString(ship.cargoBay.level), Integer.toString(10));
+        addLabels(table, ship.mechBay.name, 600, "lv", Integer.toString(ship.mechBay.level), Integer.toString(10));
+        addLabel(table, "", 600, "");
+        addLabel(table, "", 600, "");
         addLabel(table, "", 600, "");
         addLabel(table, "", 600, "");
 
