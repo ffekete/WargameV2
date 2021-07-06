@@ -9,10 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -68,7 +65,7 @@ public class GearSelectionScreen extends GenericScreenAdapter {
 
         mech = availableMechs.get(gearIndex);
 
-        final Cell<LayeredAnimatedImage> mechImgeCell = screenContentTable.add(mech.getMechImage()).size(128, 128).center();
+        final Cell<Mech> mechImgeCell = screenContentTable.add(mech).size(128, 128).center();
         ImageTextButton scrollMechRightButton = UIFactoryCommon.getSmallRoundButton("+", UIFactoryCommon.fontLarge);
         screenContentTable.add(scrollMechRightButton).size(64).left().row();
 
@@ -170,7 +167,7 @@ public class GearSelectionScreen extends GenericScreenAdapter {
 
                 mech = availableMechs.get(gearIndex);
 
-                mechImgeCell.setActor(mech.getMechImage());
+                mechImgeCell.setActor(mech);
                 armorCell.setActor(UIFactoryCommon.getPowerGauge("armor", 5, mech.armor));
                 hpCell.setActor(UIFactoryCommon.getPowerGauge("hp", 5, mech.hp));
                 movementCell.setActor(UIFactoryCommon.getPowerGauge("movement", 5, mech.movementPoints));
@@ -198,7 +195,7 @@ public class GearSelectionScreen extends GenericScreenAdapter {
 
                 mech = availableMechs.get(gearIndex);
 
-                mechImgeCell.setActor(mech.getMechImage());
+                mechImgeCell.setActor(mech);
                 hpCell.setActor(UIFactoryCommon.getPowerGauge("hp", 5, mech.hp));
                 armorCell.setActor(UIFactoryCommon.getPowerGauge("armor", 5, mech.armor));
                 movementCell.setActor(UIFactoryCommon.getPowerGauge("movement", 5, mech.movementPoints));

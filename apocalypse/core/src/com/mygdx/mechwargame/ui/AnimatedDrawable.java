@@ -50,12 +50,6 @@ public class AnimatedDrawable extends TextureRegionDrawable {
         this.looping = looping;
     }
 
-    public AnimatedDrawable(String file) {
-        TextureRegion[][] textureRegion = TextureRegion.split(GameState.assetManager.get(file, Texture.class), 577, 128);
-        this.animation = new Animation<>(0.1f, textureRegion[0]);
-
-    }
-
     @Override
     public void draw(Batch batch,
                      float x,

@@ -21,6 +21,11 @@ import com.mygdx.mechwargame.core.character.Attributes;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.character.Skills;
 import com.mygdx.mechwargame.core.mech.BlackBear;
+import com.mygdx.mechwargame.core.mech.Hellfire;
+import com.mygdx.mechwargame.core.mech.Interceptor;
+import com.mygdx.mechwargame.core.ship.BaseShip;
+import com.mygdx.mechwargame.core.ship.SmallStarShip;
+import com.mygdx.mechwargame.core.weapon.LaserCannon;
 import com.mygdx.mechwargame.screen.action.FlashingAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.screen.chargen.CharacterCreationScreen;
@@ -140,7 +145,15 @@ public class MainMenuScreen extends GenericScreenAdapter {
                 character.nickName = "Mole";
 
                 GameData.mainCharacter = character;
-                GameData.mainCharacterMech = new BlackBear();
+
+                BaseShip starShip = new SmallStarShip();
+                starShip.mechBay.addMech(new BlackBear());
+                starShip.mechBay.addMech(new Interceptor());
+                starShip.mechBay.addMech(new Hellfire());
+
+                starShip.cargoBay.addItem(new LaserCannon());
+
+                GameData.starShip = starShip;
 
                 SequenceAction sequenceAction = new SequenceAction();
                 sequenceAction.addAction(new FlashingAction(0.1f, 8, quickStartButton));

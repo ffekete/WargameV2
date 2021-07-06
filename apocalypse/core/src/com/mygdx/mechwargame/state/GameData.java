@@ -9,6 +9,7 @@ import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.world.Galaxy;
 import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 import com.mygdx.mechwargame.ui.view.galaxy.CargoViewWindow;
+import com.mygdx.mechwargame.ui.view.galaxy.MechBayViewWindow;
 import com.mygdx.mechwargame.ui.view.galaxy.ShipInfoLocalMenu;
 import com.mygdx.mechwargame.ui.view.galaxy.StarLocalMenu;
 
@@ -25,6 +26,7 @@ public class GameData {
     public static StarLocalMenu starLocalMenu;
     public static ShipInfoLocalMenu shipInfoLocalMenu;
     public static CargoViewWindow cargoViewWindow;
+    public static MechBayViewWindow mechBayViewWindow;
     public static MovementPathEffect movementPathEffect;
     public static List<Faction> factions;
 

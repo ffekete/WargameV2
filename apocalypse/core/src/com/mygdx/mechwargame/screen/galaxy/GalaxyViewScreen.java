@@ -28,11 +28,13 @@ import com.mygdx.mechwargame.screen.action.LockGameStageAction;
 import com.mygdx.mechwargame.screen.action.MainAction;
 import com.mygdx.mechwargame.screen.galaxy.inputevent.*;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
+import com.mygdx.mechwargame.ui.view.galaxy.MechBayViewWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -289,6 +291,10 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                         showCargoLocalMenu();
                     }
 
+                    if(KeyMapping.MECH_BAY_MENU == keycode) {
+                        showMechBayLocalMenu();
+                    }
+
                     return true;
                 }
 
@@ -300,7 +306,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                 }
             });
 
-            BaseShip starShip = new SmallStarShip();
+            BaseShip starShip = GameData.starShip;
+
             starShip.setSize(UNIT_SIZE, UNIT_SIZE);
 
             DynamicProgressBar fuelProgressBar = UIFactoryCommon.createProgressBar(128,
@@ -367,6 +374,20 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
+    private void showMechBayLocalMenu() {
+        if (GameData.mechBayViewWindow == null) {
+
+            hideAllMenus();
+
+            GameData.isPaused = true;
+            SequenceAction sequenceAction = new SequenceAction();
+            MechBayClickEvent.handle(sequenceAction, uiStage);
+            sequenceAction.addAction(new LockGameStageAction(true));
+            uiStage.addAction(sequenceAction);
+        } else {
+            GameData.mechBayViewWindow.hide(uiStage);
+        }
+    }
 
     private void showCargoLocalMenu() {
         if (GameData.cargoViewWindow == null) {
@@ -400,6 +421,11 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
     }
 
     private void hideAllMenus() {
+
+        if(GameData.mechBayViewWindow != null) {
+            GameData.mechBayViewWindow.hide(uiStage);
+        }
+
         if (GameData.cargoViewWindow != null) {
             GameData.cargoViewWindow.hide(uiStage);
         }

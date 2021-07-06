@@ -4,6 +4,4 @@ public class Company {
 
     public static int money = 500;
 
-
-
 }

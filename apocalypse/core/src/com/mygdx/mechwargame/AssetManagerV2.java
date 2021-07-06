@@ -34,9 +34,9 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String PORTRAIT_FRAME = "portrait/Frame.png";
 
-    public static final String BLACK_BEAR_IMAGE = "mech/BlackBear.png";
-    public static final String HELLFIRE_IMAGE = "mech/Hellfire.png";
-    public static final String INTERCEPTOR_IMAGE = "mech/Interceptor.png";
+    public static final String BLACK_BEAR_IDLE_IMAGE = "mech/BlackBear.png";
+    public static final String HELLFIRE_IDLE_IMAGE = "mech/Hellfire.png";
+    public static final String INTERCEPTOR_IDLE_IMAGE = "mech/Interceptor.png";
 
     public static final String GM_STAR_01 = "galaxy/Star01.png";
     public static final String GM_STAR_02 = "galaxy/Star02.png";
@@ -82,6 +82,10 @@ public class AssetManagerV2 extends AssetManager {
     public static final String FRAME_BG = "ui/FrameBg.png";
     public static final String FRAME_BG_SMALL = "ui/FrameBgSmall.png";
 
+    public static final String LASER_CANNON = "weapon/LaserCannon.png";
+    public static final String AA_MISSILE = "weapon/AirToAirMissile.png";
+    public static final String AG_MISSILE = "weapon/AirToGroundMissile.png";
+    public static final String MISSILE = "weapon/Missile.png";
 
 
     public List<String> logos = Arrays.asList(
@@ -158,9 +162,9 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.PORTRAIT_FRAME, Texture.class);
         load(AssetManagerV2.POWER_ICON_EMPTY, Texture.class);
         load(AssetManagerV2.POWER_ICON_FULL, Texture.class);
-        load(AssetManagerV2.BLACK_BEAR_IMAGE, Texture.class);
-        load(AssetManagerV2.HELLFIRE_IMAGE, Texture.class);
-        load(AssetManagerV2.INTERCEPTOR_IMAGE, Texture.class);
+        load(AssetManagerV2.BLACK_BEAR_IDLE_IMAGE, Texture.class);
+        load(AssetManagerV2.HELLFIRE_IDLE_IMAGE, Texture.class);
+        load(AssetManagerV2.INTERCEPTOR_IDLE_IMAGE, Texture.class);
         load(AssetManagerV2.GM_STAR_01, Texture.class);
         load(AssetManagerV2.GM_STAR_02, Texture.class);
         load(AssetManagerV2.GM_STAR_03, Texture.class);
@@ -208,5 +212,9 @@ public class AssetManagerV2 extends AssetManager {
         load(TOOLTIP_BG, Texture.class);
         load(FRAME_BG, Texture.class);
         load(FRAME_BG_SMALL, Texture.class);
+        load(LASER_CANNON, Texture.class);
+        load(AA_MISSILE, Texture.class);
+        load(AG_MISSILE, Texture.class);
+        load(MISSILE, Texture.class);
     }
 }

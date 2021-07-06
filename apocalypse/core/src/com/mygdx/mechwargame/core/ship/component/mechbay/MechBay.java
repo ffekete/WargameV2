@@ -3,7 +3,7 @@ package com.mygdx.mechwargame.core.ship.component.mechbay;
 import com.mygdx.mechwargame.core.mech.Mech;
 import com.mygdx.mechwargame.core.ship.component.Component;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MechBay extends Component {
@@ -13,12 +13,15 @@ public class MechBay extends Component {
 
     protected int baseMaxCapacity;
 
-    protected List<Mech> mechs = new ArrayList<>();
+    protected List<Mech> mechs = new LinkedList<>();
 
     public MechBay(int level,
                    String name) {
         super(level, name);
-        adjustValues(level);
+    }
+
+    public List<Mech> getMechs() {
+        return mechs;
     }
 
     @Override
