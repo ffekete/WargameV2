@@ -59,7 +59,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
     public void show() {
         super.show();
 
-        if(needsReloading) {
+        if (needsReloading) {
             targetMarker = new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.TARGET_MARKER, 32, 32, false, 0.05f) {
                 @Override
                 public void draw(Batch batch,
@@ -115,6 +115,17 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
             shipInfoButton.setSize(64, 64);
             shipInfoButton.addListener(new ClickListener() {
+
+                @Override
+                public boolean touchDown(InputEvent event,
+                                         float x,
+                                         float y,
+                                         int pointer,
+                                         int button) {
+                    event.stop();
+                    return super.touchDown(event, x, y, pointer, button);
+                }
+
                 @Override
                 public void touchUp(InputEvent event,
                                     float x,
@@ -128,6 +139,17 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             });
 
             cargoButton.addListener(new ClickListener() {
+
+                @Override
+                public boolean touchDown(InputEvent event,
+                                         float x,
+                                         float y,
+                                         int pointer,
+                                         int button) {
+                    event.stop();
+                    return super.touchDown(event, x, y, pointer, button);
+                }
+
                 @Override
                 public void touchUp(InputEvent event,
                                     float x,
@@ -255,7 +277,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                         showShipInfoLocalMenu();
                     }
 
-                    if(KeyMapping.CARGO_MENU == keycode) {
+                    if (KeyMapping.CARGO_MENU == keycode) {
                         showCargoLocalMenu();
                     }
 
@@ -336,6 +358,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
+
 
     private void showCargoLocalMenu() {
         if (GameData.cargoViewWindow == null) {

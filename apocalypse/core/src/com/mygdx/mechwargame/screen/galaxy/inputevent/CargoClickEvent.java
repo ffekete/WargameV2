@@ -100,11 +100,11 @@ public class CargoClickEvent {
 
                             scaleToAction.setActor(item);
                             scaleToAction.setTarget(item);
-                            scaleToAction.setDuration(0.1f);
+                            scaleToAction.setDuration(0.05f);
 
                             scaleBackAction.setActor(item);
                             scaleBackAction.setTarget(item);
-                            scaleBackAction.setDuration(0.05f);
+                            scaleBackAction.setDuration(0.025f);
 
                             item.addAction(sequenceAction);
 

@@ -15,7 +15,8 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String SCROLL_PANE_KNOB = "ui/ScrollPaneKnob.png";
 
-    public static final String HYDROGEN_CELL = "item/HydrogenCell.png";
+    public static final String HYDROGEN_CELL_FULL = "item/HydrogenCellFull.png";
+    public static final String HYDROGEN_CELL_USED = "item/HydrogenCellUsed.png";
 
     public static final String POWER_ICON_EMPTY = "ui/PowerIconEmpty.png";
     public static final String POWER_ICON_FULL = "ui/PowerIconFull.png";
@@ -200,7 +201,8 @@ public class AssetManagerV2 extends AssetManager {
         load(DECORATION_007, Texture.class);
         load(CAPITOL_FRAME, Texture.class);
         load(PIRATE_STATION_001, Texture.class);
-        load(HYDROGEN_CELL, Texture.class);
+        load(HYDROGEN_CELL_FULL, Texture.class);
+        load(HYDROGEN_CELL_USED, Texture.class);
         load(CARGO_ITEM_BG, Texture.class);
         load(SCROLL_PANE_KNOB, Texture.class);
         load(TOOLTIP_BG, Texture.class);

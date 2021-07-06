@@ -1,8 +1,10 @@
 package com.mygdx.mechwargame.core.item;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
@@ -22,9 +24,12 @@ public class HydrogenCell extends ConsumableItem {
 
     float fuelCapacity = 200;
     float maxFuelCapacity = 200;
+    Image usedImage;
+    boolean switchedImage = false;
 
     public HydrogenCell() {
-        super(AssetManagerV2.HYDROGEN_CELL);
+        super(AssetManagerV2.HYDROGEN_CELL_FULL);
+        usedImage = new Image(GameState.assetManager.get(AssetManagerV2.HYDROGEN_CELL_USED, Texture.class));
         order = FUEL_ORDER;
         price = 50;
         name = "hydrogen cell";
@@ -104,5 +109,16 @@ public class HydrogenCell extends ConsumableItem {
     @Override
     public int getPrice() {
         return (int) ((float) price * (fuelCapacity / maxFuelCapacity));
+    }
+
+    @Override
+    public void draw(Batch batch,
+                     float parentAlpha) {
+        if (fuelCapacity < maxFuelCapacity && !switchedImage) {
+            this.setDrawable(usedImage.getDrawable());
+            switchedImage = true;
+        }
+
+        super.draw(batch, parentAlpha);
     }
 }
