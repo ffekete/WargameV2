@@ -120,7 +120,6 @@ public class CargoClickEvent {
                 container.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
                 itemsTable.add(container)
                         .size(128);
-
             }
 
             if (i % 4 == 3) {
