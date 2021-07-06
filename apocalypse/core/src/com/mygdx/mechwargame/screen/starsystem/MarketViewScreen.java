@@ -27,7 +27,7 @@ import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
-import com.mygdx.mechwargame.ui.view.common.CargoViewWindow;
+import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -174,16 +174,16 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         screenContentTable.row();
 
-        screenContentTable.add(new CargoViewWindow(playerItemsTable, stage))
+        screenContentTable.add(new ItemsViewWindow(playerItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
-        screenContentTable.add(new CargoViewWindow(barterItemsTable, stage))
+        screenContentTable.add(new ItemsViewWindow(barterItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 
 
-        screenContentTable.add(new CargoViewWindow(marketItemsTable, stage))
+        screenContentTable.add(new ItemsViewWindow(marketItemsTable, stage))
                 .size(620, 800)
                 .padRight(10);
 

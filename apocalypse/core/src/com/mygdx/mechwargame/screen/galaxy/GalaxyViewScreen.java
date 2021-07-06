@@ -338,6 +338,9 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
     }
 
     private void showCargoLocalMenu() {
+
+        hideAllMenus();
+
         if (GameData.cargoViewWindow == null) {
             GameData.isPaused = true;
             SequenceAction sequenceAction = new SequenceAction();
@@ -349,7 +352,20 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         }
     }
 
+    private void hideAllMenus() {
+        if (GameData.cargoViewWindow != null) {
+            GameData.cargoViewWindow.hide(uiStage);
+        }
+
+        if (GameData.shipInfoLocalMenu != null) {
+            GameData.shipInfoLocalMenu.hide(uiStage);
+        }
+    }
+
     private void showShipInfoLocalMenu() {
+
+        hideAllMenus();
+
         if (GameData.shipInfoLocalMenu == null) {
             GameData.isPaused = true;
             SequenceAction sequenceAction = new SequenceAction();

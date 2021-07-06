@@ -10,24 +10,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 
-public class CargoViewWindow extends ScrollPane {
+public class ItemsViewWindow extends ScrollPane {
 
     public Table container;
     public Stage stage;
 
-    public CargoViewWindow(Table table, Stage stage) {
+    public ItemsViewWindow(Table table,
+                           Stage stage) {
         super(table);
         this.stage = stage;
 
         this.container = table;
 
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        NinePatch knobNinePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.SCROLL_PANE_KNOB, Texture.class), 8 ,8, 8, 8);
+        NinePatch knobNinePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.SCROLL_PANE_KNOB, Texture.class), 8, 8, 8, 8);
         NinePatchDrawable knobNinePatchDrawable = new NinePatchDrawable(knobNinePatch);
 
         ScrollPaneStyle scrollPaneStyle = new ScrollPaneStyle();
@@ -62,12 +62,5 @@ public class CargoViewWindow extends ScrollPane {
                 stage.setScrollFocus(null);
             }
         });
-    }
-
-    public void hide(Stage stage) {
-        stage.getActors().removeValue(this, true);
-        stage.setKeyboardFocus(null);
-        GameData.cargoViewWindow = null;
-        GameData.lockGameStage = false;
     }
 }

@@ -81,7 +81,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
         Table descriptionTable = new Table();
 
         buttonsTable.setSize(450, 500);
-        descriptionTable.setSize(1000, 500);
+        descriptionTable.setSize(920, 480);
 
         descriptionTable.background(ninePatchDrawable);
 
@@ -91,7 +91,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 .size(450, 500);
         mainTable.add(descriptionTable)
                 .center()
-                .size(1000, 500);
+                .size(920, 480);
 
         addEmptyClickListener(mainTable);
         addEmptyClickListener(buttonsTable);

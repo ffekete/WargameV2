@@ -14,7 +14,7 @@ import com.mygdx.mechwargame.core.item.Item;
 import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.view.common.CargoViewWindow;
+import com.mygdx.mechwargame.ui.view.galaxy.CargoViewWindow;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -33,8 +33,7 @@ public class CargoClickEvent {
         Camera camera = stage.getCamera();
         cargoViewWindow.setVisible(false);
 
-        cargoViewWindow.setSize(600, 800);
-        cargoViewWindow.setPosition(camera.position.x - 300f, camera.position.y - 400);
+        cargoViewWindow.setPosition(camera.position.x - cargoViewWindow.getWidth() / 2f, camera.position.y - cargoViewWindow.getHeight() / 2f);
 
         stage.addActor(cargoViewWindow);
 
