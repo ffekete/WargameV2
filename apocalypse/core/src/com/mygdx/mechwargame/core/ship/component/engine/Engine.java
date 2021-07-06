@@ -43,10 +43,15 @@ public abstract class Engine extends Component {
         fuel -= fuelConsumption;
         if (fuel < 0) {
             fuel = 0;
-
-
-
         }
     }
 
+    public float topUp(float value) {
+        float  needed = maxFuel - fuel;
+        float leftOver = Math.max(value - needed, 0);
+
+        this.fuel += Math.min(needed, value);
+
+        return leftOver;
+    }
 }

@@ -21,7 +21,7 @@ public abstract class Item extends Image {
 
     public String name;
     public String description;
-    public int price;
+    protected int price;
     public int order;
 
     public Item(String image) {
@@ -60,7 +60,7 @@ public abstract class Item extends Image {
                 .width(150)
                 .padRight(30);
 
-        table.add(UIFactoryCommon.getTextLabel(price + "c", UIFactoryCommon.fontSmall, Align.left))
+        table.add(UIFactoryCommon.getTextLabel(getPrice() + "c", UIFactoryCommon.fontSmall, Align.left))
                 .left()
                 .expandX()
                 .row();
@@ -71,4 +71,9 @@ public abstract class Item extends Image {
 
         this.addListener(tooltip);
     }
+
+    public int getPrice() {
+        return this.price;
+    }
+
 }

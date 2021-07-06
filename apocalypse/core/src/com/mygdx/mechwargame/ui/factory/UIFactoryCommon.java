@@ -159,6 +159,16 @@ public class UIFactoryCommon {
         return new DynamicTextLabel("", labelStyle, textSource);
     }
 
+    public static Label getDynamicTextLabel(Supplier<String> textSource,
+                                            BitmapFont bitmapFont,
+                                            int align) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = bitmapFont;
+        Label label = new DynamicTextLabel("", labelStyle, textSource);
+        label.setAlignment(align);
+        return label;
+    }
+
     public static Container<TextField> getTextField(String message,
                                                     String text,
                                                     BitmapFont bitmapFont) {

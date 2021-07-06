@@ -5,11 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.core.item.ConsumableItem;
 import com.mygdx.mechwargame.core.item.Item;
 import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
@@ -84,7 +87,32 @@ public class CargoClickEvent {
                                         float y,
                                         int pointer,
                                         int button) {
-                        // todo add click event to items
+                        super.touchUp(event, x, y, pointer, button);
+                        event.stop();
+
+                        if (item instanceof ConsumableItem) {
+
+                            SequenceAction sequenceAction = new SequenceAction();
+                            ScaleToAction scaleToAction = Actions.scaleTo(0.8f, 0.8f);
+                            ScaleToAction scaleBackAction = Actions.scaleTo(1f, 1f);
+                            sequenceAction.addAction(scaleToAction);
+                            sequenceAction.addAction(scaleBackAction);
+
+                            scaleToAction.setActor(item);
+                            scaleToAction.setTarget(item);
+                            scaleToAction.setDuration(0.1f);
+
+                            scaleBackAction.setActor(item);
+                            scaleBackAction.setTarget(item);
+                            scaleBackAction.setDuration(0.05f);
+
+                            item.addAction(sequenceAction);
+
+                            if (((ConsumableItem) item).consume()) {
+                                items.remove(item);
+                                refreshWindow(items, itemsTable);
+                            }
+                        }
                     }
                 });
             } else {

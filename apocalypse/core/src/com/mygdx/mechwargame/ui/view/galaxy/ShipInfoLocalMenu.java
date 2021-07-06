@@ -167,7 +167,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 addEmptyClickListener(table);
                 table.setSize(980, 500);
 
-                DecimalFormat decimalFormat = new DecimalFormat("#.00");
+                DecimalFormat decimalFormat = new DecimalFormat("#.0");
 
                 addLabel(table, ship.engine.name, 700, "");
                 addLabel(table, "fuel level", 700, decimalFormat.format(ship.engine.fuel));
