@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.ship.BaseShip;
-import com.mygdx.mechwargame.core.ship.SmallStarShip;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
@@ -28,13 +27,11 @@ import com.mygdx.mechwargame.screen.action.LockGameStageAction;
 import com.mygdx.mechwargame.screen.action.MainAction;
 import com.mygdx.mechwargame.screen.galaxy.inputevent.*;
 import com.mygdx.mechwargame.state.GameData;
-import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
-import com.mygdx.mechwargame.ui.view.galaxy.MechBayViewWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,14 +111,15 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     .size(64)
                     .padRight(10);
 
-            ImageTextButton mechBayButton = UIFactoryCommon.getSmallRoundButton("b");
-            mechBayButton.setSize(64, 64);
-            menuTable.add(mechBayButton)
+            ImageTextButton hangarButton = UIFactoryCommon.getSmallRoundButton("h");
+            hangarButton.setSize(64, 64);
+            menuTable.add(hangarButton)
                     .size(64)
                     .padRight(10);
 
             ImageTextButton shipInfoButton = UIFactoryCommon.getSmallRoundButton("i");
             shipInfoButton.setSize(64, 64);
+
             shipInfoButton.addListener(new ClickListener() {
 
                 @Override
@@ -167,6 +165,30 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     super.touchUp(event, x, y, pointer, button);
                     event.stop();
                     showCargoLocalMenu();
+                }
+            });
+
+            hangarButton.addListener(new ClickListener() {
+
+                @Override
+                public boolean touchDown(InputEvent event,
+                                         float x,
+                                         float y,
+                                         int pointer,
+                                         int button) {
+                    event.stop();
+                    return super.touchDown(event, x, y, pointer, button);
+                }
+
+                @Override
+                public void touchUp(InputEvent event,
+                                    float x,
+                                    float y,
+                                    int pointer,
+                                    int button) {
+                    super.touchUp(event, x, y, pointer, button);
+                    event.stop();
+                    showHangarLocalMenu();
                 }
             });
 
@@ -291,8 +313,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                         showCargoLocalMenu();
                     }
 
-                    if(KeyMapping.MECH_BAY_MENU == keycode) {
-                        showMechBayLocalMenu();
+                    if(KeyMapping.HANGAR_MENU == keycode) {
+                        showHangarLocalMenu();
                     }
 
                     return true;
@@ -374,8 +396,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
-    private void showMechBayLocalMenu() {
-        if (GameData.mechBayViewWindow == null) {
+    private void showHangarLocalMenu() {
+        if (GameData.hangarViewWindow == null) {
 
             hideAllMenus();
 
@@ -385,7 +407,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             sequenceAction.addAction(new LockGameStageAction(true));
             uiStage.addAction(sequenceAction);
         } else {
-            GameData.mechBayViewWindow.hide(uiStage);
+            GameData.hangarViewWindow.hide(uiStage);
         }
     }
 
@@ -422,8 +444,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
     private void hideAllMenus() {
 
-        if(GameData.mechBayViewWindow != null) {
-            GameData.mechBayViewWindow.hide(uiStage);
+        if(GameData.hangarViewWindow != null) {
+            GameData.hangarViewWindow.hide(uiStage);
         }
 
         if (GameData.cargoViewWindow != null) {

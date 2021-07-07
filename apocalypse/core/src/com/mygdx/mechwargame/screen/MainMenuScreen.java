@@ -5,8 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -14,25 +12,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Attributes;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.character.Skills;
-import com.mygdx.mechwargame.core.mech.BlackBear;
-import com.mygdx.mechwargame.core.mech.Hellfire;
-import com.mygdx.mechwargame.core.mech.Interceptor;
+import com.mygdx.mechwargame.core.unit.BlackBear;
+import com.mygdx.mechwargame.core.unit.Hellfire;
+import com.mygdx.mechwargame.core.unit.Interceptor;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.SmallStarShip;
-import com.mygdx.mechwargame.core.weapon.LaserCannon;
+import com.mygdx.mechwargame.core.weapon.*;
 import com.mygdx.mechwargame.screen.action.FlashingAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.screen.chargen.CharacterCreationScreen;
 import com.mygdx.mechwargame.screen.galaxy.GalaxySetupScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 public class MainMenuScreen extends GenericScreenAdapter {
@@ -147,11 +143,15 @@ public class MainMenuScreen extends GenericScreenAdapter {
                 GameData.mainCharacter = character;
 
                 BaseShip starShip = new SmallStarShip();
-                starShip.mechBay.addMech(new BlackBear());
-                starShip.mechBay.addMech(new Interceptor());
-                starShip.mechBay.addMech(new Hellfire());
+                starShip.hangar.addUnit(new BlackBear());
+                starShip.hangar.addUnit(new Interceptor());
+                starShip.hangar.addUnit(new Hellfire());
 
-                starShip.cargoBay.addItem(new LaserCannon());
+                starShip.cargoBay.addItem(new LargeLaserCannon());
+                starShip.cargoBay.addItem(new ShortRangeMissile());
+                starShip.cargoBay.addItem(new LongRangeMissile());
+                starShip.cargoBay.addItem(new AirToAirMissile());
+                starShip.cargoBay.addItem(new AirToGroundMissile());
 
                 GameData.starShip = starShip;
 

@@ -179,9 +179,9 @@ public class ShipInfoLocalMenu extends Container<Table> {
                 addEmptyClickListener(table);
                 table.setSize(980, 500);
 
-                addLabel(table, ship.mechBay.name, 700, "");
-                addLabel(table, "capacity", 700, ship.mechBay.capacity);
-                addLabel(table, "max capacity", 700, ship.mechBay.maxCapacity);
+                addLabel(table, ship.hangar.name, 700, "");
+                addLabel(table, "capacity", 700, ship.hangar.capacity);
+                addLabel(table, "max capacity", 700, ship.hangar.maxCapacity);
                 addLabel(table, "", 700, "");
                 addLabel(table, "", 700, "");
                 addLabel(table, "", 700, "");
@@ -464,7 +464,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
         addLabels(table, ship.hullArmor.name, 600, "lv", Integer.toString(ship.hullArmor.level), Integer.toString(10));
         addLabels(table, ship.energyGrid.name, 600, "lv", Integer.toString(ship.energyGrid.level), Integer.toString(10));
         addLabels(table, ship.cargoBay.name, 600, "lv", Integer.toString(ship.cargoBay.level), Integer.toString(10));
-        addLabels(table, ship.mechBay.name, 600, "lv", Integer.toString(ship.mechBay.level), Integer.toString(10));
+        addLabels(table, ship.hangar.name, 600, "lv", Integer.toString(ship.hangar.level), Integer.toString(10));
         addLabel(table, "", 600, "");
         addLabel(table, "", 600, "");
         addLabel(table, "", 600, "");

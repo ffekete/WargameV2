@@ -1,10 +1,11 @@
-package com.mygdx.mechwargame.core.mech;
+package com.mygdx.mechwargame.core.unit;
 
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.weapon.LaserCannon;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
+import com.mygdx.mechwargame.core.weapon.ShortRangeMissile;
+import com.mygdx.mechwargame.core.weapon.socket.Socket;
 
-public class BlackBear extends Mech {
+public class BlackBear extends BaseUnit {
 
     public BlackBear() {
         idleImagePath = AssetManagerV2.BLACK_BEAR_IDLE_IMAGE;
@@ -16,7 +17,11 @@ public class BlackBear extends Mech {
         movementPoints = 1;
         initiative = 1;
         primaryWeapon = new LaserCannon();
-        hp = 3;
+        primaryWeaponSocket = Socket.Gun;
+
+        hp = 2;
+
+        unitType = UnitType.PowerArmor;
     }
 
     @Override

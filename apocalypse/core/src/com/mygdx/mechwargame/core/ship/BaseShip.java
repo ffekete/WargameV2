@@ -5,7 +5,7 @@ import com.mygdx.mechwargame.core.ship.component.armor.Armor;
 import com.mygdx.mechwargame.core.ship.component.cargo.CargoBay;
 import com.mygdx.mechwargame.core.ship.component.energy.EnergyGrid;
 import com.mygdx.mechwargame.core.ship.component.engine.Engine;
-import com.mygdx.mechwargame.core.ship.component.mechbay.MechBay;
+import com.mygdx.mechwargame.core.ship.component.mechbay.Hangar;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
 public abstract class BaseShip extends BaseActor {
@@ -14,7 +14,7 @@ public abstract class BaseShip extends BaseActor {
     public CargoBay cargoBay;
     public Armor hullArmor;
     public Engine engine;
-    public MechBay mechBay;
+    public Hangar hangar;
 
     public String name;
     public String modelName;

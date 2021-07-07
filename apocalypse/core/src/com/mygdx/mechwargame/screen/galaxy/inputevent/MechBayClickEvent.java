@@ -5,30 +5,30 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
-import com.mygdx.mechwargame.ui.view.galaxy.MechBayViewWindow;
+import com.mygdx.mechwargame.ui.view.galaxy.HangarViewWindow;
 
 public class MechBayClickEvent {
 
     public static void handle(SequenceAction sequenceAction,
                               Stage stage) {
 
-        MechBayViewWindow mechBayViewWindow = new MechBayViewWindow(stage);
-        GameData.mechBayViewWindow = mechBayViewWindow;
+        HangarViewWindow hangarViewWindow = new HangarViewWindow(stage);
+        GameData.hangarViewWindow = hangarViewWindow;
 
         Camera camera = stage.getCamera();
-        mechBayViewWindow.setVisible(false);
+        hangarViewWindow.setVisible(false);
 
-        mechBayViewWindow.setPosition(camera.position.x - mechBayViewWindow.getWidth() / 2f, camera.position.y - mechBayViewWindow.getHeight() / 2f);
+        hangarViewWindow.setPosition(camera.position.x - hangarViewWindow.getWidth() / 2f, camera.position.y - hangarViewWindow.getHeight() / 2f);
 
-        stage.addActor(mechBayViewWindow);
+        stage.addActor(hangarViewWindow);
 
         ShowAction visibleAction = new ShowAction();
         visibleAction.setVisible(true);
 
         sequenceAction.addAction(visibleAction);
 
-        visibleAction.setActor(mechBayViewWindow);
-        visibleAction.setTarget(mechBayViewWindow);
+        visibleAction.setActor(hangarViewWindow);
+        visibleAction.setTarget(hangarViewWindow);
 
     }
 

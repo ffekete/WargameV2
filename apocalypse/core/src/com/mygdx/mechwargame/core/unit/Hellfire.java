@@ -1,10 +1,10 @@
-package com.mygdx.mechwargame.core.mech;
+package com.mygdx.mechwargame.core.unit;
 
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.weapon.LongRangeMissile;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
+import com.mygdx.mechwargame.core.weapon.socket.Socket;
 
-public class Hellfire extends Mech {
+public class Hellfire extends BaseUnit {
 
     public Hellfire() {
         idleImagePath = AssetManagerV2.HELLFIRE_IDLE_IMAGE;
@@ -16,6 +16,8 @@ public class Hellfire extends Mech {
         movementPoints = 1;
         initiative = 1;
         primaryWeapon = new LongRangeMissile();
+        primaryWeaponSocket = Socket.LargeMissile;
+        unitType = UnitType.Vehicle;
     }
 
     @Override

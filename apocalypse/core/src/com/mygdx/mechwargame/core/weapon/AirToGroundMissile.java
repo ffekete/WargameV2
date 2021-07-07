@@ -3,18 +3,22 @@ package com.mygdx.mechwargame.core.weapon;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.weapon.socket.Socket;
 
-public class AirToSurfaceMissile extends Weapon {
+public class AirToGroundMissile extends Weapon {
 
-    public AirToSurfaceMissile() {
+    public AirToGroundMissile() {
         super(AssetManagerV2.AG_MISSILE);
-        name = "AS missile";
+        name = "AG missile";
+        longName = "air to ground missile";
         damage = 1;
         range = 4;
         rateOfFire = 4;
         ammo = 40;
         accuracy = 2;
+        price = 1000;
 
-        socket = Socket.ASMissile;
+        socket = Socket.AGMissile;
+
+        addToolTip();
     }
 
 }

@@ -5,7 +5,7 @@ import com.mygdx.mechwargame.core.ship.component.armor.StandardHullArmor;
 import com.mygdx.mechwargame.core.ship.component.cargo.StandardCargoBay;
 import com.mygdx.mechwargame.core.ship.component.energy.StandardEnergyGrid;
 import com.mygdx.mechwargame.core.ship.component.engine.StandardEngine;
-import com.mygdx.mechwargame.core.ship.component.mechbay.StandardMechBay;
+import com.mygdx.mechwargame.core.ship.component.mechbay.StandardHangar;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
@@ -20,7 +20,7 @@ public class SmallStarShip extends BaseShip {
         this.hullArmor = new StandardHullArmor(1);
         this.cargoBay = new StandardCargoBay(1);
         this.energyGrid = new StandardEnergyGrid(1);
-        this.mechBay = new StandardMechBay(1);
+        this.hangar = new StandardHangar(1);
     }
 
 }

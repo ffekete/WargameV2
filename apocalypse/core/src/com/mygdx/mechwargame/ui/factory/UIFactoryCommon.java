@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -81,12 +80,19 @@ public class UIFactoryCommon {
         return dynamicProgressBar;
     }
 
+    public static Table getPowerGauge(int max,
+                                      int actual) {
+        return getPowerGauge("", max, actual);
+    }
+
     public static Table getPowerGauge(String text,
                                       int max,
                                       int actual) {
         Table table = new Table();
 
-        table.add(UIFactoryCommon.getTextLabel(text, fontSmall)).padRight(5).left().width(400);
+        if (text != null && !text.isEmpty()) {
+            table.add(UIFactoryCommon.getTextLabel(text, fontSmall)).padRight(5).left().width(400);
+        }
 
         for (int i = 0; i < actual; i++) {
             table.add(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_FULL, 32, 32, true, 0.15f))).size(32).padRight(5).left();
@@ -96,7 +102,7 @@ public class UIFactoryCommon {
             table.add(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_EMPTY, 32, 32, true, 0.15f))).size(32).padRight(5).left();
         }
 
-        table.add().width(260 - max * (32 + 5));
+        table.add().expandX();
 
         return table;
     }
@@ -124,7 +130,9 @@ public class UIFactoryCommon {
         return new Label(text, labelStyle);
     }
 
-    public static Label getTextLabel(String text, BitmapFont bitmapFont, int align) {
+    public static Label getTextLabel(String text,
+                                     BitmapFont bitmapFont,
+                                     int align) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = bitmapFont;
         Label label = new Label(text, labelStyle);
@@ -132,7 +140,8 @@ public class UIFactoryCommon {
         return label;
     }
 
-    public static Label getTextLabel(String text, int align) {
+    public static Label getTextLabel(String text,
+                                     int align) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = fontMedium;
         Label label = new Label(text, labelStyle);
@@ -190,7 +199,7 @@ public class UIFactoryCommon {
 
     public static <T extends Actor> Container<T> getInputContainer(T t) {
         Container<T> container = new Container<>(t);
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
         ninePatch.setColor(Color.GREEN);
         container.background(ninePatchDrawable);
@@ -234,10 +243,10 @@ public class UIFactoryCommon {
 
         final ImageTextButton textButton = new ImageTextButton(text, textButtonStyle);
 
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawableSmall = new NinePatchDrawable(ninePatchSmall);
 
         textButton.getStyle().up = ninePatchDrawable;
@@ -261,10 +270,10 @@ public class UIFactoryCommon {
 
         textButton.getLabel().setAlignment(Align.center);
 
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16 ,16, 16, 16);
+        NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawableSmall = new NinePatchDrawable(ninePatchSmall);
 
         textButton.getStyle().up = ninePatchDrawable;

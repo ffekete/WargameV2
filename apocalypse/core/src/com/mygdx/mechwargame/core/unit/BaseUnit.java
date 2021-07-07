@@ -1,19 +1,25 @@
-package com.mygdx.mechwargame.core.mech;
+package com.mygdx.mechwargame.core.unit;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.mygdx.mechwargame.core.weapon.Weapon;
+import com.mygdx.mechwargame.core.weapon.socket.Socket;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 
-public abstract class Mech extends Image {
+public abstract class BaseUnit extends Image {
 
     public int armor;
+
     public Weapon primaryWeapon;
+    public Socket primaryWeaponSocket;
+    public Socket secondaryWeaponSocket;
     public Weapon secondaryWeapon;
+
     public int movementPoints;
     public int initiative;
     public int hp;
     public String name;
+
+    public UnitType unitType;
 
     protected String idleImagePath;
     protected AnimatedDrawable idleDrawable;

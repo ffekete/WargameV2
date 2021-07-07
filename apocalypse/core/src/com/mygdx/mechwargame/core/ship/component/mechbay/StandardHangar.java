@@ -1,8 +1,8 @@
 package com.mygdx.mechwargame.core.ship.component.mechbay;
 
-public class StandardMechBay extends MechBay {
+public class StandardHangar extends Hangar {
 
-    public StandardMechBay(int level) {
+    public StandardHangar(int level) {
         super(level, "std mech bay");
         baseMaxCapacity = 3;
         adjustValues(level);

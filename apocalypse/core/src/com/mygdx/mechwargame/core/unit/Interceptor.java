@@ -1,10 +1,11 @@
-package com.mygdx.mechwargame.core.mech;
+package com.mygdx.mechwargame.core.unit;
 
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.weapon.AirToAirMissile;
-import com.mygdx.mechwargame.core.weapon.AirToSurfaceMissile;
+import com.mygdx.mechwargame.core.weapon.AirToGroundMissile;
+import com.mygdx.mechwargame.core.weapon.socket.Socket;
 
-public class Interceptor extends Mech {
+public class Interceptor extends BaseUnit {
 
     public Interceptor() {
         idleImagePath = AssetManagerV2.INTERCEPTOR_IDLE_IMAGE;
@@ -15,8 +16,14 @@ public class Interceptor extends Mech {
         hp = 1;
         movementPoints = 5;
         initiative = 5;
-        primaryWeapon = new AirToSurfaceMissile();
+
+        primaryWeapon = new AirToGroundMissile();
+        primaryWeaponSocket = Socket.AGMissile;
+
         secondaryWeapon = new AirToAirMissile();
+        secondaryWeaponSocket = Socket.AAMissile;
+
+        unitType = UnitType.Aircraft;
     }
 
     @Override

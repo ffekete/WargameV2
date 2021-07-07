@@ -3,20 +3,20 @@ package com.mygdx.mechwargame.core.weapon;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.weapon.socket.Socket;
 
-public class LongRangeMissile extends Weapon {
+public class ShortRangeMissile extends Weapon {
 
-    public LongRangeMissile() {
+    public ShortRangeMissile() {
         super(AssetManagerV2.MISSILE);
-        name = "LR missile";
-        longName = "long range missile";
+        name = "SR missile";
+        longName = "short range missile";
         damage = 1;
-        range = 8;
+        range = 4;
         rateOfFire = 3;
         ammo = 30;
-        accuracy = 2;
-        price = 1200;
+        accuracy = 3;
+        price = 900;
 
-        socket = Socket.LargeMissile;
+        socket = Socket.SmallMissile;
 
         addToolTip();
     }
