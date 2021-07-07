@@ -266,12 +266,22 @@ public class HangarViewWindow extends Table {
                                 Actor actor) {
                 if (primary) {
                     Weapon weaponToAdd = (Weapon) ((SelectBox) actor).getSelected();
+
+                    if(selectedUnit.primaryWeapon == weaponToAdd) {
+                        return;
+                    }
+
                     GameData.starShip.cargoBay.removeItem(weaponToAdd);
                     GameData.starShip.cargoBay.addItem(selectedUnit.primaryWeapon);
 
                     selectedUnit.primaryWeapon = weaponToAdd;
                 } else {
                     Weapon weaponToAdd = (Weapon) ((SelectBox) actor).getSelected();
+
+                    if(selectedUnit.secondaryWeapon == weaponToAdd) {
+                        return;
+                    }
+
                     GameData.starShip.cargoBay.removeItem(weaponToAdd);
                     GameData.starShip.cargoBay.addItem(selectedUnit.secondaryWeapon);
 
