@@ -107,6 +107,50 @@ public class UIFactoryCommon {
         return table;
     }
 
+    public static Pair getPowerUpGauge(int max,
+                                       int actual,
+                                       int maxUpgrade,
+                                       boolean canUpgrade) {
+        Table table = new Table();
+
+        for (int i = 0; i < actual; i++) {
+            table.add(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_FULL, 32, 32, true, 0.15f))).size(32).padRight(5).left();
+        }
+
+        Image powerUpImage = null;
+        if (actual < maxUpgrade && canUpgrade) {
+            powerUpImage = new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_PLUS, 32, 32, true, 0.2f));
+            table.add(powerUpImage)
+                    .size(32)
+                    .padRight(5)
+                    .left();
+            actual++;
+        }
+
+        for (int i = actual; i < maxUpgrade; i++) {
+            table.add(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_CAN_UPGRADE, 32, 32, true, 0.15f))).size(32).padRight(5).left();
+        }
+
+        for (int i = maxUpgrade; i < max; i++) {
+            table.add(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_EMPTY, 32, 32, true, 0.15f))).size(32).padRight(5).left();
+        }
+
+        table.add().expandX();
+
+        return new Pair(powerUpImage, table);
+    }
+
+    public static class Pair {
+        public Image image;
+        public Table table;
+
+        public Pair(Image image,
+                    Table table) {
+            this.image = image;
+            this.table = table;
+        }
+    }
+
     private static BitmapFont getFont(String fontPath) {
 
         BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal(fontPath));

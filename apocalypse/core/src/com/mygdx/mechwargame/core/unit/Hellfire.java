@@ -12,6 +12,7 @@ public class Hellfire extends BaseUnit {
         super.setDrawable(idleDrawable);
         name = "hellfire";
         armor = 2;
+        maxArmor = 3;
         hp = 2;
         movementPoints = 1;
         initiative = 1;

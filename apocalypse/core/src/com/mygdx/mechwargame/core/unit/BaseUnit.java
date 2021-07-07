@@ -8,6 +8,7 @@ import com.mygdx.mechwargame.ui.AnimatedDrawable;
 public abstract class BaseUnit extends Image {
 
     public int armor;
+    public int maxArmor;
 
     public Weapon primaryWeapon;
     public Socket primaryWeaponSocket;

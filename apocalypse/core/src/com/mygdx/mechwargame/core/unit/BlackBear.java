@@ -14,6 +14,7 @@ public class BlackBear extends BaseUnit {
         name = "black bear";
 
         armor = 3;
+        maxArmor = 4;
         movementPoints = 1;
         initiative = 1;
         primaryWeapon = new LaserCannon();

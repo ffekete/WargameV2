@@ -13,6 +13,7 @@ public class Interceptor extends BaseUnit {
         super.setDrawable(idleDrawable);
         name = "interceptor";
         armor = 0;
+        maxArmor = 0;
         hp = 1;
         movementPoints = 5;
         initiative = 5;

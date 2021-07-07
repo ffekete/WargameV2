@@ -3,20 +3,19 @@ package com.mygdx.mechwargame.ui.view.galaxy;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.core.weapon.Weapon;
 import com.mygdx.mechwargame.state.GameData;
@@ -27,6 +26,8 @@ import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
 
 public class HangarViewWindow extends Table {
 
@@ -174,7 +175,31 @@ public class HangarViewWindow extends Table {
         // armor
         mechDetailTable.add(UIFactoryCommon.getTextLabel("armor", UIFactoryCommon.fontSmall, Align.left))
                 .size(350, 60);
-        mechDetailTable.add(UIFactoryCommon.getPowerGauge(5, baseUnit.armor))
+
+        boolean canUpgrade = Company.money >= (baseUnit.armor) * 500;
+
+        UIFactoryCommon.Pair powerUpGauge = UIFactoryCommon.getPowerUpGauge(5, baseUnit.armor, baseUnit.maxArmor, canUpgrade);
+
+        if (powerUpGauge.image != null) {
+
+            powerUpGauge.image.addListener(addToolTip(baseUnit.armor * 500));
+
+            powerUpGauge.image.addListener(new ClickListener() {
+                @Override
+                public void touchUp(InputEvent event,
+                                    float x,
+                                    float y,
+                                    int pointer,
+                                    int button) {
+                    super.touchUp(event, x, y, pointer, button);
+                    baseUnit.armor++;
+                    Company.money -= (baseUnit.armor) * 500;
+                    setupMechSetupTable(mechSetupTable, baseUnit);
+                }
+            });
+        }
+
+        mechDetailTable.add(powerUpGauge.table)
                 .size(350, 60)
                 .left();
 
@@ -267,7 +292,7 @@ public class HangarViewWindow extends Table {
                 if (primary) {
                     Weapon weaponToAdd = (Weapon) ((SelectBox) actor).getSelected();
 
-                    if(selectedUnit.primaryWeapon == weaponToAdd) {
+                    if (selectedUnit.primaryWeapon == weaponToAdd) {
                         return;
                     }
 
@@ -278,7 +303,7 @@ public class HangarViewWindow extends Table {
                 } else {
                     Weapon weaponToAdd = (Weapon) ((SelectBox) actor).getSelected();
 
-                    if(selectedUnit.secondaryWeapon == weaponToAdd) {
+                    if (selectedUnit.secondaryWeapon == weaponToAdd) {
                         return;
                     }
 
@@ -337,4 +362,45 @@ public class HangarViewWindow extends Table {
         GameData.hangarViewWindow = null;
         GameData.lockGameStage = false;
     }
+
+    public Tooltip<Table> addToolTip(int cost) {
+        TooltipManager tooltipManager = new TooltipManager();
+        tooltipManager.resetTime = 0.05f;
+        tooltipManager.initialTime = 0.05f;
+        tooltipManager.subsequentTime = 0.05f;
+        tooltipManager.instant();
+
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class), 16, 16, 16, 16);
+
+        Table table = new Table();
+        table.pad(30);
+        Sprite sprite = new Sprite(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class));
+        sprite.setColor(TOOLTIP_COLOR);
+
+        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
+        table.setBackground(ninePatchDrawable);
+        Tooltip<Table> tooltip = new Tooltip<>(table, tooltipManager);
+
+        table.add(UIFactoryCommon.getTextLabel("your money", UIFactoryCommon.fontSmall, Align.left))
+                .left()
+                .width(300)
+                .padRight(30);
+        table.add(UIFactoryCommon.getTextLabel(Integer.toString(Company.money), UIFactoryCommon.fontSmall, Align.left))
+                .left()
+                .expandX()
+                .row();
+
+        table.add(UIFactoryCommon.getTextLabel("cost", UIFactoryCommon.fontSmall, Align.left))
+                .left()
+                .width(300)
+                .padRight(30);
+        table.add(UIFactoryCommon.getTextLabel(Integer.toString(cost), UIFactoryCommon.fontSmall, Align.left))
+                .left()
+                .expandX()
+                .row();
+
+
+        return tooltip;
+    }
+
 }
