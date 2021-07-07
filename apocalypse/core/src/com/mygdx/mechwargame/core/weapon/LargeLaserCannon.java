@@ -6,7 +6,7 @@ import com.mygdx.mechwargame.core.weapon.socket.Socket;
 public class LargeLaserCannon extends Weapon {
 
     public LargeLaserCannon() {
-        super(AssetManagerV2.LASER_CANNON);
+        super(AssetManagerV2.LARGE_LASER_CANNON);
         name = "l laser cannon";
         longName = "large laser cannon";
         damage = 2;

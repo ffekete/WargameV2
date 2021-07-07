@@ -83,6 +83,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String FRAME_BG_SMALL = "ui/FrameBgSmall.png";
 
     public static final String LASER_CANNON = "weapon/LaserCannon.png";
+    public static final String LARGE_LASER_CANNON = "weapon/LargeLaserCannon.png";
     public static final String AA_MISSILE = "weapon/AirToAirMissile.png";
     public static final String AG_MISSILE = "weapon/AirToGroundMissile.png";
     public static final String MISSILE = "weapon/Missile.png";
@@ -213,6 +214,7 @@ public class AssetManagerV2 extends AssetManager {
         load(FRAME_BG, Texture.class);
         load(FRAME_BG_SMALL, Texture.class);
         load(LASER_CANNON, Texture.class);
+        load(LARGE_LASER_CANNON, Texture.class);
         load(AA_MISSILE, Texture.class);
         load(AG_MISSILE, Texture.class);
         load(MISSILE, Texture.class);
