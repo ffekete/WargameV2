@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.core.weapon.Weapon;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.mygdx.mechwargame.Config.MAX_UNIT_STAT_LEVEL;
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
 
 public class HangarViewWindow extends Table {
@@ -205,7 +207,7 @@ public class HangarViewWindow extends Table {
 
         boolean canUpgrade = Company.money >= (baseUnit.armor) * 500;
 
-        UIFactoryCommon.Pair powerUpGauge = UIFactoryCommon.getPowerUpGauge(5, baseUnit.armor, baseUnit.maxArmor, canUpgrade);
+        UIFactoryCommon.Pair powerUpGauge = UIFactoryCommon.getPowerUpGauge(MAX_UNIT_STAT_LEVEL, baseUnit.armor, baseUnit.maxArmor, canUpgrade);
 
         if (powerUpGauge.image != null) {
 
@@ -249,7 +251,7 @@ public class HangarViewWindow extends Table {
         // hp
         mechDetailTable.add(UIFactoryCommon.getTextLabel("hp", UIFactoryCommon.fontSmall, Align.left))
                 .size(350, 60);
-        mechDetailTable.add(UIFactoryCommon.getPowerGauge(5, baseUnit.hp))
+        mechDetailTable.add(UIFactoryCommon.getPowerGauge(MAX_UNIT_STAT_LEVEL, baseUnit.hp))
                 .size(350, 60)
                 .left()
                 .row();
@@ -257,7 +259,7 @@ public class HangarViewWindow extends Table {
         // init
         mechDetailTable.add(UIFactoryCommon.getTextLabel("initiative", UIFactoryCommon.fontSmall, Align.left))
                 .size(350, 60);
-        mechDetailTable.add(UIFactoryCommon.getPowerGauge(5, baseUnit.initiative))
+        mechDetailTable.add(UIFactoryCommon.getPowerGauge(MAX_UNIT_STAT_LEVEL, baseUnit.initiative))
                 .size(350, 60)
                 .left();
 
@@ -265,7 +267,7 @@ public class HangarViewWindow extends Table {
         mechDetailTable.add(UIFactoryCommon.getTextLabel("movement", UIFactoryCommon.fontSmall, Align.left))
                 .size(350, 60);
 
-        mechDetailTable.add(UIFactoryCommon.getPowerGauge(5, baseUnit.movementPoints))
+        mechDetailTable.add(UIFactoryCommon.getPowerGauge(MAX_UNIT_STAT_LEVEL, baseUnit.movementPoints))
                 .size(350, 60)
                 .left()
                 .row();

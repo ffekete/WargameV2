@@ -9,6 +9,8 @@ public class Config {
 
     public static final int UNIT_SIZE = 128;
 
+    public static final int MAX_UNIT_STAT_LEVEL = 8;
+
     public static boolean SHOW_FPS = false;
 
     public static float SCREEN_TRANSITION_DELAY = 0.25f;

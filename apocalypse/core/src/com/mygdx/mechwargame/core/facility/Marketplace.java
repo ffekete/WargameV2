@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.core.starsystem.facility;
+package com.mygdx.mechwargame.core.facility;
 
 import com.mygdx.mechwargame.core.item.Item;
 

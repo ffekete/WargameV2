@@ -1,7 +1,7 @@
 package com.mygdx.mechwargame.core.world.generator;
 
 import com.mygdx.mechwargame.core.item.HydrogenCell;
-import com.mygdx.mechwargame.core.starsystem.facility.Marketplace;
+import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.generator.items.WeaponGenerator;
