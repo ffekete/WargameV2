@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.core.item.ConsumableItem;
 import com.mygdx.mechwargame.core.item.Item;
+import com.mygdx.mechwargame.state.GameData;
 
 import java.util.List;
 
@@ -57,7 +58,8 @@ public class CargoRightClickEventDefinition {
                 sequenceAction.addAction(new Action() {
                     @Override
                     public boolean act(float delta) {
-                        items.remove(item);
+                        GameData.starShip.cargoBay.removeItem(item);
+
                         refreshWindow(items, itemsTable);
                         return true;
                     }

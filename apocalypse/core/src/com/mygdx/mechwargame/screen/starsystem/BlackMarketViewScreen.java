@@ -20,6 +20,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.item.Item;
+import com.mygdx.mechwargame.core.starsystem.facility.BlackMarket;
 import com.mygdx.mechwargame.core.starsystem.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
@@ -36,7 +37,7 @@ import java.util.function.Supplier;
 
 import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
-public class MarketViewScreen extends GenericScreenAdapter {
+public class BlackMarketViewScreen extends GenericScreenAdapter {
 
     private static final int HEADER_HEIGHT = 120;
     private Table screenContentTable = new Table();
@@ -62,8 +63,8 @@ public class MarketViewScreen extends GenericScreenAdapter {
     Map<Item, Integer> itemPrices = new HashMap<>();
     Map<Item, Integer> marketPrices = new HashMap<>();
 
-    public MarketViewScreen(Star star,
-                            Sector sector) {
+    public BlackMarketViewScreen(Star star,
+                                 Sector sector) {
         this.star = star;
         this.sector = sector;
 
@@ -79,8 +80,8 @@ public class MarketViewScreen extends GenericScreenAdapter {
         });
 
         marketItems = star.facilities.stream()
-                .filter(f -> f instanceof Marketplace)
-                .map(f -> (Marketplace) f)
+                .filter(f -> f instanceof BlackMarket)
+                .map(f -> (BlackMarket) f)
                 .findAny()
                 .get()
                 .itemsToSell;
@@ -170,7 +171,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
                 .center()
                 .padRight(10);
 
-        screenContentTable.add(UIFactoryCommon.getTextLabel("marketplace", UIFactoryCommon.fontSmall, Align.center))
+        screenContentTable.add(UIFactoryCommon.getTextLabel("black market", UIFactoryCommon.fontSmall, Align.center))
                 .size(620, HEADER_HEIGHT)
                 .center()
                 .padRight(10);

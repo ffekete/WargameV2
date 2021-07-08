@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.BaseActor;
-import com.mygdx.mechwargame.core.starsystem.Facility;
+import com.mygdx.mechwargame.core.starsystem.facility.Facility;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 

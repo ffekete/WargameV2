@@ -1,27 +1,28 @@
 package com.mygdx.mechwargame.screen.starsystem;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
-import com.mygdx.mechwargame.core.starsystem.Marketplace;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
+import com.mygdx.mechwargame.input.ScrollPaneInputListener;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.screen.starsystem.facility.BlackMarketFactory;
+import com.mygdx.mechwargame.screen.starsystem.facility.MarketPlaceFactory;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.text.MarketplaceDialogueCreator;
 import com.mygdx.mechwargame.text.StarViewDescriptionCreator;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
@@ -51,7 +52,7 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
         GameState.previousScreen = this;
 
-        screenContentTable.setColor(1,1,1,1);
+        screenContentTable.setColor(1, 1, 1, 1);
 
         if (reloadNeeded) {
 
@@ -176,57 +177,13 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .padBottom(30)
                     .row();
 
-            if (star.facilities.stream().anyMatch(facility -> facility instanceof Marketplace)) {
+            MarketPlaceFactory.addMarketPlace(dialogueTable, screenContentTable, sector, star, stage);
+            BlackMarketFactory.addBlackMarket(dialogueTable, screenContentTable, sector, star, stage);
 
-                ClickListener clickListener = new ClickListener() {
-                    @Override
-                    public boolean touchDown(InputEvent event,
-                                             float x,
-                                             float y,
-                                             int pointer,
-                                             int button) {
-                        // show market screen
-                        SequenceAction sequenceAction = new SequenceAction();
-                        AlphaAction alphaAction = new AlphaAction();
-                        sequenceAction.addAction(alphaAction);
-                        alphaAction.setAlpha(0);
-                        alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
-                        alphaAction.setActor(screenContentTable);
-
-                        sequenceAction.addAction(new SetScreenAction(new MarketViewScreen(star, sector)));
-
-                        stage.addAction(sequenceAction);
-                        return true;
-                    }
-                };
-
-                addTextToDialogueBox(dialogueTable, "1", MarketplaceDialogueCreator.generate(star, sector), clickListener);
-
-            }
 
             dialogueTable.add().expandY();
 
-            scrollPane.addListener(new InputListener() {
-                @Override
-                public void enter(InputEvent event,
-                                  float x,
-                                  float y,
-                                  int pointer,
-                                  Actor fromActor) {
-                    super.enter(event, x, y, pointer, fromActor);
-                    stage.setScrollFocus(scrollPane);
-                }
-
-                @Override
-                public void exit(InputEvent event,
-                                 float x,
-                                 float y,
-                                 int pointer,
-                                 Actor toActor) {
-                    super.exit(event, x, y, pointer, toActor);
-                    stage.setScrollFocus(null);
-                }
-            });
+            scrollPane.addListener(ScrollPaneInputListener.newInstance(stage, scrollPane));
 
             screenContentTable
                     .add(scrollPane)
@@ -269,50 +226,6 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
         }
 
         Gdx.input.setInputProcessor(stage);
-    }
-
-    private Label addTextToDialogueBox(Table dialogueTable,
-                                       String buttonText,
-                                       String text,
-                                       ClickListener clickListener) {
-
-        ImageTextButton button = UIFactoryCommon.getSmallRoundButton(buttonText);
-        button.addListener(clickListener);
-        dialogueTable.add(button)
-                .size(64, 64)
-                .padRight(20);
-
-        Label textLabel = UIFactoryCommon.getTextLabel(text, UIFactoryCommon.fontSmall);
-
-        textLabel.addListener(new InputListener() {
-            @Override
-            public void enter(InputEvent event,
-                              float x,
-                              float y,
-                              int pointer,
-                              Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                textLabel.setColor(Color.GREEN);
-            }
-
-            @Override
-            public void exit(InputEvent event,
-                             float x,
-                             float y,
-                             int pointer,
-                             Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                textLabel.setColor(Color.WHITE);
-            }
-        });
-
-        textLabel.addListener(clickListener);
-
-        dialogueTable.add(textLabel)
-                .width(1500 - 64 - 25)
-                .row();
-
-        return textLabel;
     }
 
     @Override

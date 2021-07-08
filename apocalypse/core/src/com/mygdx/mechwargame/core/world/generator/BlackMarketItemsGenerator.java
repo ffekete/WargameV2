@@ -1,6 +1,7 @@
 package com.mygdx.mechwargame.core.world.generator;
 
 import com.mygdx.mechwargame.core.item.HydrogenCell;
+import com.mygdx.mechwargame.core.starsystem.facility.BlackMarket;
 import com.mygdx.mechwargame.core.starsystem.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
@@ -10,7 +11,7 @@ import com.mygdx.mechwargame.state.GameData;
 
 import java.util.Random;
 
-public class MarketItemsGenerator {
+public class BlackMarketItemsGenerator {
 
     public static void generate(GalaxySetupParameters galaxySetupParameters) {
 
@@ -26,16 +27,17 @@ public class MarketItemsGenerator {
                 sector.stars.forEach(star -> {
                     if(sector.sectorOwnerArea.owner != null) {
                         star.facilities.stream()
-                                .filter(f -> f instanceof Marketplace)
-                                .map(f -> (Marketplace)f)
-                                .forEach(marketplace -> {
+                                .filter(f -> f instanceof BlackMarket)
+                                .map(f -> (BlackMarket)f)
+                                .forEach(blackMarket -> {
 
-                                    for(int k = 0; k < star.wealth + new Random().nextInt(5 * star.wealth); k++) {
-                                        marketplace.itemsToSell.add(new HydrogenCell());
+                                    // hydrogen cell
+                                    for(int k = 0; k < new Random().nextInt(star.wealth + 1); k++) {
+                                        blackMarket.itemsToSell.add(new HydrogenCell());
                                     }
 
                                     // weapons
-                                    WeaponGenerator.generate(star.wealth, marketplace.itemsToSell);
+                                    WeaponGenerator.generate(star.wealth + 1, blackMarket.itemsToSell);
                                 });
                     }
                 });

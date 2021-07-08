@@ -3,6 +3,7 @@ package com.mygdx.mechwargame.core.world.generator;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.mechwargame.core.faction.Faction;
+import com.mygdx.mechwargame.core.faction.FactionNames;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
@@ -41,6 +42,8 @@ public class FactionDistributor {
 
         GameData.factions = new ArrayList<>();
 
+        List<String> names = new ArrayList<>(FactionNames.names);
+
         // assign starting stars
         for (int i = 0; i < galaxySetupParameters.defaultNumberOfFactions; i++) {
             int x, y;
@@ -52,7 +55,7 @@ public class FactionDistributor {
 
             Color color = colors.remove(random.nextInt(colors.size()));
 
-            Faction faction = new Faction("Faction " + i, color);
+            Faction faction = new Faction(names.remove(new Random().nextInt(names.size())), color);
             GameData.galaxy.sectors[x][y].sectorOwnerArea.owner = faction;
             GameData.galaxy.sectors[x][y].stars.get(0).capitol = true;
             factionStrengths.put(faction, random.nextInt(strength / 2) + strength / 2);

@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.core.starsystem;
+package com.mygdx.mechwargame.core.starsystem.facility;
 
 public abstract class Facility {
 

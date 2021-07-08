@@ -19,8 +19,9 @@ public class StarViewDescriptionCreator {
             "so now would be the best time to have a look.";
 
     private static final String PIRATE_DESCR =
-            "You stand in the halls of one of the pirate cove of %s, \n" +
-            "which was the hiding place of %s for long now.\n" +
+            "You stand in the halls of one of the pirate cove \n" +
+            "of %s, which has been the hiding place\n" +
+            "of %s for long now.\n" +
             "The star system provides some facilities \n" +
             "so now would be the best time to have a look.";
 
