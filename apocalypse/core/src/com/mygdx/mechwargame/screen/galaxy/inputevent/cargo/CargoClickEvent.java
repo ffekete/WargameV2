@@ -1,8 +1,8 @@
-package com.mygdx.mechwargame.screen.galaxy.inputevent;
+package com.mygdx.mechwargame.screen.galaxy.inputevent.cargo;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.item.ConsumableItem;
 import com.mygdx.mechwargame.core.item.Item;
 import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
@@ -22,6 +21,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+
+import static com.mygdx.mechwargame.screen.galaxy.inputevent.cargo.CargoRightClickHandler.rightClickUp;
+import static com.mygdx.mechwargame.screen.galaxy.inputevent.cargo.CargoRightClickHandler.rightClickDown;
 
 public class CargoClickEvent {
 
@@ -50,7 +52,7 @@ public class CargoClickEvent {
         visibleAction.setTarget(cargoViewWindow);
     }
 
-    private static void refreshWindow(List<Item> items,
+    static void refreshWindow(List<Item> items,
                                       Table itemsTable) {
 
         int max = GameData.starShip.cargoBay.maxCapacity;
@@ -79,7 +81,7 @@ public class CargoClickEvent {
 
                 toClear.forEach(l -> item.getListeners().removeValue(l, true));
 
-                item.addListener(new ClickListener() {
+                item.addListener(new ClickListener(Input.Buttons.RIGHT) {
 
                     @Override
                     public boolean touchDown(InputEvent event,
@@ -89,20 +91,8 @@ public class CargoClickEvent {
                                              int button) {
                         boolean result = super.touchDown(event, x, y, pointer, button);
 
-                        if (item instanceof ConsumableItem) {
-
-                            ParallelAction sequenceAction = new ParallelAction();
-                            ScaleToAction scaleToAction = Actions.scaleTo(0.8f, 0.8f);
-
-                            MoveByAction moveByAction = new MoveByAction();
-                            moveByAction.setAmount(32 * 0.25f, 32 * 0.25f);
-
-                            sequenceAction.addAction(moveByAction);
-                            sequenceAction.addAction(scaleToAction);
-
-                            scaleToAction.setDuration(0.05f);
-
-                            item.addAction(sequenceAction);
+                        if (button == Input.Buttons.RIGHT) {
+                            rightClickDown(item);
                         }
 
                         return result;
@@ -117,40 +107,8 @@ public class CargoClickEvent {
                         super.touchUp(event, x, y, pointer, button);
                         event.stop();
 
-                        if (item instanceof ConsumableItem) {
-
-                            ParallelAction parallelAction1 = new ParallelAction();
-                            ScaleToAction scaleBackAction = Actions.scaleTo(1f, 1f);
-
-                            parallelAction1.addAction(scaleBackAction);
-
-                            scaleBackAction.setDuration(0.025f);
-
-                            MoveByAction moveByAction = new MoveByAction();
-                            moveByAction.setAmount(-32 * 0.25f, -32 * 0.25f);
-
-                            parallelAction1.addAction(moveByAction);
-
-                            SequenceAction sequenceAction = new SequenceAction();
-                            sequenceAction.addAction(parallelAction1);
-
-                            if (((ConsumableItem) item).consume()) {
-
-                                sequenceAction.addAction(Actions.fadeOut(0.5f));
-                                sequenceAction.addAction(Actions.removeActor());
-                                sequenceAction.addAction(new Action() {
-                                    @Override
-                                    public boolean act(float delta) {
-                                        items.remove(item);
-                                        refreshWindow(items, itemsTable);
-                                        return true;
-                                    }
-                                });
-
-                            }
-
-
-                            item.addAction(sequenceAction);
+                        if (button == Input.Buttons.RIGHT) {
+                            rightClickUp(item, items, itemsTable);
                         }
                     }
                 });
@@ -166,5 +124,7 @@ public class CargoClickEvent {
             }
         }
     }
+
+
 
 }

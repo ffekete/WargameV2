@@ -27,6 +27,7 @@ import com.mygdx.mechwargame.screen.ScrollController;
 import com.mygdx.mechwargame.screen.action.LockGameStageAction;
 import com.mygdx.mechwargame.screen.action.MainAction;
 import com.mygdx.mechwargame.screen.galaxy.inputevent.*;
+import com.mygdx.mechwargame.screen.galaxy.inputevent.cargo.CargoClickEvent;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
