@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.IntAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.core.weapon.Weapon;
@@ -219,8 +219,24 @@ public class HangarViewWindow extends Table {
                                     int pointer,
                                     int button) {
                     super.touchUp(event, x, y, pointer, button);
+
+                    IntAction intAction = new IntAction() {
+                        @Override
+                        public boolean act(float delta) {
+                            boolean result = super.act(delta);
+                            Company.money = getValue();
+                            return result;
+                        }
+                    };
+
+                    intAction.setStart(Company.money);
+                    intAction.setEnd(Company.money - (baseUnit.armor) * 500);
+                    intAction.setDuration(0.5f);
+
+                    stage.addAction(intAction);
+
                     baseUnit.armor++;
-                    Company.money -= (baseUnit.armor) * 500;
+
                     setupMechSetupTable(mechSetupTable, baseUnit);
                 }
             });
@@ -255,7 +271,7 @@ public class HangarViewWindow extends Table {
                 .row();
 
         mechSetupTable.add()
-                .height(30)
+                .height(20)
                 .row();
 
         List<Weapon> primaryWeapons = new ArrayList<>();

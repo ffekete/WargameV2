@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 public class KeyMapping {
 
     public static int UNPAUSE =Input.Keys.SPACE;
+    public static int SAVE = Input.Keys.S;
+    public static int LOAD = Input.Keys.L;
     public static int SHIP_INFO = Input.Keys.I;
     public static int CARGO_MENU = Input.Keys.C;
     public static int HANGAR_MENU = Input.Keys.H;

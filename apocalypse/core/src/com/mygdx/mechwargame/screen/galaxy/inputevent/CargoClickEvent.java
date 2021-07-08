@@ -2,12 +2,11 @@ package com.mygdx.mechwargame.screen.galaxy.inputevent;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -81,6 +80,34 @@ public class CargoClickEvent {
                 toClear.forEach(l -> item.getListeners().removeValue(l, true));
 
                 item.addListener(new ClickListener() {
+
+                    @Override
+                    public boolean touchDown(InputEvent event,
+                                             float x,
+                                             float y,
+                                             int pointer,
+                                             int button) {
+                        boolean result = super.touchDown(event, x, y, pointer, button);
+
+                        if (item instanceof ConsumableItem) {
+
+                            ParallelAction sequenceAction = new ParallelAction();
+                            ScaleToAction scaleToAction = Actions.scaleTo(0.8f, 0.8f);
+
+                            MoveByAction moveByAction = new MoveByAction();
+                            moveByAction.setAmount(32 * 0.25f, 32 * 0.25f);
+
+                            sequenceAction.addAction(moveByAction);
+                            sequenceAction.addAction(scaleToAction);
+
+                            scaleToAction.setDuration(0.05f);
+
+                            item.addAction(sequenceAction);
+                        }
+
+                        return result;
+                    }
+
                     @Override
                     public void touchUp(InputEvent event,
                                         float x,
@@ -92,26 +119,38 @@ public class CargoClickEvent {
 
                         if (item instanceof ConsumableItem) {
 
-                            SequenceAction sequenceAction = new SequenceAction();
-                            ScaleToAction scaleToAction = Actions.scaleTo(0.8f, 0.8f);
+                            ParallelAction parallelAction1 = new ParallelAction();
                             ScaleToAction scaleBackAction = Actions.scaleTo(1f, 1f);
-                            sequenceAction.addAction(scaleToAction);
-                            sequenceAction.addAction(scaleBackAction);
 
-                            scaleToAction.setActor(item);
-                            scaleToAction.setTarget(item);
-                            scaleToAction.setDuration(0.05f);
+                            parallelAction1.addAction(scaleBackAction);
 
-                            scaleBackAction.setActor(item);
-                            scaleBackAction.setTarget(item);
                             scaleBackAction.setDuration(0.025f);
 
-                            item.addAction(sequenceAction);
+                            MoveByAction moveByAction = new MoveByAction();
+                            moveByAction.setAmount(-32 * 0.25f, -32 * 0.25f);
+
+                            parallelAction1.addAction(moveByAction);
+
+                            SequenceAction sequenceAction = new SequenceAction();
+                            sequenceAction.addAction(parallelAction1);
 
                             if (((ConsumableItem) item).consume()) {
-                                items.remove(item);
-                                refreshWindow(items, itemsTable);
+
+                                sequenceAction.addAction(Actions.fadeOut(0.5f));
+                                sequenceAction.addAction(Actions.removeActor());
+                                sequenceAction.addAction(new Action() {
+                                    @Override
+                                    public boolean act(float delta) {
+                                        items.remove(item);
+                                        refreshWindow(items, itemsTable);
+                                        return true;
+                                    }
+                                });
+
                             }
+
+
+                            item.addAction(sequenceAction);
                         }
                     }
                 });

@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
@@ -27,7 +28,9 @@ import com.mygdx.mechwargame.screen.action.LockGameStageAction;
 import com.mygdx.mechwargame.screen.action.MainAction;
 import com.mygdx.mechwargame.screen.galaxy.inputevent.*;
 import com.mygdx.mechwargame.state.GameData;
+import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.state.KeyMapping;
+import com.mygdx.mechwargame.state.SaveLoadManager;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.DynamicProgressBar;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
@@ -84,6 +87,12 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
             Table menuTable = new Table();
             uiStage.addActor(menuTable);
+
+            Label moneyLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(Company.money));
+            uiStage.addActor(moneyLabel);
+            GameState.moneyLabel = moneyLabel;
+            moneyLabel.setPosition(10, Config.SCREEN_HEIGHT - 50);
+
             menuTable.setPosition(10, 10);
             menuTable.setSize(6 * 64 + 5 * 10, 64);
 
@@ -303,6 +312,10 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                         if(!GameData.lockGameStage) {
                             GameData.isPaused = !GameData.isPaused;
                         }
+                    }
+
+                    if(KeyMapping.SAVE == keycode) {
+                        SaveLoadManager.save();
                     }
 
                     if (KeyMapping.SHIP_INFO == keycode) {
