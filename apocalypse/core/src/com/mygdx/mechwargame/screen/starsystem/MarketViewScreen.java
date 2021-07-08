@@ -71,8 +71,8 @@ public class MarketViewScreen extends GenericScreenAdapter {
         playerItems = GameData.starShip.cargoBay.getItems();
 
         playerItems.forEach(item -> {
-            itemPrices.computeIfAbsent(item, v -> (int)(item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
-            marketPrices.computeIfAbsent(item, v -> (int)(item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
+            itemPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
+            marketPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
         });
 
         marketItems = star.facilities.stream()
@@ -83,8 +83,8 @@ public class MarketViewScreen extends GenericScreenAdapter {
                 .itemsToSell;
 
         marketItems.forEach(item -> {
-            itemPrices.computeIfAbsent(item, v -> (int)(item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
-            marketPrices.computeIfAbsent(item, v -> (int)(item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
+            itemPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
+            marketPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
         });
 
     }
@@ -273,6 +273,18 @@ public class MarketViewScreen extends GenericScreenAdapter {
         Table buyButtonTable = new Table();
         ImageTextButton buyButton = UIFactoryCommon.getMenuButton("trade");
         ImageTextButton resetButton = UIFactoryCommon.getMenuButton("reset");
+
+        buyButton.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                if(Company.money < barterPrice) {
+                    buyButton.setDisabled(true);
+                } else {
+                    buyButton.setDisabled(false);
+                }
+                return false;
+            }
+        });
 
         // ************    BUY BUTTON   ************************
         buyButton.addListener(new ClickListener() {

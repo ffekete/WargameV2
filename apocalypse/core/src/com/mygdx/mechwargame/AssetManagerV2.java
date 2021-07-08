@@ -83,6 +83,7 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String TOOLTIP_BG = "ui/ToolTipBg.png";
     public static final String FRAME_BG = "ui/FrameBg.png";
+    public static final String FRAME_DISABLED_BG = "ui/FrameDisabledBg.png";
     public static final String FRAME_BG_SMALL = "ui/FrameBgSmall.png";
 
     public static final String LASER_CANNON = "weapon/LaserCannon.png";
@@ -218,6 +219,7 @@ public class AssetManagerV2 extends AssetManager {
         load(SCROLL_PANE_KNOB, Texture.class);
         load(TOOLTIP_BG, Texture.class);
         load(FRAME_BG, Texture.class);
+        load(FRAME_DISABLED_BG, Texture.class);
         load(FRAME_BG_SMALL, Texture.class);
         load(LASER_CANNON, Texture.class);
         load(LARGE_LASER_CANNON, Texture.class);

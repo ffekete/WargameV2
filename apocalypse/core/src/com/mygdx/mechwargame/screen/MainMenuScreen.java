@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -23,13 +24,14 @@ import com.mygdx.mechwargame.core.unit.Interceptor;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.SmallStarShip;
 import com.mygdx.mechwargame.core.weapon.*;
-import com.mygdx.mechwargame.screen.action.FlashingAction;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.screen.chargen.CharacterCreationScreen;
 import com.mygdx.mechwargame.screen.galaxy.GalaxySetupScreen;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
+
+import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
 public class MainMenuScreen extends GenericScreenAdapter {
 
@@ -119,7 +121,6 @@ public class MainMenuScreen extends GenericScreenAdapter {
                                 int pointer,
                                 int button) {
                 SequenceAction sequenceAction = new SequenceAction();
-                sequenceAction.addAction(new FlashingAction(0.1f, 8, newGameButton));
                 sequenceAction.addAction(new SetScreenAction(new CharacterCreationScreen()));
                 stage.addAction(sequenceAction);
             }
@@ -156,7 +157,13 @@ public class MainMenuScreen extends GenericScreenAdapter {
                 GameData.starShip = starShip;
 
                 SequenceAction sequenceAction = new SequenceAction();
-                sequenceAction.addAction(new FlashingAction(0.1f, 8, quickStartButton));
+
+                AlphaAction alphaAction = new AlphaAction();
+                sequenceAction.addAction(alphaAction);
+                alphaAction.setAlpha(0);
+                alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                alphaAction.setActor(table);
+
                 sequenceAction.addAction(new SetScreenAction(new GalaxySetupScreen()));
                 stage.addAction(sequenceAction);
                 return true;

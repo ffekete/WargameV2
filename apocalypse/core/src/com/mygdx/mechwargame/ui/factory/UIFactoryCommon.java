@@ -180,6 +180,18 @@ public class UIFactoryCommon {
 
     public static Label getTextLabel(String text,
                                      BitmapFont bitmapFont,
+                                     Color color,
+                                     int align) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = bitmapFont;
+        labelStyle.fontColor = color;
+        Label label = new Label(text, labelStyle);
+        label.setAlignment(align);
+        return label;
+    }
+
+    public static Label getTextLabel(String text,
+                                     BitmapFont bitmapFont,
                                      int align) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = bitmapFont;
@@ -297,8 +309,12 @@ public class UIFactoryCommon {
         NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawableSmall = new NinePatchDrawable(ninePatchSmall);
 
+        NinePatch ninePatchDisabled = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_DISABLED_BG, Texture.class), 16, 16, 16, 16);
+        NinePatchDrawable ninePatchDrawableDisabled = new NinePatchDrawable(ninePatchDisabled);
+
         textButton.getStyle().up = ninePatchDrawable;
         textButton.getStyle().down = ninePatchDrawableSmall;
+        textButton.getStyle().disabled = ninePatchDrawableDisabled;
 
         return textButton;
     }

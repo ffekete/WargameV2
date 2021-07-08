@@ -387,9 +387,12 @@ public class HangarViewWindow extends Table {
                 .expandX()
                 .row();
 
-        table.add(UIFactoryCommon.getTextLabel("new level: " + (selectedUnit.armor + 1), UIFactoryCommon.fontSmall, Align.left))
+        table.add(UIFactoryCommon.getTextLabel("new level", UIFactoryCommon.fontSmall, Align.left))
+                .width(300)
+                .left();
+
+        table.add(UIFactoryCommon.getTextLabel(Integer.toString(selectedUnit.armor + 1), UIFactoryCommon.fontSmall, Align.left))
                 .left()
-                .colspan(2)
                 .expandX()
                 .row();
 
@@ -397,7 +400,7 @@ public class HangarViewWindow extends Table {
                 .left()
                 .width(300)
                 .padRight(30);
-        table.add(UIFactoryCommon.getTextLabel(Integer.toString(Company.money), UIFactoryCommon.fontSmall, Align.left))
+        table.add(UIFactoryCommon.getTextLabel(Integer.toString(Company.money), UIFactoryCommon.fontSmall, Color.GREEN, Align.left))
                 .left()
                 .expandX()
                 .row();
@@ -406,7 +409,7 @@ public class HangarViewWindow extends Table {
                 .left()
                 .width(300)
                 .padRight(30);
-        table.add(UIFactoryCommon.getTextLabel(Integer.toString(cost), UIFactoryCommon.fontSmall, Align.left))
+        table.add(UIFactoryCommon.getTextLabel(Integer.toString(cost), UIFactoryCommon.fontSmall, Color.RED, Align.left))
                 .left()
                 .expandX()
                 .row();
