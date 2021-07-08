@@ -72,8 +72,10 @@ public class MarketViewScreen extends GenericScreenAdapter {
         playerItems = GameData.starShip.cargoBay.getItems();
 
         playerItems.forEach(item -> {
-            itemPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
-            marketPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
+            if(item != null) {
+                itemPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
+                marketPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
+            }
         });
 
         marketItems = star.facilities.stream()
@@ -252,12 +254,14 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
                 playerItems.forEach(item -> {
                     List<EventListener> toClear = new ArrayList<>();
-                    item.getListeners().forEach(eventListener -> {
-                        if (eventListener instanceof ClickListener) {
-                            toClear.add(eventListener);
-                        }
-                    });
-                    toClear.forEach(l -> item.getListeners().removeValue(l, true));
+                    if(item != null) {
+                        item.getListeners().forEach(eventListener -> {
+                            if (eventListener instanceof ClickListener) {
+                                toClear.add(eventListener);
+                            }
+                        });
+                        toClear.forEach(l -> item.getListeners().removeValue(l, true));
+                    }
                 });
 
                 resetBarter();
@@ -375,6 +379,13 @@ public class MarketViewScreen extends GenericScreenAdapter {
             @Override
             public int compare(Item o1,
                                Item o2) {
+                if(o1 == null) {
+                    return -1;
+                }
+
+                if(o2 == null) {
+                    return 1;
+                }
                 return Integer.compare(o1.order, o2.order);
             }
         });
@@ -426,17 +437,17 @@ public class MarketViewScreen extends GenericScreenAdapter {
                                Table itemsTable,
                                Consumer<Item> consumer) {
 
-        int max = 60;
+        int max = 52;
 
         itemsTable.clear();
 
-        Deque<Item> itemQueue = new ArrayDeque<>(itemsToSell);
-
         for (int i = 0; i < max; i++) {
 
-            if (i < itemsToSell.size()) {
+            Item item = itemsToSell.size() <= i ? null :itemsToSell.get(i);
+
+            if (item != null) {
                 Table container = new Table();
-                Item item = itemQueue.pop();
+
                 container.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
                 container.add(item)
                         .size(128);

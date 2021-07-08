@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,7 +26,7 @@ public class CargoClickEvent {
     private static final TextureRegionDrawable SELECTED_BACKGROUND = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
     private static final TextureRegionDrawable BACKGROUND = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class));
 
-    private static Map<Item, Integer> cellMap = new HashMap<>();
+    private static Map<Table, Integer> cellMap = new HashMap<>();
     private static Item selectedItem;
     private static Table selectedContainer;
 
@@ -62,13 +63,12 @@ public class CargoClickEvent {
         itemsTable.clear();
         cellMap.clear();
 
-        Deque<Item> itemQueue = new ArrayDeque<>(items);
-
         for (int i = 0; i < max; i++) {
 
-            if (i < items.size()) {
+            Item item = items.get(i);
+
+            if (item != null) {
                 Table container = new Table();
-                Item item = itemQueue.pop();
 
                 container.background(BACKGROUND);
                 container.add(item)
@@ -77,7 +77,7 @@ public class CargoClickEvent {
                 Cell<Table> cell = itemsTable.add(container)
                         .size(128);
 
-                cellMap.put(item, i);
+                cellMap.put(container, i);
 
                 List<EventListener> toClear = new ArrayList<>();
                 item.getListeners().forEach(eventListener -> {
@@ -88,7 +88,9 @@ public class CargoClickEvent {
 
                 toClear.forEach(l -> item.getListeners().removeValue(l, true));
 
-                item.addListener(new ClickListener(Input.Buttons.LEFT) {
+                container.setTouchable(Touchable.enabled);
+
+                container.addListener(new ClickListener(Input.Buttons.LEFT) {
                     @Override
                     public boolean touchDown(InputEvent event,
                                              float x,
@@ -134,6 +136,47 @@ public class CargoClickEvent {
             } else {
                 Table container = new Table();
                 container.background(BACKGROUND);
+                cellMap.put(container, i);
+                container.setTouchable(Touchable.enabled);
+
+                container.addListener(new ClickListener(Input.Buttons.LEFT) {
+                    @Override
+                    public boolean touchDown(InputEvent event,
+                                             float x,
+                                             float y,
+                                             int pointer,
+                                             int button) {
+                        boolean result = super.touchDown(event, x, y, pointer, button);
+
+                        return result;
+                    }
+
+                    @Override
+                    public void touchUp(InputEvent event,
+                                        float x,
+                                        float y,
+                                        int pointer,
+                                        int button) {
+                        super.touchUp(event, x, y, pointer, button);
+
+                        if (selectedItem != null) {
+
+                            int targetIndex = cellMap.get(container);
+
+                            int oldIndex = items.indexOf(selectedItem);
+                            items.remove(selectedItem);
+                            items.add(oldIndex, null);
+                            items.remove(targetIndex);
+                            items.add(targetIndex, selectedItem);
+
+                            selectedContainer.background(BACKGROUND);
+                            selectedContainer = null;
+                            selectedItem = null;
+                            refreshWindow(items, itemsTable);
+                        }
+                    }
+                });
+
                 itemsTable.add(container)
                         .size(128);
             }
