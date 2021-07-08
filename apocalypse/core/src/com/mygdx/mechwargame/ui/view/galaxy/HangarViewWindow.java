@@ -381,6 +381,18 @@ public class HangarViewWindow extends Table {
         table.setBackground(ninePatchDrawable);
         Tooltip<Table> tooltip = new Tooltip<>(table, tooltipManager);
 
+        table.add(UIFactoryCommon.getTextLabel("upgrade armor", UIFactoryCommon.fontSmall, Align.left))
+                .left()
+                .colspan(2)
+                .expandX()
+                .row();
+
+        table.add(UIFactoryCommon.getTextLabel("new level: " + (selectedUnit.armor + 1), UIFactoryCommon.fontSmall, Align.left))
+                .left()
+                .colspan(2)
+                .expandX()
+                .row();
+
         table.add(UIFactoryCommon.getTextLabel("your money", UIFactoryCommon.fontSmall, Align.left))
                 .left()
                 .width(300)

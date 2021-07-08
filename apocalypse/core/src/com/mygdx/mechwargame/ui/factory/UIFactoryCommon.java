@@ -14,10 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
-import com.mygdx.mechwargame.ui.DynamicProgressBar;
-import com.mygdx.mechwargame.ui.DynamicTextLabel;
-import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
+import com.mygdx.mechwargame.ui.*;
 
 import java.util.function.Supplier;
 
@@ -117,9 +114,16 @@ public class UIFactoryCommon {
             table.add(new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_FULL, 32, 32, true, 0.15f))).size(32).padRight(5).left();
         }
 
-        Image powerUpImage = null;
+        ImageButton powerUpImage = null;
         if (actual < maxUpgrade && canUpgrade) {
-            powerUpImage = new LayeredAnimatedImage(new AnimatedDrawable(AssetManagerV2.POWER_ICON_PLUS, 32, 32, true, 0.2f));
+
+            ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+            imageButtonStyle.up = new AnimatedDrawable(AssetManagerV2.POWER_ICON_PLUS, 32, 32, true, 0.15f);
+            imageButtonStyle.down = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.POWER_ICON_PLUS_DOWN, Texture.class));
+
+            powerUpImage = new AnimatedImageButton(imageButtonStyle);
+            powerUpImage.getImage().setSize(32, 32);
+
             table.add(powerUpImage)
                     .size(32)
                     .padRight(5)
@@ -141,10 +145,10 @@ public class UIFactoryCommon {
     }
 
     public static class Pair {
-        public Image image;
+        public ImageButton image;
         public Table table;
 
-        public Pair(Image image,
+        public Pair(ImageButton image,
                     Table table) {
             this.image = image;
             this.table = table;

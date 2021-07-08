@@ -21,6 +21,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String POWER_ICON_EMPTY = "ui/PowerIconEmpty.png";
     public static final String POWER_ICON_FULL = "ui/PowerIconFull.png";
     public static final String POWER_ICON_PLUS = "ui/PowerIconPlus.png";
+    public static final String POWER_ICON_PLUS_DOWN = "ui/PowerIconPlusDown.png";
     public static final String POWER_ICON_CAN_UPGRADE = "ui/PowerIconCanUpgrade.png";
 
     public static final String MOUSE_POINTER = "ui/MousePointer.png";
@@ -166,6 +167,7 @@ public class AssetManagerV2 extends AssetManager {
         load(AssetManagerV2.POWER_ICON_EMPTY, Texture.class);
         load(AssetManagerV2.POWER_ICON_FULL, Texture.class);
         load(AssetManagerV2.POWER_ICON_PLUS, Texture.class);
+        load(AssetManagerV2.POWER_ICON_PLUS_DOWN, Texture.class);
         load(AssetManagerV2.POWER_ICON_CAN_UPGRADE, Texture.class);
         load(AssetManagerV2.BLACK_BEAR_IDLE_IMAGE, Texture.class);
         load(AssetManagerV2.HELLFIRE_IDLE_IMAGE, Texture.class);
