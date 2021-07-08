@@ -1,13 +1,11 @@
 package com.mygdx.mechwargame.ui.view.galaxy;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.core.weapon.Weapon;
@@ -149,13 +148,41 @@ public class HangarViewWindow extends Table {
                 .size(1050, 138)
                 .left();
 
-        modelTable.add(UIFactoryCommon.getTextLabel("model", UIFactoryCommon.fontSmall, Align.left))
+        modelTable.add(UIFactoryCommon.getTextLabel("name", UIFactoryCommon.fontSmall, Align.left))
                 .size(200, 64);
 
-        modelTable.add(UIFactoryCommon.getTextLabel(baseUnit.name, UIFactoryCommon.fontSmall, Align.left))
-                .size(850, 64)
+//        modelTable.add(UIFactoryCommon.getTextLabel(baseUnit.name, UIFactoryCommon.fontSmall, Align.left))
+//                .size(850, 64)
+//                .left()
+//                .row();
+
+        Container<TextField> textField = UIFactoryCommon.getTextField(baseUnit.name, "", UIFactoryCommon.fontSmall);
+        modelTable.add(textField)
+                .size(400, 64)
+                .fillX()
                 .left()
                 .row();
+
+        textField.addListener(new InputListener() {
+
+            @Override
+            public boolean keyUp(InputEvent event,
+                                 int keycode) {
+
+                if (keycode == Input.Keys.ENTER) {
+                    stage.setKeyboardFocus(null);
+                }
+                return true;
+            }
+        });
+
+        textField.getActor().addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event,
+                                Actor actor) {
+                baseUnit.name = textField.getActor().getText();
+            }
+        });
 
         modelTable.add(UIFactoryCommon.getTextLabel("type", UIFactoryCommon.fontSmall, Align.left))
                 .size(200, 64);
