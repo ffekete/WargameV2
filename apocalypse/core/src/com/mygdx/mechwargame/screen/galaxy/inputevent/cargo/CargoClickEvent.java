@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.*;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -17,15 +18,16 @@ import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.view.galaxy.CargoViewWindow;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-
-import static com.mygdx.mechwargame.screen.galaxy.inputevent.cargo.CargoRightClickHandler.rightClickUp;
-import static com.mygdx.mechwargame.screen.galaxy.inputevent.cargo.CargoRightClickHandler.rightClickDown;
+import java.util.*;
 
 public class CargoClickEvent {
+
+    private static final TextureRegionDrawable SELECTED_BACKGROUND = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
+    private static final TextureRegionDrawable BACKGROUND = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class));
+
+    private static Map<Item, Integer> cellMap = new HashMap<>();
+    private static Item selectedItem;
+    private static Table selectedContainer;
 
     public static void handle(SequenceAction sequenceAction,
                               Stage stage) {
@@ -53,11 +55,12 @@ public class CargoClickEvent {
     }
 
     static void refreshWindow(List<Item> items,
-                                      Table itemsTable) {
+                              Table itemsTable) {
 
         int max = GameData.starShip.cargoBay.maxCapacity;
 
         itemsTable.clear();
+        cellMap.clear();
 
         Deque<Item> itemQueue = new ArrayDeque<>(items);
 
@@ -66,11 +69,15 @@ public class CargoClickEvent {
             if (i < items.size()) {
                 Table container = new Table();
                 Item item = itemQueue.pop();
-                container.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
+
+                container.background(BACKGROUND);
                 container.add(item)
                         .size(128);
-                itemsTable.add(container)
+
+                Cell<Table> cell = itemsTable.add(container)
                         .size(128);
+
+                cellMap.put(item, i);
 
                 List<EventListener> toClear = new ArrayList<>();
                 item.getListeners().forEach(eventListener -> {
@@ -81,8 +88,7 @@ public class CargoClickEvent {
 
                 toClear.forEach(l -> item.getListeners().removeValue(l, true));
 
-                item.addListener(new ClickListener(Input.Buttons.RIGHT) {
-
+                item.addListener(new ClickListener(Input.Buttons.LEFT) {
                     @Override
                     public boolean touchDown(InputEvent event,
                                              float x,
@@ -90,10 +96,6 @@ public class CargoClickEvent {
                                              int pointer,
                                              int button) {
                         boolean result = super.touchDown(event, x, y, pointer, button);
-
-                        if (button == Input.Buttons.RIGHT) {
-                            rightClickDown(item);
-                        }
 
                         return result;
                     }
@@ -105,16 +107,33 @@ public class CargoClickEvent {
                                         int pointer,
                                         int button) {
                         super.touchUp(event, x, y, pointer, button);
-                        event.stop();
 
-                        if (button == Input.Buttons.RIGHT) {
-                            rightClickUp(item, items, itemsTable);
+                        if (selectedItem == null) {
+                            selectedItem = item;
+                            selectedContainer = cell.getActor();
+                            selectedContainer.background(SELECTED_BACKGROUND);
+                        } else {
+                            int targetIndex = items.indexOf(item);
+                            int sourceIndex = items.indexOf(selectedItem);
+
+                            items.remove(selectedItem);
+                            items.add(targetIndex, selectedItem);
+                            items.remove(item);
+                            items.add(sourceIndex, item);
+
+                            selectedContainer.background(BACKGROUND);
+                            selectedContainer = null;
+                            selectedItem = null;
+                            refreshWindow(items, itemsTable);
                         }
                     }
                 });
+
+                item.addListener(CargoRightClickListener.newInstance(item, items, itemsTable));
+
             } else {
                 Table container = new Table();
-                container.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
+                container.background(BACKGROUND);
                 itemsTable.add(container)
                         .size(128);
             }
@@ -124,7 +143,6 @@ public class CargoClickEvent {
             }
         }
     }
-
 
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.mygdx.mechwargame.screen.galaxy.inputevent.cargo.CargoClickEvent.refreshWindow;
 
-public class CargoRightClickHandler {
+public class CargoRightClickEventDefinition {
 
     static void rightClickDown(Item item) {
         if (item instanceof ConsumableItem) {

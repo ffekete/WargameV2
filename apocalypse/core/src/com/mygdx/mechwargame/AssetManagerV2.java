@@ -11,7 +11,9 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String TEXT_CURSOR = "ui/TextCursor.png";
     public static final String HELP_ICON = "ui/HelpIcon.png";
+
     public static final String CARGO_ITEM_BG = "ui/cargo/CargoItemBg.png";
+    public static final String CARGO_SELECTED_ITEM_BG = "ui/cargo/CargoSelectedItemBg.png";
 
     public static final String SCROLL_PANE_KNOB = "ui/ScrollPaneKnob.png";
 
@@ -226,5 +228,6 @@ public class AssetManagerV2 extends AssetManager {
         load(AA_MISSILE, Texture.class);
         load(AG_MISSILE, Texture.class);
         load(MISSILE, Texture.class);
+        load(CARGO_SELECTED_ITEM_BG, Texture.class);
     }
 }

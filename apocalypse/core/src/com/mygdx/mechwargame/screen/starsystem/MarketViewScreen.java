@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.IntAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
@@ -277,7 +278,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
         buyButton.addAction(new Action() {
             @Override
             public boolean act(float delta) {
-                if(Company.money < barterPrice) {
+                if(Company.money < barterPrice || initialCapacity < 0) {
                     buyButton.setDisabled(true);
                 } else {
                     buyButton.setDisabled(false);
@@ -298,10 +299,24 @@ public class MarketViewScreen extends GenericScreenAdapter {
                 if (Company.money >= barterPrice && !barterItems.isEmpty()) {
 
                     if (initialCapacity < 0) {
-                        // todo show message
+
                     } else {
 
-                        Company.money -= barterPrice;
+                        IntAction intAction = new IntAction() {
+                            @Override
+                            public boolean act(float delta) {
+                                boolean result = super.act(delta);
+                                Company.money = getValue();
+                                return result;
+                            }
+                        };
+
+                        intAction.setStart(Company.money);
+                        intAction.setEnd(Company.money - barterPrice);
+                        intAction.setDuration(0.5f);
+
+                        stage.addAction(intAction);
+
                         barterPrice = 0;
 
                         itemsOriginalList.entrySet().forEach(entry -> {
@@ -312,7 +327,7 @@ public class MarketViewScreen extends GenericScreenAdapter {
                             }
                             barterItems.remove(entry.getKey());
 
-                            sortItems(playerItems);
+                            //sortItems(playerItems);
                             sortItems(marketItems);
                         });
 
@@ -383,14 +398,14 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         initialCapacity = GameData.starShip.cargoBay.capacity;
 
-        sortItems(playerItems);
+        //sortItems(playerItems);
         sortItems(marketItems);
         sortItems(barterItems);
 
     }
 
     private void refreshWindows() {
-        sortItems(playerItems);
+        //sortItems(playerItems);
         sortItems(marketItems);
         sortItems(barterItems);
 
