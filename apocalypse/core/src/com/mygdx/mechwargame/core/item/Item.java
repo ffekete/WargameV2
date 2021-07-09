@@ -32,6 +32,7 @@ public abstract class Item extends Image {
 
     public void addToolTip() {
         TooltipManager tooltipManager = new TooltipManager();
+        tooltipManager.instant();
         tooltipManager.resetTime = 0.1f;
         tooltipManager.initialTime = 0.1f;
         tooltipManager.subsequentTime = 0.1f;
