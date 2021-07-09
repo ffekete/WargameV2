@@ -11,6 +11,12 @@ public class TargetingModule extends Modification {
         super(AssetManagerV2.TARGETING_MODULE);
         name = "targeting module";
         price = 800;
+        description =
+                "+1 weapon accuracy.\n" +
+                "slots: all missiles\n\n" +
+                "Simple chip that enhances the targeting capabilities\n" +
+                "of the missile launcher it is applied to.\n";
+        addToolTip();
     }
 
     @Override

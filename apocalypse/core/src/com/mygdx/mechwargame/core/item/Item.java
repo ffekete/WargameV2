@@ -31,9 +31,9 @@ public abstract class Item extends Image {
 
     public void addToolTip() {
         TooltipManager tooltipManager = new TooltipManager();
-        tooltipManager.resetTime = 0.5f;
-        tooltipManager.initialTime = 0.5f;
-        tooltipManager.subsequentTime = 0.5f;
+        tooltipManager.resetTime = 0.1f;
+        tooltipManager.initialTime = 0.1f;
+        tooltipManager.subsequentTime = 0.1f;
 
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class), 16 ,16, 16, 16);
 
