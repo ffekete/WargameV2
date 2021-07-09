@@ -2,6 +2,7 @@ package com.mygdx.mechwargame.core.world.generator.items;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.mechwargame.core.item.Item;
+import com.mygdx.mechwargame.core.item.modification.EnhancedSensors;
 import com.mygdx.mechwargame.core.item.modification.Modification;
 import com.mygdx.mechwargame.core.item.modification.TargetingModule;
 
@@ -12,7 +13,8 @@ import java.util.Random;
 public class ModificationStockGenerator {
 
     private static List<Class<? extends Modification>> basicItems = Arrays.asList(
-            TargetingModule.class
+            TargetingModule.class,
+            EnhancedSensors.class
     );
 
     private static List<Class<? extends Modification>> advancedItems = Arrays.asList(
@@ -37,7 +39,7 @@ public class ModificationStockGenerator {
             }
         }
 
-        if(level > 1 && !advancedItems.isEmpty()) {
+        if (level > 1 && !advancedItems.isEmpty()) {
             for (int i = 0; i < random.nextInt(3) + 1; i++) {
                 Class<? extends Modification> aClass = advancedItems.get(random.nextInt(advancedItems.size()));
                 try {
@@ -49,7 +51,7 @@ public class ModificationStockGenerator {
             }
         }
 
-        if(level > 2 && !rareItems.isEmpty()) {
+        if (level > 2 && !rareItems.isEmpty()) {
             for (int i = 0; i < random.nextInt(2); i++) {
                 Class<? extends Modification> aClass = rareItems.get(random.nextInt(rareItems.size()));
                 try {

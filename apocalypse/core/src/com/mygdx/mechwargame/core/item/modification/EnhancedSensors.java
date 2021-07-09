@@ -5,18 +5,18 @@ import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
-public class TargetingModule extends Modification {
+public class EnhancedSensors extends Modification {
 
-    public TargetingModule() {
-        super(AssetManagerV2.TARGETING_MODULE);
-        name = "targeting module";
-        shortName = "tgt";
+    public EnhancedSensors() {
+        super(AssetManagerV2.ENHANCED_SENSORS_MODULE);
+        name = "enhanced sensors";
+        shortName = "ens";
         price = 800;
         description =
-                "+1 weapon accuracy.\n" +
-                "slots: all missiles\n\n" +
-                "Simple chip that enhances the targeting capabilities\n" +
-                "of the missile launcher it is applied to.\n";
+                "+1 weapon range.\n" +
+                        "slots: all missiles\n\n" +
+                        "Simple chip that enhances the maximum range\n" +
+                        "of the missile launcher it is applied to.\n";
         addToolTip();
     }
 
@@ -31,14 +31,14 @@ public class TargetingModule extends Modification {
     @Override
     void apply(Weapon weapon) {
         super.apply(weapon);
-        if(weapon.accuracy < Config.MAX_WEAPON_STAT_LEVEL) {
-            weapon.accuracy++;
+        if (weapon.range < Config.MAX_WEAPON_STAT_LEVEL) {
+            weapon.range++;
         }
     }
 
     @Override
     void remove(Weapon weapon) {
         super.remove(weapon);
-        weapon.accuracy--;
+        weapon.range--;
     }
 }

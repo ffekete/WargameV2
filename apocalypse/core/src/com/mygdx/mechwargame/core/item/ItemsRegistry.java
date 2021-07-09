@@ -1,6 +1,7 @@
 package com.mygdx.mechwargame.core.item;
 
 import com.mygdx.mechwargame.core.item.consumable.HydrogenCell;
+import com.mygdx.mechwargame.core.item.modification.EnhancedSensors;
 import com.mygdx.mechwargame.core.item.weapon.aamissile.AirToAirMissile;
 import com.mygdx.mechwargame.core.item.weapon.agmissile.AirToGroundMissile;
 import com.mygdx.mechwargame.core.item.weapon.gun.LargeLaserCannon;
@@ -23,7 +24,8 @@ public class ItemsRegistry {
             AirToGroundMissile.class,
             LongRangeMissile.class,
             ShortRangeMissile.class,
-            TargetingModule.class
+            TargetingModule.class,
+            EnhancedSensors.class
     );
 
 }
