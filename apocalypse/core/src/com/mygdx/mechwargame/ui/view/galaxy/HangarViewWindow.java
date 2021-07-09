@@ -286,7 +286,7 @@ public class HangarViewWindow extends Table {
                 .collect(Collectors.toList())
         );
 
-        addWeaponSelectionBox(mechSetupTable, "primary weapon slot selection", primaryWeapons, true);
+        addWeaponSelectionBox(mechSetupTable, "primary weapon", primaryWeapons, true);
 
         mechSetupTable
                 .padBottom(10)
@@ -305,7 +305,7 @@ public class HangarViewWindow extends Table {
                     .collect(Collectors.toList())
             );
 
-            addWeaponSelectionBox(mechSetupTable, "secondary weapon slot selection", secondaryWeapons, false);
+            addWeaponSelectionBox(mechSetupTable, "secondary weapon", secondaryWeapons, false);
 
         } else {
             mechSetupTable.add()
@@ -319,85 +319,53 @@ public class HangarViewWindow extends Table {
                                        String message,
                                        List<Weapon> items,
                                        boolean primary) {
-        SelectBox<Weapon> primaryWeaponsSelectBox = getSelectBox();
-        primaryWeaponsSelectBox.setSize(1100, 80);
+
+        Table weaponSelectionTable = new Table();
+        mechSetupTable.add(weaponSelectionTable)
+                .size(1400, 150)
+                .colspan(2);
+
+        ImageTextButton assignButton = UIFactoryCommon.getMenuButton("assign");
 
         Array<Weapon> itemArray = new Array<>();
         for (Weapon item : items) {
             itemArray.add(item);
         }
 
-        primaryWeaponsSelectBox.setItems(itemArray);
+        weaponSelectionTable.add(UIFactoryCommon.getTextLabel(message, UIFactoryCommon.fontSmall, Align.left))
+                .size(450, 60)
+                .left();
 
-        primaryWeaponsSelectBox.addListener(new ChangeListener() {
+        String weaponName;
+
+        if(primary) {
+            weaponName = selectedUnit.primaryWeapon.name;
+        } else {
+            weaponName = selectedUnit.secondaryWeapon.name;
+        }
+
+        assignButton.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event,
-                                Actor actor) {
-                if (primary) {
-                    Weapon weaponToAdd = (Weapon) ((SelectBox) actor).getSelected();
-
-                    if (selectedUnit.primaryWeapon == weaponToAdd) {
-                        return;
-                    }
-
-                    GameData.starShip.cargoBay.removeItem(weaponToAdd);
-                    GameData.starShip.cargoBay.addItem(selectedUnit.primaryWeapon);
-
-                    selectedUnit.primaryWeapon = weaponToAdd;
-                } else {
-                    Weapon weaponToAdd = (Weapon) ((SelectBox) actor).getSelected();
-
-                    if (selectedUnit.secondaryWeapon == weaponToAdd) {
-                        return;
-                    }
-
-                    GameData.starShip.cargoBay.removeItem(weaponToAdd);
-                    GameData.starShip.cargoBay.addItem(selectedUnit.secondaryWeapon);
-
-                    selectedUnit.secondaryWeapon = weaponToAdd;
-                }
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                stage.addActor(new WeaponViewWindow(stage, items, primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon));
             }
         });
 
-        mechSetupTable.add(UIFactoryCommon.getTextLabel(message, UIFactoryCommon.fontSmall, Align.left))
-                .size(1100, 60)
+        weaponSelectionTable.add(UIFactoryCommon.getTextLabel(weaponName, UIFactoryCommon.fontSmall, Align.left))
+                .size(950, 60)
                 .left()
-                .colspan(2)
                 .row();
 
-        mechSetupTable.add(primaryWeaponsSelectBox)
-                .size(1100, 80)
-                .padLeft(50)
+        weaponSelectionTable.add(assignButton)
+                .size(400, 80)
                 .colspan(2)
                 .padBottom(10)
                 .left();
-    }
-
-    private <T> SelectBox<T> getSelectBox() {
-
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
-        NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
-
-        NinePatch knobNinePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.SCROLL_PANE_KNOB, Texture.class), 8, 8, 8, 8);
-        NinePatchDrawable knobNinePatchDrawable = new NinePatchDrawable(knobNinePatch);
-
-        SelectBox.SelectBoxStyle selectBoxStyle = new SelectBox.SelectBoxStyle();
-
-        com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle listStyle = new com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle();
-        listStyle.selection = ninePatchDrawable;
-        listStyle.font = UIFactoryCommon.fontSmall;
-
-        ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
-        scrollPaneStyle.background = ninePatchDrawable;
-        scrollPaneStyle.vScrollKnob = knobNinePatchDrawable;
-
-        selectBoxStyle.background = ninePatchDrawable;
-        selectBoxStyle.font = UIFactoryCommon.fontSmall;
-        selectBoxStyle.fontColor = Color.WHITE;
-        selectBoxStyle.listStyle = listStyle;
-        selectBoxStyle.scrollStyle = scrollPaneStyle;
-
-        return new SelectBox<>(selectBoxStyle);
     }
 
     public void hide(Stage stage) {

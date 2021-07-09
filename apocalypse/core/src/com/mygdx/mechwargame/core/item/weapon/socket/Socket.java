@@ -2,12 +2,12 @@ package com.mygdx.mechwargame.core.item.weapon.socket;
 
 public enum Socket {
 
-    AAMissile("air to air missile"),
-    AGMissile("air to ground missile"),
-    LargeMissile("large missile"),
-    SmallMissile("small missile"),
+    AAMissile("m-aa"),
+    AGMissile("m-ag"),
+    LargeMissile("m-l"),
+    SmallMissile("m-s"),
     Gun("gun"),
-    MegaWeapon("mega weapon");
+    MegaWeapon("cannon");
 
     public String name;
 
