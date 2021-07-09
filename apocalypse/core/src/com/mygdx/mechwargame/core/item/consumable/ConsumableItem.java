@@ -1,4 +1,6 @@
-package com.mygdx.mechwargame.core.item;
+package com.mygdx.mechwargame.core.item.consumable;
+
+import com.mygdx.mechwargame.core.item.Item;
 
 public abstract class ConsumableItem extends Item {
 

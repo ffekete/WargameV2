@@ -1,7 +1,8 @@
-package com.mygdx.mechwargame.core.weapon;
+package com.mygdx.mechwargame.core.item.weapon.aamissile;
 
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.weapon.socket.Socket;
+import com.mygdx.mechwargame.core.item.weapon.Weapon;
+import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
 public class AirToAirMissile extends Weapon {
 

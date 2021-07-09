@@ -1,9 +1,9 @@
 package com.mygdx.mechwargame.core.unit;
 
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.weapon.AirToAirMissile;
-import com.mygdx.mechwargame.core.weapon.AirToGroundMissile;
-import com.mygdx.mechwargame.core.weapon.socket.Socket;
+import com.mygdx.mechwargame.core.item.weapon.aamissile.AirToAirMissile;
+import com.mygdx.mechwargame.core.item.weapon.agmissile.AirToGroundMissile;
+import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
 public class Interceptor extends BaseUnit {
 

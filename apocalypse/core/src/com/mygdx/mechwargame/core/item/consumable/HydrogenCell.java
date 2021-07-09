@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.core.item;
+package com.mygdx.mechwargame.core.item.consumable;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

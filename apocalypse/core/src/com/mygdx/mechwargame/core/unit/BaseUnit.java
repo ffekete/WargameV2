@@ -1,8 +1,8 @@
 package com.mygdx.mechwargame.core.unit;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.mechwargame.core.weapon.Weapon;
-import com.mygdx.mechwargame.core.weapon.socket.Socket;
+import com.mygdx.mechwargame.core.item.weapon.Weapon;
+import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 
 public abstract class BaseUnit extends Image {

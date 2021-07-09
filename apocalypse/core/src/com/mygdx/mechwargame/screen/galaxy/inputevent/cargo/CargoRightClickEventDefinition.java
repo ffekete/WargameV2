@@ -3,7 +3,7 @@ package com.mygdx.mechwargame.screen.galaxy.inputevent.cargo;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.mygdx.mechwargame.core.item.ConsumableItem;
+import com.mygdx.mechwargame.core.item.consumable.ConsumableItem;
 import com.mygdx.mechwargame.core.item.Item;
 import com.mygdx.mechwargame.state.GameData;
 

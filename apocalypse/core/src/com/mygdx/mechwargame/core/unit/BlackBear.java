@@ -1,9 +1,8 @@
 package com.mygdx.mechwargame.core.unit;
 
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.weapon.LaserCannon;
-import com.mygdx.mechwargame.core.weapon.ShortRangeMissile;
-import com.mygdx.mechwargame.core.weapon.socket.Socket;
+import com.mygdx.mechwargame.core.item.weapon.gun.LaserCannon;
+import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
 public class BlackBear extends BaseUnit {
 

@@ -1,10 +1,11 @@
 package com.mygdx.mechwargame.core.world.generator;
 
-import com.mygdx.mechwargame.core.item.HydrogenCell;
+import com.mygdx.mechwargame.core.item.consumable.HydrogenCell;
 import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
-import com.mygdx.mechwargame.core.world.generator.items.WeaponGenerator;
+import com.mygdx.mechwargame.core.world.generator.items.ModificationStockGenerator;
+import com.mygdx.mechwargame.core.world.generator.items.WeaponStockGenerator;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 
@@ -35,7 +36,8 @@ public class MarketItemsGenerator {
                                     }
 
                                     // weapons
-                                    WeaponGenerator.generate(star.wealth, marketplace.itemsToSell);
+                                    WeaponStockGenerator.generate(star.wealth, marketplace.itemsToSell);
+                                    ModificationStockGenerator.generate(star.wealth, marketplace.itemsToSell);
                                 });
                     }
                 });

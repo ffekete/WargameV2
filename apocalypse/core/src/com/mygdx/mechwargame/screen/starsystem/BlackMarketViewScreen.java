@@ -86,6 +86,11 @@ public class BlackMarketViewScreen extends GenericScreenAdapter {
                 .itemsToSell;
 
         marketItems.forEach(item -> {
+
+            if(sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) == null) {
+                throw new RuntimeException("Item " + item.getClass().getSimpleName() + "has no demand value, add it to ItemRegistry");
+            }
+
             itemPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 0.9f));
             marketPrices.computeIfAbsent(item, v -> (int) (item.getPrice() * sector.sectorOwnerArea.owner.itemsDemand.get(item.getClass()) * 1.1f));
         });

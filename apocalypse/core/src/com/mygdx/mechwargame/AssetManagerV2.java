@@ -94,6 +94,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String AG_MISSILE = "weapon/AirToGroundMissile.png";
     public static final String MISSILE = "weapon/Missile.png";
 
+    public static final String TARGETING_MODULE = "item/targetingModule.png";
 
     public List<String> logos = Arrays.asList(
             LOGO_01,
@@ -229,5 +230,6 @@ public class AssetManagerV2 extends AssetManager {
         load(AG_MISSILE, Texture.class);
         load(MISSILE, Texture.class);
         load(CARGO_SELECTED_ITEM_BG, Texture.class);
+        load(TARGETING_MODULE, Texture.class);
     }
 }

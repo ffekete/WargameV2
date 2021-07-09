@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.core.weapon;
+package com.mygdx.mechwargame.core.item.weapon;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -10,15 +10,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.item.Item;
-import com.mygdx.mechwargame.core.weapon.socket.Socket;
+import com.mygdx.mechwargame.core.item.modification.Modification;
+import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
+import static com.mygdx.mechwargame.Config.WEAPON_ORDER;
 
 public abstract class Weapon extends Item {
 
     private static final int WIDTH = 250;
+
+    public Modification modification;
 
     public int damage;
     public int range;
@@ -33,6 +37,7 @@ public abstract class Weapon extends Item {
 
     public Weapon(String image) {
         super(image);
+        order = WEAPON_ORDER;
     }
 
     public void addToolTip() {
