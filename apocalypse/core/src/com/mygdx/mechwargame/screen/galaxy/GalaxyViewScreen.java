@@ -5,15 +5,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -38,6 +41,7 @@ import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -73,6 +77,33 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     super.draw(batch, x, y, width, height);
                 }
             });
+
+            List<TextureRegionDrawable> bgs = Arrays.asList(
+                    new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.GALAXY_TILE_BG_01, Texture.class)),
+                    new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.GALAXY_TILE_BG_02, Texture.class)),
+                    new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.GALAXY_TILE_BG_03, Texture.class)),
+                    new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.GALAXY_TILE_BG_04, Texture.class)),
+                    new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.GALAXY_TILE_BG_05, Texture.class))
+            );
+
+            GameData.bgImages = new Image[GameData.galaxy.width][GameData.galaxy.height];
+
+            for (int i = 0; i < GameData.galaxy.width; i++) {
+                for (int j = 0; j < GameData.galaxy.height; j++) {
+
+                    Image image = new Image();
+
+                    GameData.bgImages[i][j] = image;
+
+                    image.setDrawable(bgs.get(new Random().nextInt(bgs.size())));
+                    stage.addActor(image);
+                    image.toBack();
+                    image.setPosition(i * 128, j * 128);
+                    image.setSize(128, 128);
+                    image.setTouchable(Touchable.disabled);
+                }
+            }
+
             stage.addActor(targetMarker);
             targetMarker.setSize(128, 128);
             targetMarker.setVisible(true);
@@ -310,12 +341,12 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                     }
 
                     if (KeyMapping.UNPAUSE == keycode) {
-                        if(!GameData.lockGameStage) {
+                        if (!GameData.lockGameStage) {
                             GameData.isPaused = !GameData.isPaused;
                         }
                     }
 
-                    if(KeyMapping.SAVE == keycode) {
+                    if (KeyMapping.SAVE == keycode) {
                         SaveLoadManager.save();
                     }
 
@@ -327,7 +358,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
                         showCargoLocalMenu();
                     }
 
-                    if(KeyMapping.HANGAR_MENU == keycode) {
+                    if (KeyMapping.HANGAR_MENU == keycode) {
                         showHangarLocalMenu();
                     }
 
@@ -458,7 +489,7 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
     private void hideAllMenus() {
 
-        if(GameData.hangarViewWindow != null) {
+        if (GameData.hangarViewWindow != null) {
             GameData.hangarViewWindow.hide(uiStage);
         }
 

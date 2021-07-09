@@ -1,6 +1,8 @@
 package com.mygdx.mechwargame.state;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.core.MovementPathEffect;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.faction.Faction;
@@ -12,6 +14,7 @@ import com.mygdx.mechwargame.ui.view.galaxy.HangarViewWindow;
 import com.mygdx.mechwargame.ui.view.galaxy.ShipInfoLocalMenu;
 import com.mygdx.mechwargame.ui.view.galaxy.StarLocalMenu;
 
+import java.awt.*;
 import java.util.List;
 
 public class GameData {
@@ -30,5 +33,7 @@ public class GameData {
     public static List<Faction> factions;
 
     public static boolean lockGameStage = false;
+
+    public static Image[][] bgImages;
 
 }

@@ -25,9 +25,16 @@ public class StarViewDescriptionCreator {
             "The star system provides some facilities \n" +
             "so now would be the best time to have a look.";
 
+    private static final String STAR_UNINHABITED = "You pass by the mighty star %s.\n" +
+            "There is silence in this system and has always been.";
+
     public static String generate(Star star, Sector sector) {
         String text;
-        if(sector.sectorOwnerArea.owner.isPirate) {
+
+        if(sector.sectorOwnerArea.owner == null) {
+            return String.format(STAR_UNINHABITED, star.name);
+        }
+        else if(sector.sectorOwnerArea.owner.isPirate) {
             text = PIRATE_DESCR;
         } else {
             if(star.capitol) {

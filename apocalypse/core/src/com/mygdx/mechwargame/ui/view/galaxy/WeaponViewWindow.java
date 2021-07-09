@@ -316,19 +316,19 @@ public class WeaponViewWindow extends Table {
 
         if (currentWeapon.modes.contains(Mode.SingleShot)) {
             modesTable.add(new Image(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.SINGLE_SHOT_ICON, Texture.class))))
-                    .size(32)
+                    .size(60)
                     .padRight(20);
         }
 
         if (currentWeapon.modes.contains(Mode.Burst)) {
             modesTable.add(new Image(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.BURST_SHOT_ICON, Texture.class))))
-                    .size(32)
+                    .size(60)
                     .padRight(20);
         }
 
         if (currentWeapon.modes.contains(Mode.Area)) {
             modesTable.add(new Image(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.AREA_ATTACK_ICON, Texture.class))))
-                    .size(32)
+                    .size(60)
                     .padRight(20);
         }
         modesTable.add().expandX();

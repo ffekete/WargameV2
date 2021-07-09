@@ -104,6 +104,12 @@ public class AssetManagerV2 extends AssetManager {
     public static final String DELETE_ICON_UP = "ui/DeleteIconUp.png";
     public static final String DELETE_ICON_DOWN = "ui/DeleteIconDown.png";
 
+    public static final String GALAXY_TILE_BG_01 = "galaxy/Bg01.png";
+    public static final String GALAXY_TILE_BG_02 = "galaxy/Bg02.png";
+    public static final String GALAXY_TILE_BG_03 = "galaxy/Bg03.png";
+    public static final String GALAXY_TILE_BG_04 = "galaxy/Bg04.png";
+    public static final String GALAXY_TILE_BG_05 = "galaxy/Bg05.png";
+
     public List<String> logos = Arrays.asList(
             LOGO_01,
             LOGO_02
@@ -245,5 +251,10 @@ public class AssetManagerV2 extends AssetManager {
         load(AREA_ATTACK_ICON, Texture.class);
         load(DELETE_ICON_UP, Texture.class);
         load(DELETE_ICON_DOWN, Texture.class);
+        load(GALAXY_TILE_BG_01, Texture.class);
+        load(GALAXY_TILE_BG_02, Texture.class);
+        load(GALAXY_TILE_BG_03, Texture.class);
+        load(GALAXY_TILE_BG_04, Texture.class);
+        load(GALAXY_TILE_BG_05, Texture.class);
     }
 }
