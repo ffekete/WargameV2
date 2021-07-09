@@ -97,6 +97,10 @@ public class AssetManagerV2 extends AssetManager {
     public static final String TARGETING_MODULE = "item/targetingModule.png";
     public static final String ENHANCED_SENSORS_MODULE = "item/EnhancedSensors.png";
 
+    public static final String SINGLE_SHOT_ICON = "ui/weapon/SingleShotIcon.png";
+    public static final String BURST_SHOT_ICON = "ui/weapon/BurstShotIcon.png";
+    public static final String AREA_ATTACK_ICON = "ui/weapon/AreaAttackIcon.png";
+
     public List<String> logos = Arrays.asList(
             LOGO_01,
             LOGO_02
@@ -233,5 +237,8 @@ public class AssetManagerV2 extends AssetManager {
         load(CARGO_SELECTED_ITEM_BG, Texture.class);
         load(TARGETING_MODULE, Texture.class);
         load(ENHANCED_SENSORS_MODULE, Texture.class);
+        load(SINGLE_SHOT_ICON, Texture.class);
+        load(BURST_SHOT_ICON, Texture.class);
+        load(AREA_ATTACK_ICON, Texture.class);
     }
 }

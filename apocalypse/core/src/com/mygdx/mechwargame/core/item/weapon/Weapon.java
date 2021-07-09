@@ -15,6 +15,9 @@ import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
 import static com.mygdx.mechwargame.Config.WEAPON_ORDER;
 
@@ -34,6 +37,7 @@ public abstract class Weapon extends Item {
     public String longName;
 
     public Socket socket;
+    public List<Mode> modes = new ArrayList<>();
 
     public Weapon(String image) {
         super(image);

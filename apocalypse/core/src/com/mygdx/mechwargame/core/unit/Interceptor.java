@@ -1,8 +1,8 @@
 package com.mygdx.mechwargame.core.unit;
 
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.item.weapon.aamissile.AirToAirMissile;
-import com.mygdx.mechwargame.core.item.weapon.agmissile.AirToGroundMissile;
+import com.mygdx.mechwargame.core.item.weapon.aamissile.StandardAirToAirMissile;
+import com.mygdx.mechwargame.core.item.weapon.agmissile.StandardAirToGroundMissile;
 import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
 public class Interceptor extends BaseUnit {
@@ -18,10 +18,10 @@ public class Interceptor extends BaseUnit {
         movementPoints = 5;
         initiative = 5;
 
-        primaryWeapon = new AirToGroundMissile();
+        primaryWeapon = new StandardAirToGroundMissile();
         primaryWeaponSocket = Socket.AGMissile;
 
-        secondaryWeapon = new AirToAirMissile();
+        secondaryWeapon = new StandardAirToAirMissile();
         secondaryWeaponSocket = Socket.AAMissile;
 
         unitType = UnitType.Aircraft;

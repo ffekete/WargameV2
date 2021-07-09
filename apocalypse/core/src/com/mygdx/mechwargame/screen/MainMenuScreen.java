@@ -23,8 +23,8 @@ import com.mygdx.mechwargame.core.unit.Hellfire;
 import com.mygdx.mechwargame.core.unit.Interceptor;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.SmallStarShip;
-import com.mygdx.mechwargame.core.item.weapon.aamissile.AirToAirMissile;
-import com.mygdx.mechwargame.core.item.weapon.agmissile.AirToGroundMissile;
+import com.mygdx.mechwargame.core.item.weapon.aamissile.StandardAirToAirMissile;
+import com.mygdx.mechwargame.core.item.weapon.agmissile.StandardAirToGroundMissile;
 import com.mygdx.mechwargame.core.item.weapon.gun.LargeLaserCannon;
 import com.mygdx.mechwargame.core.item.weapon.missile.LongRangeMissile;
 import com.mygdx.mechwargame.core.item.weapon.missile.ShortRangeMissile;
@@ -155,8 +155,8 @@ public class MainMenuScreen extends GenericScreenAdapter {
                 starShip.cargoBay.addItem(new LargeLaserCannon());
                 starShip.cargoBay.addItem(new ShortRangeMissile());
                 starShip.cargoBay.addItem(new LongRangeMissile());
-                starShip.cargoBay.addItem(new AirToAirMissile());
-                starShip.cargoBay.addItem(new AirToGroundMissile());
+                starShip.cargoBay.addItem(new StandardAirToAirMissile());
+                starShip.cargoBay.addItem(new StandardAirToGroundMissile());
 
                 GameData.starShip = starShip;
 
