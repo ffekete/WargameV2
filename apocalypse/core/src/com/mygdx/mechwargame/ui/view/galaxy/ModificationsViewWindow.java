@@ -196,10 +196,17 @@ public class ModificationsViewWindow extends Table {
                     return;
                 }
 
+                if(oldModification != null) {
+                    GameData.starShip.cargoBay.addItem(oldModification);
+                    oldModification.remove(targetWeapon);
+                }
+
                 targetWeapon.modification = currentModification;
+                targetWeapon.modification.apply(targetWeapon);
 
                 GameData.starShip.cargoBay.removeItem(newModification);
-                GameData.starShip.cargoBay.addItem(oldModification);
+
+
                 currentModification = newModification;
                 weaponViewWindow.refreshAll();
                 stage.getActors().removeValue(modificationsViewWindow, true);

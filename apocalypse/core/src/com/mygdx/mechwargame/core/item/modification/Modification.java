@@ -19,11 +19,11 @@ public abstract class Modification extends Item {
 
     }
 
-    void apply(Weapon weapon) {
+    public void apply(Weapon weapon) {
         weapon.modification = this;
     }
 
-    void remove(Weapon weapon) {
+    public void remove(Weapon weapon) {
         weapon.modification = null;
     }
 

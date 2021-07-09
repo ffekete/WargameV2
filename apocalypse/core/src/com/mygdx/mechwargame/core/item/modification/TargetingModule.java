@@ -32,7 +32,7 @@ public class TargetingModule extends Modification {
     }
 
     @Override
-    void apply(Weapon weapon) {
+    public void apply(Weapon weapon) {
         super.apply(weapon);
         if (weapon.accuracy < Config.MAX_WEAPON_STAT_LEVEL) {
             weapon.accuracy++;
@@ -40,7 +40,7 @@ public class TargetingModule extends Modification {
     }
 
     @Override
-    void remove(Weapon weapon) {
+    public void remove(Weapon weapon) {
         super.remove(weapon);
         weapon.accuracy--;
     }
