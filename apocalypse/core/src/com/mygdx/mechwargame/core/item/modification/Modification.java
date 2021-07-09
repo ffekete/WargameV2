@@ -20,7 +20,7 @@ public abstract class Modification extends Item {
     }
 
     public void apply(Weapon weapon) {
-        weapon.modification = this;
+
     }
 
     public void remove(Weapon weapon) {

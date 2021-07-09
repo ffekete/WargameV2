@@ -12,6 +12,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.item.Item;
 import com.mygdx.mechwargame.core.item.modification.Modification;
 import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
+import com.mygdx.mechwargame.input.ToolTipManager;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
@@ -26,6 +27,8 @@ public abstract class Weapon extends Item {
     private static final int WIDTH = 250;
 
     public Modification modification;
+    public Modification secondModification;
+    public Modification thirdModification;
 
     public int damage;
     public int range;
@@ -45,11 +48,7 @@ public abstract class Weapon extends Item {
     }
 
     public void addToolTip() {
-        TooltipManager tooltipManager = new TooltipManager();
-        tooltipManager.instant();
-        tooltipManager.resetTime = 0.1f;
-        tooltipManager.initialTime = 0.1f;
-        tooltipManager.subsequentTime = 0.1f;
+        TooltipManager toolTipManager = ToolTipManager.getTooltipManager();
 
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class), 16, 16, 16, 16);
 
@@ -60,7 +59,7 @@ public abstract class Weapon extends Item {
 
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
         table.setBackground(ninePatchDrawable);
-        Tooltip<Table> tooltip = new Tooltip<>(table, tooltipManager);
+        Tooltip<Table> tooltip = new Tooltip<>(table, toolTipManager);
 
         table.add(UIFactoryCommon.getTextLabel("name", UIFactoryCommon.fontSmall, Align.left))
                 .left()

@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 
 import static com.mygdx.mechwargame.Config.FUEL_ORDER;
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
+import static com.mygdx.mechwargame.input.ToolTipManager.getTooltipManager;
 
 public class HydrogenCell extends ConsumableItem {
 
@@ -46,11 +47,7 @@ public class HydrogenCell extends ConsumableItem {
     }
 
     public void addToolTip() {
-        TooltipManager tooltipManager = new TooltipManager();
-        tooltipManager.instant();
-        tooltipManager.resetTime = 0.1f;
-        tooltipManager.initialTime = 0.1f;
-        tooltipManager.subsequentTime = 0.1f;
+        TooltipManager tooltipManager = getTooltipManager();
 
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class), 16, 16, 16, 16);
 

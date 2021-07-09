@@ -32,6 +32,7 @@ public class WeaponViewWindow extends Table {
     Table weaponDetailsTable = new Table();
 
     public WeaponViewWindow(Stage stage,
+                            HangarViewWindow hangarViewWindow,
                             List<Weapon> weaponsToShow,
                             BaseUnit selectedUnit,
                             Weapon initiallySelectedWeapon,
@@ -166,6 +167,7 @@ public class WeaponViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
+                hangarViewWindow.refresh();
                 stage.getActors().removeValue(weaponViewWindow, true);
             }
         });
@@ -202,6 +204,7 @@ public class WeaponViewWindow extends Table {
                 GameData.starShip.cargoBay.removeItem(newWeapon);
                 GameData.starShip.cargoBay.addItem(oldWeapon);
                 currentWeapon = newWeapon;
+                hangarViewWindow.refresh();
                 stage.getActors().removeValue(weaponViewWindow, true);
             }
         });
@@ -221,9 +224,10 @@ public class WeaponViewWindow extends Table {
         Container<TextField> textField = UIFactoryCommon.getTextField(currentWeapon.longName, "", UIFactoryCommon.fontSmall);
 
         weaponDetailsTable.add(textField)
-                .fillX()
                 .left()
                 .padLeft(40)
+                .padRight(50)
+                .fillX()
                 .colspan(2)
                 .row();
 
@@ -251,87 +255,55 @@ public class WeaponViewWindow extends Table {
         });
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("damage"))
-                .size(450, 70)
+                .size(450, 65)
                 .padLeft(40);
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.damage))
-                .size(350, 70)
+                .size(350, 65)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("rate of fire"))
-                .size(450, 70)
+                .size(450, 65)
                 .padLeft(40);
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.rateOfFire))
-                .size(350, 70)
+                .size(350, 65)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("accuracy"))
-                .size(450, 70)
+                .size(450, 65)
                 .padLeft(40);
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.accuracy))
-                .size(350, 70)
+                .size(350, 65)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("range"))
-                .size(450, 70)
+                .size(450, 65)
                 .padLeft(40);
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.range))
-                .size(350, 70)
+                .size(350, 65)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("ammo"))
-                .size(450, 70)
+                .size(450, 65)
                 .padLeft(40);
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel(Integer.toString(currentWeapon.ammo)))
-                .size(350, 70)
+                .size(350, 65)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("socket"))
-                .size(450, 70)
+                .size(450, 65)
                 .padLeft(40);
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel(currentWeapon.socket.name))
-                .size(350, 70)
+                .size(350, 65)
                 .row();
-
-        weaponDetailsTable.add(UIFactoryCommon.getTextLabel("modification"))
-                .size(450, 70)
-                .padLeft(40);
-
-        ImageTextButton modButton = UIFactoryCommon.getSmallRoundButton(currentWeapon.modification != null ? currentWeapon.modification.shortName : "none");
-        modButton.setSize(300, 60);
-
-        weaponDetailsTable.add(modButton)
-                .size(300, 60)
-                .padRight(50)
-                .row();
-
-        modButton.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event,
-                                float x,
-                                float y,
-                                int pointer,
-                                int button) {
-                super.touchUp(event, x, y, pointer, button);
-
-                List<Modification> mods = GameData.starShip.cargoBay.getItems()
-                        .stream()
-                        .filter(i -> i instanceof Modification)
-                        .map(i -> (Modification) i)
-                        .filter(m -> m.canBeAppliedTo(currentWeapon.socket))
-                        .collect(Collectors.toList());
-
-                getStage().addActor(new ModificationsViewWindow(getStage(), weaponViewWindow, mods, currentWeapon.modification, currentWeapon));
-            }
-        });
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("modes"))
-                .size(450, 70)
+                .size(450, 65)
                 .padLeft(40);
 
         Table modesTable = new Table();
@@ -358,5 +330,47 @@ public class WeaponViewWindow extends Table {
         weaponDetailsTable.add(modesTable)
                 .size(350, 70)
                 .row();
+
+        addModificationsSection(weaponDetailsTable, weaponViewWindow, "mod - slot 1", currentWeapon.modification, 1);
+        addModificationsSection(weaponDetailsTable, weaponViewWindow, "mod - slot 2", currentWeapon.secondModification, 2);
+        addModificationsSection(weaponDetailsTable, weaponViewWindow, "mod - slot 3", currentWeapon.thirdModification, 3);
+    }
+
+    private void addModificationsSection(Table weaponDetailsTable,
+                           WeaponViewWindow weaponViewWindow,
+                                         String text,
+                                         Modification modification,
+                                         int slot) {
+        weaponDetailsTable.add(UIFactoryCommon.getTextLabel(text))
+                .size(450, 70)
+                .padLeft(40);
+
+        ImageTextButton modButton = UIFactoryCommon.getSmallRoundButton(modification != null ? modification.shortName : "none");
+        modButton.setSize(300, 60);
+
+        weaponDetailsTable.add(modButton)
+                .size(300, 60)
+                .padRight(50)
+                .row();
+
+        modButton.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+
+                List<Modification> mods = GameData.starShip.cargoBay.getItems()
+                        .stream()
+                        .filter(i -> i instanceof Modification)
+                        .map(i -> (Modification) i)
+                        .filter(m -> m.canBeAppliedTo(currentWeapon.socket))
+                        .collect(Collectors.toList());
+
+                getStage().addActor(new ModificationsViewWindow(getStage(), weaponViewWindow, mods, modification, currentWeapon, slot));
+            }
+        });
     }
 }

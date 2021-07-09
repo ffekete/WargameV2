@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.input.ToolTipManager;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
@@ -31,11 +32,7 @@ public abstract class Item extends Image {
     }
 
     public void addToolTip() {
-        TooltipManager tooltipManager = new TooltipManager();
-        tooltipManager.instant();
-        tooltipManager.resetTime = 0.1f;
-        tooltipManager.initialTime = 0.1f;
-        tooltipManager.subsequentTime = 0.1f;
+        TooltipManager tooltipManager = ToolTipManager.getTooltipManager();
 
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class), 16, 16, 16, 16);
 

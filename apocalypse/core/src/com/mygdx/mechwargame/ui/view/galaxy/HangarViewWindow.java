@@ -17,6 +17,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
+import com.mygdx.mechwargame.input.ToolTipManager;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
@@ -34,6 +35,7 @@ public class HangarViewWindow extends Table {
 
     private Stage stage;
     private BaseUnit selectedUnit;
+    private Table mechSetupTable;
 
     public HangarViewWindow(Stage stage) {
 
@@ -65,6 +67,9 @@ public class HangarViewWindow extends Table {
                 .row();
 
         Table mechSetupTable = new Table();
+
+        this.mechSetupTable = mechSetupTable;
+
         mechSetupTable.setSize(1460, 610);
 
         mechSetupTable.background(ninePatchDrawable);
@@ -333,13 +338,15 @@ public class HangarViewWindow extends Table {
                 .padBottom(5)
                 .left();
 
-        Supplier<String> weaponName;
+        String weaponName;
 
         if (primary) {
-            weaponName = () -> selectedUnit.primaryWeapon.name + " (" + (selectedUnit.primaryWeapon.modification != null ? selectedUnit.primaryWeapon.modification.name : "unmodified")  + ")";
+            weaponName = selectedUnit.primaryWeapon.name + " (" + getModName(selectedUnit.primaryWeapon) + ")";
         } else {
-            weaponName = () -> selectedUnit.secondaryWeapon.name + " (" + (selectedUnit.secondaryWeapon.modification != null ? selectedUnit.secondaryWeapon.modification.name : "unmodified")  + ")";
+            weaponName = selectedUnit.secondaryWeapon.name + " (" + getModName(selectedUnit.secondaryWeapon) + ")";
         }
+
+        HangarViewWindow hangarViewWindow = this;
 
         assignButton.addListener(new ClickListener() {
             @Override
@@ -349,11 +356,12 @@ public class HangarViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
-                stage.addActor(new WeaponViewWindow(stage, items, selectedUnit, primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon, primary));
+
+                stage.addActor(new WeaponViewWindow(stage, hangarViewWindow, items, selectedUnit, primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon, primary));
             }
         });
 
-        weaponSelectionTable.add(UIFactoryCommon.getDynamicTextLabel(weaponName, UIFactoryCommon.fontSmall, Color.GREEN, Align.left))
+        weaponSelectionTable.add(UIFactoryCommon.getTextLabel(weaponName, UIFactoryCommon.fontSmall, Color.GREEN, Align.left))
                 .size(920, 60)
                 .left()
                 .row();
@@ -365,6 +373,32 @@ public class HangarViewWindow extends Table {
                 .left();
     }
 
+    public void refresh() {
+        setupMechSetupTable(mechSetupTable, selectedUnit);
+    }
+
+    private String getModName(Weapon primaryWeapon) {
+        List<String> modNames = new ArrayList<>();
+
+        String modName1 = primaryWeapon.modification != null ? primaryWeapon.modification.shortName : null;
+        String modName2 = primaryWeapon.secondModification != null ? primaryWeapon.secondModification.shortName : null;
+        String modName3 = primaryWeapon.thirdModification != null ? primaryWeapon.thirdModification.shortName : null;
+
+        if (modName1 != null) {
+            modNames.add(modName1);
+        }
+
+        if (modName2 != null) {
+            modNames.add(modName2);
+        }
+
+        if (modName3 != null) {
+            modNames.add(modName3);
+        }
+
+        return modName1 == null && modName2 == null && modName3 == null ? "unmodified" : String.join(", ", modNames.toArray(new String[0]));
+    }
+
     public void hide(Stage stage) {
         stage.getActors().removeValue(this, true);
         stage.setKeyboardFocus(null);
@@ -373,10 +407,7 @@ public class HangarViewWindow extends Table {
     }
 
     public Tooltip<Table> addToolTip(int cost) {
-        TooltipManager tooltipManager = new TooltipManager();
-        tooltipManager.resetTime = 0.05f;
-        tooltipManager.initialTime = 0.05f;
-        tooltipManager.subsequentTime = 0.05f;
+        TooltipManager tooltipManager = ToolTipManager.getTooltipManager();
         tooltipManager.instant();
 
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.TOOLTIP_BG, Texture.class), 16, 16, 16, 16);

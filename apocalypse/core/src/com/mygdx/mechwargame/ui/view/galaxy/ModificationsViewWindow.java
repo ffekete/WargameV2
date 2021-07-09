@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,9 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.modification.Modification;
-import com.mygdx.mechwargame.core.item.weapon.Mode;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
@@ -32,7 +29,6 @@ public class ModificationsViewWindow extends Table {
     public static Drawable ITEM_BG = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class));
     private static final TextureRegionDrawable SELECTED_BACKGROUND = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
 
-
     private Modification currentModification;
     private Table currentCell;
 
@@ -40,7 +36,8 @@ public class ModificationsViewWindow extends Table {
                                    WeaponViewWindow weaponViewWindow,
                                    List<Modification> modifications,
                                    Modification initiallySelectedModification,
-                                   Weapon targetWeapon) {
+                                   Weapon targetWeapon,
+                                   int slot) {
 
         currentModification = initiallySelectedModification;
 
@@ -134,7 +131,7 @@ public class ModificationsViewWindow extends Table {
                         super.touchUp(event, x, y, pointer, button);
                         currentModification = modification;
                         refreshDetails(modificationsDetailsTable);
-                        if(currentCell != null) {
+                        if (currentCell != null) {
                             currentCell.background(ITEM_BG); // reset
                         }
                         cell.background(SELECTED_BACKGROUND);
@@ -173,6 +170,7 @@ public class ModificationsViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
+                weaponViewWindow.refreshAll();
                 stage.getActors().removeValue(modificationsViewWindow, true);
             }
         });
@@ -196,13 +194,25 @@ public class ModificationsViewWindow extends Table {
                     return;
                 }
 
-                if(oldModification != null) {
+                if (oldModification != null) {
                     GameData.starShip.cargoBay.addItem(oldModification);
                     oldModification.remove(targetWeapon);
                 }
 
-                targetWeapon.modification = currentModification;
-                targetWeapon.modification.apply(targetWeapon);
+                switch (slot) {
+                    case 1:
+                        targetWeapon.modification = currentModification;
+                        targetWeapon.modification.apply(targetWeapon);
+                        break;
+                    case 2:
+                        targetWeapon.secondModification = currentModification;
+                        targetWeapon.secondModification.apply(targetWeapon);
+                        break;
+                    case 3:
+                        targetWeapon.thirdModification = currentModification;
+                        targetWeapon.thirdModification.apply(targetWeapon);
+                        break;
+                }
 
                 GameData.starShip.cargoBay.removeItem(newModification);
 
@@ -214,7 +224,7 @@ public class ModificationsViewWindow extends Table {
         });
 
         // details panel
-        if(currentModification != null) {
+        if (currentModification != null) {
             refreshDetails(modificationsDetailsTable);
         }
     }
