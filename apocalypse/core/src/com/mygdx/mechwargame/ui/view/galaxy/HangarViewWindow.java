@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.character.Company;
-import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
+import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
@@ -24,6 +24,7 @@ import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.mygdx.mechwargame.Config.MAX_UNIT_STAT_LEVEL;
@@ -152,11 +153,6 @@ public class HangarViewWindow extends Table {
         modelTable.add(UIFactoryCommon.getTextLabel("name", UIFactoryCommon.fontSmall, Align.left))
                 .size(200, 64);
 
-//        modelTable.add(UIFactoryCommon.getTextLabel(baseUnit.name, UIFactoryCommon.fontSmall, Align.left))
-//                .size(850, 64)
-//                .left()
-//                .row();
-
         Container<TextField> textField = UIFactoryCommon.getTextField(baseUnit.name, "", UIFactoryCommon.fontSmall);
         modelTable.add(textField)
                 .size(400, 64)
@@ -272,7 +268,7 @@ public class HangarViewWindow extends Table {
                 .row();
 
         mechSetupTable.add()
-                .height(20)
+                .height(10)
                 .row();
 
         List<Weapon> primaryWeapons = new ArrayList<>();
@@ -333,15 +329,16 @@ public class HangarViewWindow extends Table {
         }
 
         weaponSelectionTable.add(UIFactoryCommon.getTextLabel(message, UIFactoryCommon.fontSmall, Align.left))
-                .size(450, 60)
+                .size(480, 60)
+                .padBottom(5)
                 .left();
 
-        String weaponName;
+        Supplier<String> weaponName;
 
-        if(primary) {
-            weaponName = selectedUnit.primaryWeapon.name;
+        if (primary) {
+            weaponName = () -> selectedUnit.primaryWeapon.name + " (" + (selectedUnit.primaryWeapon.modification != null ? selectedUnit.primaryWeapon.modification.name : "unmodified")  + ")";
         } else {
-            weaponName = selectedUnit.secondaryWeapon.name;
+            weaponName = () -> selectedUnit.secondaryWeapon.name + " (" + (selectedUnit.secondaryWeapon.modification != null ? selectedUnit.secondaryWeapon.modification.name : "unmodified")  + ")";
         }
 
         assignButton.addListener(new ClickListener() {
@@ -352,12 +349,12 @@ public class HangarViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
-                stage.addActor(new WeaponViewWindow(stage, items, primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon));
+                stage.addActor(new WeaponViewWindow(stage, items, selectedUnit, primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon, primary));
             }
         });
 
-        weaponSelectionTable.add(UIFactoryCommon.getTextLabel(weaponName, UIFactoryCommon.fontSmall, Align.left))
-                .size(950, 60)
+        weaponSelectionTable.add(UIFactoryCommon.getDynamicTextLabel(weaponName, UIFactoryCommon.fontSmall, Color.GREEN, Align.left))
+                .size(920, 60)
                 .left()
                 .row();
 

@@ -17,6 +17,8 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.weapon.Mode;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
+import com.mygdx.mechwargame.core.unit.BaseUnit;
+import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
@@ -35,9 +37,11 @@ public class WeaponViewWindow extends Table {
 
     public WeaponViewWindow(Stage stage,
                             List<Weapon> weaponsToShow,
-                            Weapon selectedWeapon) {
+                            BaseUnit selectedUnit,
+                            Weapon initiallySelectedWeapon,
+                            boolean primary) {
 
-        currentWeapon = selectedWeapon;
+        currentWeapon = initiallySelectedWeapon;
 
         // create layout
         setTouchable(Touchable.enabled);
@@ -94,7 +98,7 @@ public class WeaponViewWindow extends Table {
             if (weapon != null) {
                 Table cell = new Table();
 
-                if(weapon == selectedWeapon) {
+                if (weapon == initiallySelectedWeapon) {
                     currentCell = cell;
                     cell.background(SELECTED_BACKGROUND);
                 } else {
@@ -109,7 +113,7 @@ public class WeaponViewWindow extends Table {
 
                 List<EventListener> toClear = new ArrayList<>();
                 weapon.getListeners().forEach(l -> {
-                    if(l instanceof ClickListener) {
+                    if (l instanceof ClickListener) {
                         toClear.add(l);
                     }
                 });
@@ -166,6 +170,37 @@ public class WeaponViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
+                stage.getActors().removeValue(weaponViewWindow, true);
+            }
+        });
+
+        selectButton.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+
+                Weapon oldWeapon;
+                if (primary) {
+                    oldWeapon = selectedUnit.primaryWeapon;
+                } else {
+                    oldWeapon = selectedUnit.secondaryWeapon;
+                }
+
+                Weapon newWeapon = currentWeapon;
+
+                if(oldWeapon == newWeapon) {
+                    stage.getActors().removeValue(weaponViewWindow, true);
+                    return;
+                }
+
+                selectedUnit.primaryWeapon = currentWeapon;
+
+                GameData.starShip.cargoBay.removeItem(newWeapon);
+                GameData.starShip.cargoBay.addItem(oldWeapon);
                 stage.getActors().removeValue(weaponViewWindow, true);
             }
         });

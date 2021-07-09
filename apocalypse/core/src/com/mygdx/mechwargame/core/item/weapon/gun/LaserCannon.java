@@ -23,8 +23,6 @@ public class LaserCannon extends Weapon {
 
         modes.add(Mode.SingleShot);
 
-        modification = new EnhancedSensors();
-
         addToolTip();
     }
 
