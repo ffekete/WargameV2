@@ -1,18 +1,11 @@
 package com.mygdx.mechwargame.ui.view.galaxy;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.modification.Modification;
@@ -225,12 +218,37 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.clear();
 
-        weaponDetailsTable.add(UIFactoryCommon.getTextLabel(currentWeapon.longName))
+        Container<TextField> textField = UIFactoryCommon.getTextField(currentWeapon.longName, "", UIFactoryCommon.fontSmall);
+
+        weaponDetailsTable.add(textField)
                 .fillX()
                 .left()
                 .padLeft(40)
                 .colspan(2)
                 .row();
+
+        textField.addListener(new InputListener() {
+
+            @Override
+            public boolean keyUp(InputEvent event,
+                                 int keycode) {
+
+                if (keycode == Input.Keys.ENTER) {
+                    getStage().setKeyboardFocus(null);
+                }
+                return true;
+            }
+        });
+
+        textField.getActor().addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event,
+                                Actor actor) {
+                currentWeapon.name = textField.getActor().getText();
+                currentWeapon.longName = textField.getActor().getText();
+                currentWeapon.shortName = textField.getActor().getText();
+            }
+        });
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("damage"))
                 .size(450, 70)

@@ -65,7 +65,7 @@ public abstract class Weapon extends Item {
                 .left()
                 .width(WIDTH)
                 .padRight(30);
-        table.add(UIFactoryCommon.getTextLabel(longName, UIFactoryCommon.fontSmall, Align.left))
+        table.add(UIFactoryCommon.getDynamicTextLabel(() -> longName, UIFactoryCommon.fontSmall, Align.left))
                 .left()
                 .expandX()
                 .row();
