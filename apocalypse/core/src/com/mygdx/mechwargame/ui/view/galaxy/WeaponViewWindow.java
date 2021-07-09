@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.item.modification.Modification;
 import com.mygdx.mechwargame.core.item.weapon.Mode;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
@@ -25,6 +26,7 @@ import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WeaponViewWindow extends Table {
 
@@ -34,6 +36,7 @@ public class WeaponViewWindow extends Table {
 
     private Weapon currentWeapon;
     private Table currentCell;
+    Table weaponDetailsTable = new Table();
 
     public WeaponViewWindow(Stage stage,
                             List<Weapon> weaponsToShow,
@@ -69,7 +72,7 @@ public class WeaponViewWindow extends Table {
                 .size(840, 860)
                 .padRight(20);
 
-        Table weaponDetailsTable = new Table();
+
         weaponDetailsTable.background(ninePatchDrawable);
 
         rightPanel.add(weaponDetailsTable)
@@ -90,6 +93,8 @@ public class WeaponViewWindow extends Table {
                 .size(400, 80)
                 .right();
 
+
+        WeaponViewWindow weaponViewWindow = this;
 
         // fill content
         for (int i = 0; i < weaponsToShow.size(); i++) {
@@ -130,7 +135,7 @@ public class WeaponViewWindow extends Table {
                                         int button) {
                         super.touchUp(event, x, y, pointer, button);
                         currentWeapon = weapon;
-                        refreshDetails(weaponDetailsTable);
+                        refreshDetails(weaponDetailsTable, weaponViewWindow);
                         currentCell.background(ITEM_BG);
                         cell.background(SELECTED_BACKGROUND);
                         currentCell = cell;
@@ -158,8 +163,6 @@ public class WeaponViewWindow extends Table {
                 content.row();
             }
         }
-
-        Table weaponViewWindow = this;
 
         // back button
         backButton.addListener(new ClickListener() {
@@ -197,19 +200,28 @@ public class WeaponViewWindow extends Table {
                     return;
                 }
 
-                selectedUnit.primaryWeapon = currentWeapon;
+                if(primary) {
+                    selectedUnit.primaryWeapon = currentWeapon;
+                } else {
+                    selectedUnit.secondaryWeapon = currentWeapon;
+                }
 
                 GameData.starShip.cargoBay.removeItem(newWeapon);
                 GameData.starShip.cargoBay.addItem(oldWeapon);
+                currentWeapon = newWeapon;
                 stage.getActors().removeValue(weaponViewWindow, true);
             }
         });
 
         // details panel
-        refreshDetails(weaponDetailsTable);
+        refreshDetails(weaponDetailsTable, this);
     }
 
-    private void refreshDetails(Table weaponDetailsTable) {
+    public void refreshAll() {
+        refreshDetails(weaponDetailsTable, this);
+    }
+
+    private void refreshDetails(Table weaponDetailsTable, WeaponViewWindow weaponViewWindow) {
 
         weaponDetailsTable.clear();
 
@@ -279,6 +291,26 @@ public class WeaponViewWindow extends Table {
                 .size(300, 60)
                 .padRight(50)
                 .row();
+
+        modButton.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+
+                List<Modification> mods = GameData.starShip.cargoBay.getItems()
+                        .stream()
+                        .filter(i -> i instanceof Modification)
+                        .map(i -> (Modification) i)
+                        .filter(m -> m.canBeAppliedTo(currentWeapon.socket))
+                        .collect(Collectors.toList());
+
+                getStage().addActor(new ModificationsViewWindow(getStage(), weaponViewWindow, mods, currentWeapon.modification, currentWeapon));
+            }
+        });
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("modes"))
                 .size(450, 70)

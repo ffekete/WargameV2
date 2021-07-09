@@ -12,11 +12,14 @@ public class TargetingModule extends Modification {
         name = "targeting module";
         shortName = "tgt";
         price = 800;
+        shortDescription = "+1 weapon accuracy\n" +
+                "slots: all missiles";
+
         description =
                 "+1 weapon accuracy.\n" +
-                "slots: all missiles\n\n" +
-                "Simple chip that enhances the targeting capabilities\n" +
-                "of the missile launcher it is applied to.\n";
+                        "slots: all missiles\n\n" +
+                        "Simple chip that enhances the targeting capabilities\n" +
+                        "of the missile launcher it is applied to.\n";
         addToolTip();
     }
 
@@ -31,7 +34,7 @@ public class TargetingModule extends Modification {
     @Override
     void apply(Weapon weapon) {
         super.apply(weapon);
-        if(weapon.accuracy < Config.MAX_WEAPON_STAT_LEVEL) {
+        if (weapon.accuracy < Config.MAX_WEAPON_STAT_LEVEL) {
             weapon.accuracy++;
         }
     }

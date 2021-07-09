@@ -12,6 +12,8 @@ public class EnhancedSensors extends Modification {
         name = "enhanced sensors";
         shortName = "ens";
         price = 800;
+        shortDescription = "+1 weapon range\n" +
+                "slots: all missiles";
         description =
                 "+1 weapon range.\n" +
                         "slots: all missiles\n\n" +

@@ -23,6 +23,7 @@ public abstract class Item extends Image {
     protected int price;
     public int order;
     public String shortName;
+    public String shortDescription;
 
     public Item(String image) {
         super(GameState.assetManager.get(image, Texture.class));
