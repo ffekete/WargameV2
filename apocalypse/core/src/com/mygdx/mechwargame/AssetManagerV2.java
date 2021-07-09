@@ -101,6 +101,9 @@ public class AssetManagerV2 extends AssetManager {
     public static final String BURST_SHOT_ICON = "ui/weapon/BurstShotIcon.png";
     public static final String AREA_ATTACK_ICON = "ui/weapon/AreaAttackIcon.png";
 
+    public static final String DELETE_ICON_UP = "ui/DeleteIconUp.png";
+    public static final String DELETE_ICON_DOWN = "ui/DeleteIconDown.png";
+
     public List<String> logos = Arrays.asList(
             LOGO_01,
             LOGO_02
@@ -240,5 +243,7 @@ public class AssetManagerV2 extends AssetManager {
         load(SINGLE_SHOT_ICON, Texture.class);
         load(BURST_SHOT_ICON, Texture.class);
         load(AREA_ATTACK_ICON, Texture.class);
+        load(DELETE_ICON_UP, Texture.class);
+        load(DELETE_ICON_DOWN, Texture.class);
     }
 }

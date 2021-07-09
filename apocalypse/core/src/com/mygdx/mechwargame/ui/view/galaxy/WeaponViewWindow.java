@@ -260,6 +260,7 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.damage))
                 .size(350, 65)
+                .colspan(2)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("rate of fire"))
@@ -268,6 +269,7 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.rateOfFire))
                 .size(350, 65)
+                .colspan(2)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("accuracy"))
@@ -276,6 +278,7 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.accuracy))
                 .size(350, 65)
+                .colspan(2)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("range"))
@@ -284,6 +287,7 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.range))
                 .size(350, 65)
+                .colspan(2)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("ammo"))
@@ -292,6 +296,7 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel(Integer.toString(currentWeapon.ammo)))
                 .size(350, 65)
+                .colspan(2)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("socket"))
@@ -300,6 +305,7 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel(currentWeapon.socket.name))
                 .size(350, 65)
+                .colspan(2)
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("modes"))
@@ -329,6 +335,7 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(modesTable)
                 .size(350, 70)
+                .colspan(2)
                 .row();
 
         addModificationsSection(weaponDetailsTable, weaponViewWindow, "mod - slot 1", currentWeapon.modification, 1);
@@ -341,6 +348,7 @@ public class WeaponViewWindow extends Table {
                                          String text,
                                          Modification modification,
                                          int slot) {
+
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel(text))
                 .size(450, 70)
                 .padLeft(40);
@@ -349,9 +357,57 @@ public class WeaponViewWindow extends Table {
         modButton.setSize(300, 60);
 
         weaponDetailsTable.add(modButton)
-                .size(300, 60)
-                .padRight(50)
-                .row();
+                .size(260, 60)
+                .padRight(10);
+
+
+        if(modification != null) {
+
+            ImageButton deleteButton = UIFactoryCommon.getDeleteButton();
+
+            deleteButton.addListener(new ClickListener() {
+                @Override
+                public void touchUp(InputEvent event,
+                                    float x,
+                                    float y,
+                                    int pointer,
+                                    int button) {
+                    super.touchUp(event, x, y, pointer, button);
+                    switch (slot) {
+
+                        case 1:
+                            GameData.starShip.cargoBay.addItem(currentWeapon.modification);
+                            currentWeapon.modification.remove(currentWeapon);
+                            currentWeapon.modification = null;
+                            refreshAll();
+                            break;
+                        case 2:
+                            GameData.starShip.cargoBay.addItem(currentWeapon.secondModification);
+                            currentWeapon.secondModification.remove(currentWeapon);
+                            currentWeapon.secondModification = null;
+                            refreshAll();
+                            break;
+                        case 3:
+                            GameData.starShip.cargoBay.addItem(currentWeapon.thirdModification);
+                            currentWeapon.thirdModification.remove(currentWeapon);
+                            currentWeapon.thirdModification = null;
+                            refreshAll();
+                            break;
+                    }
+                }
+            });
+
+            weaponDetailsTable.add(deleteButton)
+                    .size(60)
+                    .center()
+                    .padRight(10)
+                    .row();
+        } else {
+            weaponDetailsTable.add()
+                    .size(60)
+                    .padRight(10)
+                    .row();
+        }
 
         modButton.addListener(new ClickListener() {
             @Override
