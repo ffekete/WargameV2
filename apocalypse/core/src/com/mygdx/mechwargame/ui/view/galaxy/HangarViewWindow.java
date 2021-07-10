@@ -155,6 +155,7 @@ public class HangarViewWindow extends Table {
         Table modelTable = new Table();
         mechSetupTable.add(modelTable)
                 .size(1050, 138)
+                .padBottom(20)
                 .left();
 
         modelTable.add(UIFactoryCommon.getTextLabel("name", UIFactoryCommon.fontSmall, Align.left))
@@ -266,7 +267,7 @@ public class HangarViewWindow extends Table {
                 .row();
 
         mechSetupTable.add()
-                .height(10)
+                .height(40)
                 .row();
 
         List<Weapon> primaryWeapons = new ArrayList<>();
@@ -283,7 +284,7 @@ public class HangarViewWindow extends Table {
         addWeaponSelectionBox(mechSetupTable, "primary weapon", primaryWeapons, true);
 
         mechSetupTable
-                .padBottom(10)
+                .padBottom(30)
                 .row();
 
         if (baseUnit.secondaryWeapon != null) {
@@ -319,7 +320,7 @@ public class HangarViewWindow extends Table {
                 .size(1400, 150)
                 .colspan(2);
 
-        ImageTextButton assignButton = UIFactoryCommon.getMenuButton("assign");
+        ImageTextButton assignButton = UIFactoryCommon.getSmallRoundButton("assign", UIFactoryCommon.fontSmall);
 
         Array<Weapon> itemArray = new Array<>();
         for (Weapon item : items) {
@@ -360,9 +361,9 @@ public class HangarViewWindow extends Table {
                 .row();
 
         weaponSelectionTable.add(assignButton)
-                .size(400, 80)
+                .size(400, 65)
                 .colspan(2)
-                .padBottom(10)
+                .padBottom(20)
                 .left();
     }
 

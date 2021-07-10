@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.core.item.weapon.Mode;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.*;
 
@@ -335,6 +336,29 @@ public class UIFactoryCommon {
         textButton.getStyle().disabled = ninePatchDrawableDisabled;
 
         return textButton;
+    }
+
+    public static ImageButton getModeButton(Mode mode) {
+
+        TextureRegionDrawable up = null;
+        switch (mode) {
+
+            case SingleShot:
+                up = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.SINGLE_SHOT_ICON, Texture.class));
+                break;
+            case Burst:
+                up = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.BURST_SHOT_ICON, Texture.class));
+                break;
+            case Area:
+                up = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.AREA_ATTACK_ICON, Texture.class));
+                break;
+        }
+
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = up;
+        imageButtonStyle.down = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.MODE_BUTTON_DOWN, Texture.class));
+
+        return new ImageButton(imageButtonStyle);
     }
 
     public static ImageTextButton getSmallRoundButton(final String text) {

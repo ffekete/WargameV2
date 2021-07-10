@@ -18,6 +18,7 @@ import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 
+import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,10 +48,20 @@ public class WeaponViewWindow extends Table {
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
+        // disable tooltips
+        weaponsToShow.forEach(w -> {
+            w.getListeners().forEach(l -> {
+                if(l instanceof Tooltip) {
+                    ((Tooltip)l).getManager().enabled = false;
+                }
+            });
+        });
+
         this.background(ninePatchDrawable);
 
         setSize(1500, 980);
-        setPosition(stage.getCamera().position.x - 750, stage.getCamera().position.y - 450);
+
+        setPosition(stage.getCamera().position.x - getWidth() / 2f, stage.getCamera().position.y - getHeight() / 2f);
 
         add(UIFactoryCommon.getTextLabel("select weapon", Align.center))
                 .size(1500, 60)
@@ -175,6 +186,13 @@ public class WeaponViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
+                weaponsToShow.forEach(w -> {
+                    w.getListeners().forEach(l -> {
+                        if(l instanceof Tooltip) {
+                            ((Tooltip)l).getManager().enabled = true;
+                        }
+                    });
+                });
                 hangarViewWindow.refresh();
                 stage.getActors().removeValue(weaponViewWindow, true);
             }
@@ -212,6 +230,15 @@ public class WeaponViewWindow extends Table {
                 GameData.starShip.cargoBay.removeItem(newWeapon);
                 GameData.starShip.cargoBay.addItem(oldWeapon);
                 currentWeapon = newWeapon;
+
+                weaponsToShow.forEach(w -> {
+                    w.getListeners().forEach(l -> {
+                        if(l instanceof Tooltip) {
+                            ((Tooltip)l).getManager().enabled = false;
+                        }
+                    });
+                });
+
                 hangarViewWindow.refresh();
                 stage.getActors().removeValue(weaponViewWindow, true);
             }
@@ -318,32 +345,34 @@ public class WeaponViewWindow extends Table {
                 .row();
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel("modes"))
-                .size(450, 65)
+                .size(450, 60)
+                .padBottom(5)
                 .padLeft(40);
 
         Table modesTable = new Table();
 
         if (currentWeapon.modes.contains(Mode.SingleShot)) {
             modesTable.add(new Image(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.SINGLE_SHOT_ICON, Texture.class))))
-                    .size(60)
+                    .size(50)
                     .padRight(20);
         }
 
         if (currentWeapon.modes.contains(Mode.Burst)) {
             modesTable.add(new Image(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.BURST_SHOT_ICON, Texture.class))))
-                    .size(60)
+                    .size(50)
                     .padRight(20);
         }
 
         if (currentWeapon.modes.contains(Mode.Area)) {
             modesTable.add(new Image(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.AREA_ATTACK_ICON, Texture.class))))
-                    .size(60)
+                    .size(50)
                     .padRight(20);
         }
         modesTable.add().expandX();
 
         weaponDetailsTable.add(modesTable)
-                .size(350, 70)
+                .size(350, 50)
+                .padBottom(5)
                 .colspan(2)
                 .row();
 

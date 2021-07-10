@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -47,12 +48,20 @@ public class ModificationsViewWindow extends Table {
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
+        modifications.forEach(w -> {
+            w.getListeners().forEach(l -> {
+                if(l instanceof Tooltip) {
+                    ((Tooltip)l).getManager().enabled = false;
+                }
+            });
+        });
+
         this.background(ninePatchDrawable);
 
         ModificationsViewWindow modificationsViewWindow = this;
 
         setSize(1500, 980);
-        setPosition(stage.getCamera().position.x - 750, stage.getCamera().position.y - 450);
+        setPosition(stage.getCamera().position.x - getWidth() / 2f, stage.getCamera().position.y - getHeight() / 2f);
 
         add(UIFactoryCommon.getTextLabel("select modification", Align.center))
                 .size(1500, 60)
@@ -177,6 +186,15 @@ public class ModificationsViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
+
+                modifications.forEach(w -> {
+                    w.getListeners().forEach(l -> {
+                        if(l instanceof Tooltip) {
+                            ((Tooltip)l).getManager().enabled = true;
+                        }
+                    });
+                });
+
                 weaponViewWindow.refreshAll();
                 stage.getActors().removeValue(modificationsViewWindow, true);
             }
@@ -223,8 +241,16 @@ public class ModificationsViewWindow extends Table {
 
                 GameData.starShip.cargoBay.removeItem(newModification);
 
-
                 currentModification = newModification;
+
+                modifications.forEach(w -> {
+                    w.getListeners().forEach(l -> {
+                        if(l instanceof Tooltip) {
+                            ((Tooltip)l).getManager().enabled = true;
+                        }
+                    });
+                });
+
                 weaponViewWindow.refreshAll();
                 stage.getActors().removeValue(modificationsViewWindow, true);
             }

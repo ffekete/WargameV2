@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -43,6 +44,14 @@ public class ArmorViewWindow extends Table {
         // create layout
         setTouchable(Touchable.enabled);
 
+        armors.forEach(w -> {
+            w.getListeners().forEach(l -> {
+                if(l instanceof Tooltip) {
+                    ((Tooltip)l).getManager().enabled = false;
+                }
+            });
+        });
+
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
@@ -51,7 +60,7 @@ public class ArmorViewWindow extends Table {
         ArmorViewWindow modificationsViewWindow = this;
 
         setSize(1500, 980);
-        setPosition(stage.getCamera().position.x - 750, stage.getCamera().position.y - 450);
+        setPosition(stage.getCamera().position.x - getWidth() / 2f, stage.getCamera().position.y - getHeight() / 2f);
 
         add(UIFactoryCommon.getTextLabel("select armor", Align.center))
                 .size(1500, 60)
@@ -171,6 +180,15 @@ public class ArmorViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
+
+                armors.forEach(w -> {
+                    w.getListeners().forEach(l -> {
+                        if(l instanceof Tooltip) {
+                            ((Tooltip)l).getManager().enabled = true;
+                        }
+                    });
+                });
+
                 hangarViewWindow.refresh();
                 stage.getActors().removeValue(modificationsViewWindow, true);
             }
@@ -189,6 +207,14 @@ public class ArmorViewWindow extends Table {
                 targetUnit.armor += currentArmor.protection;
 
                 GameData.starShip.cargoBay.removeItem(currentArmor);
+
+                armors.forEach(w -> {
+                    w.getListeners().forEach(l -> {
+                        if(l instanceof Tooltip) {
+                            ((Tooltip)l).getManager().enabled = true;
+                        }
+                    });
+                });
 
                 hangarViewWindow.refresh();
                 stage.getActors().removeValue(modificationsViewWindow, true);

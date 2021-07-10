@@ -102,6 +102,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String SINGLE_SHOT_ICON = "ui/weapon/SingleShotIcon.png";
     public static final String BURST_SHOT_ICON = "ui/weapon/BurstShotIcon.png";
     public static final String AREA_ATTACK_ICON = "ui/weapon/AreaAttackIcon.png";
+    public static final String MODE_BUTTON_DOWN = "ui/weapon/ModeButtonDown.png";
 
     public static final String DELETE_ICON_UP = "ui/DeleteIconUp.png";
     public static final String DELETE_ICON_DOWN = "ui/DeleteIconDown.png";
@@ -259,5 +260,6 @@ public class AssetManagerV2 extends AssetManager {
         load(GALAXY_TILE_BG_04, Texture.class);
         load(GALAXY_TILE_BG_05, Texture.class);
         load(ARMOR_PLATE, Texture.class);
+        load(MODE_BUTTON_DOWN, Texture.class);
     }
 }
