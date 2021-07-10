@@ -14,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.item.armor.Armor;
 import com.mygdx.mechwargame.core.item.modification.Modification;
-import com.mygdx.mechwargame.core.item.weapon.Weapon;
+import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
@@ -24,22 +26,19 @@ import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModificationsViewWindow extends Table {
+public class ArmorViewWindow extends Table {
 
     public static Drawable ITEM_BG = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class));
     private static final TextureRegionDrawable SELECTED_BACKGROUND = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
 
-    private Modification currentModification;
     private Table currentCell;
+    private Armor currentArmor;
 
-    public ModificationsViewWindow(Stage stage,
-                                   WeaponViewWindow weaponViewWindow,
-                                   List<Modification> modifications,
-                                   Modification initiallySelectedModification,
-                                   Weapon targetWeapon,
-                                   int slot) {
+    public ArmorViewWindow(Stage stage,
+                           HangarViewWindow hangarViewWindow,
+                           List<Armor> armors,
+                           BaseUnit targetUnit) {
 
-        currentModification = initiallySelectedModification;
 
         // create layout
         setTouchable(Touchable.enabled);
@@ -49,12 +48,12 @@ public class ModificationsViewWindow extends Table {
 
         this.background(ninePatchDrawable);
 
-        ModificationsViewWindow modificationsViewWindow = this;
+        ArmorViewWindow modificationsViewWindow = this;
 
         setSize(1500, 980);
         setPosition(stage.getCamera().position.x - 750, stage.getCamera().position.y - 450);
 
-        add(UIFactoryCommon.getTextLabel("select modification", Align.center))
+        add(UIFactoryCommon.getTextLabel("select armor", Align.center))
                 .size(1500, 60)
                 .padBottom(20)
                 .center()
@@ -76,10 +75,10 @@ public class ModificationsViewWindow extends Table {
                 .size(840, 860)
                 .padRight(20);
 
-        Table modificationsDetailsTable = new Table();
-        modificationsDetailsTable.background(ninePatchDrawable);
+        Table armorDetailsTable = new Table();
+        armorDetailsTable.background(ninePatchDrawable);
 
-        rightPanel.add(modificationsDetailsTable)
+        rightPanel.add(armorDetailsTable)
                 .size(840, 760)
                 .colspan(2)
                 .padBottom(20);
@@ -99,35 +98,30 @@ public class ModificationsViewWindow extends Table {
 
 
         // fill content
-        for (int i = 0; i < modifications.size(); i++) {
-            Modification modification = modifications.get(i);
+        for (int i = 0; i < armors.size(); i++) {
+            Armor armor = armors.get(i);
 
-            if (modification != null) {
+            if (armor != null) {
                 Table cell = new Table();
 
-                if (modification == initiallySelectedModification) {
-                    currentCell = cell;
-                    cell.background(SELECTED_BACKGROUND);
-                } else {
-                    cell.background(ITEM_BG);
-                }
+                cell.background(ITEM_BG);
 
-                cell.add(modification)
+                cell.add(armor)
                         .size(128);
 
                 content.add(cell)
                         .size(128);
 
                 List<EventListener> toClear = new ArrayList<>();
-                modification.getListeners().forEach(l -> {
+                armor.getListeners().forEach(l -> {
                     if (l instanceof ClickListener) {
                         toClear.add(l);
                     }
                 });
 
-                toClear.forEach(l -> modification.getListeners().removeValue(l, true));
+                toClear.forEach(l -> armor.getListeners().removeValue(l, true));
 
-                modification.addListener(new ClickListener() {
+                armor.addListener(new ClickListener() {
 
                     @Override
                     public void touchUp(InputEvent event,
@@ -136,8 +130,8 @@ public class ModificationsViewWindow extends Table {
                                         int pointer,
                                         int button) {
                         super.touchUp(event, x, y, pointer, button);
-                        currentModification = modification;
-                        refreshDetails(modificationsDetailsTable);
+                        currentArmor = armor;
+                        refreshDetails(armorDetailsTable);
                         if (currentCell != null) {
                             currentCell.background(ITEM_BG); // reset
                         }
@@ -152,7 +146,7 @@ public class ModificationsViewWindow extends Table {
             }
         }
 
-        for (int i = modifications.size(); i < 60; i++) {
+        for (int i = armors.size(); i < 60; i++) {
             Table cell = new Table();
 
             cell.background(ITEM_BG);
@@ -177,7 +171,7 @@ public class ModificationsViewWindow extends Table {
                                 int pointer,
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
-                weaponViewWindow.refreshAll();
+                hangarViewWindow.refresh();
                 stage.getActors().removeValue(modificationsViewWindow, true);
             }
         });
@@ -191,48 +185,19 @@ public class ModificationsViewWindow extends Table {
                                 int button) {
                 super.touchUp(event, x, y, pointer, button);
 
-                Modification oldModification;
-                oldModification = initiallySelectedModification;
 
-                Modification newModification = currentModification;
+                targetUnit.armor += currentArmor.protection;
 
-                if (oldModification == newModification) {
-                    stage.getActors().removeValue(modificationsViewWindow, true);
-                    return;
-                }
+                GameData.starShip.cargoBay.removeItem(currentArmor);
 
-                if (oldModification != null) {
-                    GameData.starShip.cargoBay.addItem(oldModification);
-                    oldModification.remove(targetWeapon);
-                }
-
-                switch (slot) {
-                    case 1:
-                        targetWeapon.modification = currentModification;
-                        targetWeapon.modification.apply(targetWeapon);
-                        break;
-                    case 2:
-                        targetWeapon.secondModification = currentModification;
-                        targetWeapon.secondModification.apply(targetWeapon);
-                        break;
-                    case 3:
-                        targetWeapon.thirdModification = currentModification;
-                        targetWeapon.thirdModification.apply(targetWeapon);
-                        break;
-                }
-
-                GameData.starShip.cargoBay.removeItem(newModification);
-
-
-                currentModification = newModification;
-                weaponViewWindow.refreshAll();
+                hangarViewWindow.refresh();
                 stage.getActors().removeValue(modificationsViewWindow, true);
             }
         });
 
         // details panel
-        if (currentModification != null) {
-            refreshDetails(modificationsDetailsTable);
+        if (currentArmor != null) {
+            refreshDetails(armorDetailsTable);
         }
     }
 
@@ -240,14 +205,14 @@ public class ModificationsViewWindow extends Table {
 
         modificationsDetailsTable.clear();
 
-        modificationsDetailsTable.add(UIFactoryCommon.getTextLabel(currentModification.name))
+        modificationsDetailsTable.add(UIFactoryCommon.getTextLabel(currentArmor.name))
                 .size(800, 60)
                 .left()
                 .padLeft(40)
                 .padBottom(20)
                 .row();
 
-        modificationsDetailsTable.add(UIFactoryCommon.getTextLabel(currentModification.shortDescription, Align.topLeft))
+        modificationsDetailsTable.add(UIFactoryCommon.getTextLabel(currentArmor.shortDescription, Align.topLeft))
                 .size(800, 660)
                 .left()
                 .top()

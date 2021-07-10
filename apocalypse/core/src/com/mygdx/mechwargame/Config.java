@@ -20,6 +20,7 @@ public class Config {
     public static final int FUEL_ORDER = 1;
     public static final int WEAPON_ORDER = 2;
     public static final int MODIFICATION_ORDER = 3;
+    public static final int ARMOR_ORDER = 4;
 
     public static Color TOOLTIP_COLOR = Color.valueOf("ffffffEF");
 }

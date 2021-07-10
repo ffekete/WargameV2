@@ -94,6 +94,8 @@ public class AssetManagerV2 extends AssetManager {
     public static final String AG_MISSILE = "weapon/AirToGroundMissile.png";
     public static final String MISSILE = "weapon/Missile.png";
 
+    public static final String ARMOR_PLATE = "item/ArmorPlate.png";
+
     public static final String TARGETING_MODULE = "item/targetingModule.png";
     public static final String ENHANCED_SENSORS_MODULE = "item/EnhancedSensors.png";
 
@@ -256,5 +258,6 @@ public class AssetManagerV2 extends AssetManager {
         load(GALAXY_TILE_BG_03, Texture.class);
         load(GALAXY_TILE_BG_04, Texture.class);
         load(GALAXY_TILE_BG_05, Texture.class);
+        load(ARMOR_PLATE, Texture.class);
     }
 }

@@ -2,6 +2,7 @@ package com.mygdx.mechwargame.core.world.generator.items;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.mechwargame.core.item.Item;
+import com.mygdx.mechwargame.core.item.armor.ArmorPlating;
 import com.mygdx.mechwargame.core.item.weapon.*;
 import com.mygdx.mechwargame.core.item.weapon.aamissile.StandardAirToAirMissile;
 import com.mygdx.mechwargame.core.item.weapon.agmissile.StandardAirToGroundMissile;
@@ -79,6 +80,10 @@ public class WeaponStockGenerator {
 
                 }
             }
+        }
+
+        for (int i = 0; i < random.nextInt(level * 2); i++) {
+            items.add(new ArmorPlating());
         }
     }
 

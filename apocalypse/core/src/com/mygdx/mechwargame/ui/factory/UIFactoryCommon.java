@@ -117,12 +117,7 @@ public class UIFactoryCommon {
         ImageButton powerUpImage = null;
         if (actual < maxUpgrade && canUpgrade) {
 
-            ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
-            imageButtonStyle.up = new AnimatedDrawable(AssetManagerV2.POWER_ICON_PLUS, 32, 32, true, 0.15f);
-            imageButtonStyle.down = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.POWER_ICON_PLUS_DOWN, Texture.class));
-
-            powerUpImage = new AnimatedImageButton(imageButtonStyle);
-            powerUpImage.getImage().setSize(32, 32);
+            powerUpImage = getPowerUpImageButton();
 
             table.add(powerUpImage)
                     .size(32)
@@ -142,6 +137,17 @@ public class UIFactoryCommon {
         table.add().expandX();
 
         return new Pair(powerUpImage, table);
+    }
+
+    public static ImageButton getPowerUpImageButton() {
+        ImageButton powerUpImage;
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = new AnimatedDrawable(AssetManagerV2.POWER_ICON_PLUS, 32, 32, true, 0.15f);
+        imageButtonStyle.down = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.POWER_ICON_PLUS_DOWN, Texture.class));
+
+        powerUpImage = new AnimatedImageButton(imageButtonStyle);
+        powerUpImage.getImage().setSize(32, 32);
+        return powerUpImage;
     }
 
     public static class Pair {

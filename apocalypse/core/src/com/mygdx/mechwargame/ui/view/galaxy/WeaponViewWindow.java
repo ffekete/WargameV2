@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.modification.Modification;
@@ -48,12 +49,19 @@ public class WeaponViewWindow extends Table {
 
         this.background(ninePatchDrawable);
 
-        setSize(1500, 900);
+        setSize(1500, 980);
         setPosition(stage.getCamera().position.x - 750, stage.getCamera().position.y - 450);
+
+        add(UIFactoryCommon.getTextLabel("select weapon", Align.center))
+                .size(1500, 60)
+                .padBottom(20)
+                .center()
+                .colspan(2)
+                .row();
 
         Table content = new Table();
         ItemsViewWindow itemsViewWindow = new ItemsViewWindow(content, stage);
-        itemsViewWindow.setSize(600, 860);
+        itemsViewWindow.setSize(600, 820);
 
         add(itemsViewWindow)
                 .size(600, 860)
@@ -190,12 +198,12 @@ public class WeaponViewWindow extends Table {
 
                 Weapon newWeapon = currentWeapon;
 
-                if(oldWeapon == newWeapon) {
+                if (oldWeapon == newWeapon) {
                     stage.getActors().removeValue(weaponViewWindow, true);
                     return;
                 }
 
-                if(primary) {
+                if (primary) {
                     selectedUnit.primaryWeapon = currentWeapon;
                 } else {
                     selectedUnit.secondaryWeapon = currentWeapon;
@@ -217,7 +225,8 @@ public class WeaponViewWindow extends Table {
         refreshDetails(weaponDetailsTable, this);
     }
 
-    private void refreshDetails(Table weaponDetailsTable, WeaponViewWindow weaponViewWindow) {
+    private void refreshDetails(Table weaponDetailsTable,
+                                WeaponViewWindow weaponViewWindow) {
 
         weaponDetailsTable.clear();
 
@@ -344,7 +353,7 @@ public class WeaponViewWindow extends Table {
     }
 
     private void addModificationsSection(Table weaponDetailsTable,
-                           WeaponViewWindow weaponViewWindow,
+                                         WeaponViewWindow weaponViewWindow,
                                          String text,
                                          Modification modification,
                                          int slot) {
@@ -353,7 +362,7 @@ public class WeaponViewWindow extends Table {
                 .size(450, 70)
                 .padLeft(40);
 
-        ImageTextButton modButton = UIFactoryCommon.getSmallRoundButton(modification != null ? modification.shortName : "none");
+        ImageTextButton modButton = UIFactoryCommon.getSmallRoundButton(modification != null ? modification.shortName : "add");
         modButton.setSize(300, 60);
 
         weaponDetailsTable.add(modButton)
@@ -361,7 +370,7 @@ public class WeaponViewWindow extends Table {
                 .padRight(10);
 
 
-        if(modification != null) {
+        if (modification != null) {
 
             ImageButton deleteButton = UIFactoryCommon.getDeleteButton();
 

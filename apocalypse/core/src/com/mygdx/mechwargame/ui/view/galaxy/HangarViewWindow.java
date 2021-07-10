@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.actions.IntAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,6 +14,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.character.Company;
+import com.mygdx.mechwargame.core.item.armor.Armor;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.input.ToolTipManager;
@@ -25,7 +25,6 @@ import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.mygdx.mechwargame.Config.MAX_UNIT_STAT_LEVEL;
@@ -36,8 +35,11 @@ public class HangarViewWindow extends Table {
     private Stage stage;
     private BaseUnit selectedUnit;
     private Table mechSetupTable;
+    private HangarViewWindow hangarViewWindow;
 
     public HangarViewWindow(Stage stage) {
+
+        this.hangarViewWindow = this;
 
         this.stage = stage;
 
@@ -48,7 +50,7 @@ public class HangarViewWindow extends Table {
 
         background(ninePatchDrawable);
 
-        setSize(1500, 900);
+        setSize(1500, 980);
 
         add(UIFactoryCommon.getTextLabel("hangar", Align.center))
                 .size(1500, 50)
@@ -70,11 +72,11 @@ public class HangarViewWindow extends Table {
 
         this.mechSetupTable = mechSetupTable;
 
-        mechSetupTable.setSize(1460, 610);
+        mechSetupTable.setSize(1460, 690);
 
         mechSetupTable.background(ninePatchDrawable);
         add(mechSetupTable)
-                .size(1460, 610)
+                .size(1460, 690)
                 .center();
 
         int max = GameData.starShip.hangar.maxCapacity;
@@ -205,13 +207,19 @@ public class HangarViewWindow extends Table {
         mechDetailTable.add(UIFactoryCommon.getTextLabel("armor", UIFactoryCommon.fontSmall, Align.left))
                 .size(350, 60);
 
-        boolean canUpgrade = Company.money >= (baseUnit.armor) * 500;
+        List<Armor> armors = GameData.starShip.cargoBay.getItems()
+                .stream()
+                .filter(i -> i instanceof Armor)
+                .map(a -> (Armor) a)
+                .collect(Collectors.toList());
+
+        boolean canUpgrade = !armors.isEmpty();
 
         UIFactoryCommon.Pair powerUpGauge = UIFactoryCommon.getPowerUpGauge(MAX_UNIT_STAT_LEVEL, baseUnit.armor, baseUnit.maxArmor, canUpgrade);
 
         if (powerUpGauge.image != null) {
 
-            powerUpGauge.image.addListener(addToolTip(baseUnit.armor * 500));
+            powerUpGauge.image.addListener(addToolTip());
 
             powerUpGauge.image.addListener(new ClickListener() {
                 @Override
@@ -222,24 +230,9 @@ public class HangarViewWindow extends Table {
                                     int button) {
                     super.touchUp(event, x, y, pointer, button);
 
-                    IntAction intAction = new IntAction() {
-                        @Override
-                        public boolean act(float delta) {
-                            boolean result = super.act(delta);
-                            Company.money = getValue();
-                            return result;
-                        }
-                    };
 
-                    intAction.setStart(Company.money);
-                    intAction.setEnd(Company.money - (baseUnit.armor) * 500);
-                    intAction.setDuration(0.5f);
 
-                    stage.addAction(intAction);
-
-                    baseUnit.armor++;
-
-                    setupMechSetupTable(mechSetupTable, baseUnit);
+                    stage.addActor(new ArmorViewWindow(stage, hangarViewWindow, armors, selectedUnit));
                 }
             });
         }
@@ -406,7 +399,7 @@ public class HangarViewWindow extends Table {
         GameData.lockGameStage = false;
     }
 
-    public Tooltip<Table> addToolTip(int cost) {
+    public Tooltip<Table> addToolTip() {
         TooltipManager tooltipManager = ToolTipManager.getTooltipManager();
         tooltipManager.instant();
 
@@ -421,36 +414,14 @@ public class HangarViewWindow extends Table {
         table.setBackground(ninePatchDrawable);
         Tooltip<Table> tooltip = new Tooltip<>(table, tooltipManager);
 
-        table.add(UIFactoryCommon.getTextLabel("upgrade armor", UIFactoryCommon.fontSmall, Align.left))
+        String text = "Select armor upgrade.\n" +
+                "Armor can be upgraded by adding armor\n" +
+                "component that you already own.\n" +
+                "This armor cannot be removed once fixed.";
+
+        table.add(UIFactoryCommon.getTextLabel(text, UIFactoryCommon.fontSmall, Align.left))
                 .left()
                 .colspan(2)
-                .expandX()
-                .row();
-
-        table.add(UIFactoryCommon.getTextLabel("new level", UIFactoryCommon.fontSmall, Align.left))
-                .width(300)
-                .left();
-
-        table.add(UIFactoryCommon.getTextLabel(Integer.toString(selectedUnit.armor + 1), UIFactoryCommon.fontSmall, Align.left))
-                .left()
-                .expandX()
-                .row();
-
-        table.add(UIFactoryCommon.getTextLabel("your money", UIFactoryCommon.fontSmall, Align.left))
-                .left()
-                .width(300)
-                .padRight(30);
-        table.add(UIFactoryCommon.getTextLabel(Integer.toString(Company.money), UIFactoryCommon.fontSmall, Color.GREEN, Align.left))
-                .left()
-                .expandX()
-                .row();
-
-        table.add(UIFactoryCommon.getTextLabel("cost", UIFactoryCommon.fontSmall, Align.left))
-                .left()
-                .width(300)
-                .padRight(30);
-        table.add(UIFactoryCommon.getTextLabel(Integer.toString(cost), UIFactoryCommon.fontSmall, Color.RED, Align.left))
-                .left()
                 .expandX()
                 .row();
 
