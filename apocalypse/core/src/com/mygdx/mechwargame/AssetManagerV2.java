@@ -96,8 +96,10 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String ARMOR_PLATE = "item/ArmorPlate.png";
 
-    public static final String TARGETING_MODULE = "item/targetingModule.png";
-    public static final String ENHANCED_SENSORS_MODULE = "item/EnhancedSensors.png";
+    public static final String TARGETING_MODULE = "item/mod/targetingModule.png";
+    public static final String ENHANCED_SENSORS_MODULE = "item/mod/EnhancedSensors.png";
+    public static final String REPEATER = "item/mod/Repeater.png";
+    public static final String SMALL_POWERBANK = "item/mod/SmallPowerBank.png";
 
     public static final String SINGLE_SHOT_ICON = "ui/weapon/SingleShotIcon.png";
     public static final String BURST_SHOT_ICON = "ui/weapon/BurstShotIcon.png";
@@ -261,5 +263,7 @@ public class AssetManagerV2 extends AssetManager {
         load(GALAXY_TILE_BG_05, Texture.class);
         load(ARMOR_PLATE, Texture.class);
         load(MODE_BUTTON_DOWN, Texture.class);
+        load(REPEATER, Texture.class);
+        load(SMALL_POWERBANK, Texture.class);
     }
 }

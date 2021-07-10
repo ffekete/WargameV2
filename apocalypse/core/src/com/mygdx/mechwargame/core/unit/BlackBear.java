@@ -1,7 +1,7 @@
 package com.mygdx.mechwargame.core.unit;
 
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.item.weapon.gun.LaserCannon;
+import com.mygdx.mechwargame.core.item.weapon.laser.LaserCannon;
 import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
 public class BlackBear extends BaseUnit {
@@ -17,7 +17,7 @@ public class BlackBear extends BaseUnit {
         movementPoints = 1;
         initiative = 1;
         primaryWeapon = new LaserCannon();
-        primaryWeaponSocket = Socket.Gun;
+        primaryWeaponSocket = Socket.Laser;
 
         hp = 2;
 

@@ -2,10 +2,9 @@ package com.mygdx.mechwargame.core.world.generator.items;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.mechwargame.core.item.Item;
-import com.mygdx.mechwargame.core.item.modification.EnhancedSensors;
-import com.mygdx.mechwargame.core.item.modification.Modification;
-import com.mygdx.mechwargame.core.item.modification.TargetingModule;
+import com.mygdx.mechwargame.core.item.modification.*;
 
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -14,7 +13,9 @@ public class ModificationStockGenerator {
 
     private static List<Class<? extends Modification>> basicItems = Arrays.asList(
             TargetingModule.class,
-            EnhancedSensors.class
+            EnhancedSensors.class,
+            Repeater.class,
+            SmallPowerBank.class
     );
 
     private static List<Class<? extends Modification>> advancedItems = Arrays.asList(

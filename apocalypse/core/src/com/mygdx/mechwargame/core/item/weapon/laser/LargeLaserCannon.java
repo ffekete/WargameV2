@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.core.item.weapon.gun;
+package com.mygdx.mechwargame.core.item.weapon.laser;
 
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.item.weapon.Mode;
@@ -18,7 +18,7 @@ public class LargeLaserCannon extends Weapon {
         accuracy = 2;
         price = 1750;
 
-        socket = Socket.Gun;
+        socket = Socket.Laser;
 
         modes.add(Mode.SingleShot);
 

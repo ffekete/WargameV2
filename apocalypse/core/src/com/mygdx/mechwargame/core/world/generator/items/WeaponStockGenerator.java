@@ -6,8 +6,8 @@ import com.mygdx.mechwargame.core.item.armor.ArmorPlating;
 import com.mygdx.mechwargame.core.item.weapon.*;
 import com.mygdx.mechwargame.core.item.weapon.aamissile.StandardAirToAirMissile;
 import com.mygdx.mechwargame.core.item.weapon.agmissile.StandardAirToGroundMissile;
-import com.mygdx.mechwargame.core.item.weapon.gun.LargeLaserCannon;
-import com.mygdx.mechwargame.core.item.weapon.gun.LaserCannon;
+import com.mygdx.mechwargame.core.item.weapon.laser.LargeLaserCannon;
+import com.mygdx.mechwargame.core.item.weapon.laser.LaserCannon;
 import com.mygdx.mechwargame.core.item.weapon.missile.LongRangeMissile;
 import com.mygdx.mechwargame.core.item.weapon.missile.ShortRangeMissile;
 

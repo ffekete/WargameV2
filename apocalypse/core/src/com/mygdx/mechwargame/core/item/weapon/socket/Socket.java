@@ -6,8 +6,8 @@ public enum Socket {
     AGMissile("m-ag"),
     LargeMissile("m-l"),
     SmallMissile("m-s"),
-    Gun("gun"),
-    MegaWeapon("cannon");
+    Laser("laser"),
+    Gun("gun");
 
     public String name;
 

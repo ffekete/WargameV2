@@ -25,7 +25,7 @@ import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.ship.SmallStarShip;
 import com.mygdx.mechwargame.core.item.weapon.aamissile.StandardAirToAirMissile;
 import com.mygdx.mechwargame.core.item.weapon.agmissile.StandardAirToGroundMissile;
-import com.mygdx.mechwargame.core.item.weapon.gun.LargeLaserCannon;
+import com.mygdx.mechwargame.core.item.weapon.laser.LargeLaserCannon;
 import com.mygdx.mechwargame.core.item.weapon.missile.LongRangeMissile;
 import com.mygdx.mechwargame.core.item.weapon.missile.ShortRangeMissile;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
