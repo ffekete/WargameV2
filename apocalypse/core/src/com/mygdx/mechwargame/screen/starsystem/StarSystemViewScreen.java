@@ -155,41 +155,11 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .size(800, 500)
                     .row();
 
-            Table dialogueTable = new Table();
-            dialogueTable.setSize(1600, 550);
-
-            ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
-
-            NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
-            NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
-
-
-            scrollPaneStyle.background = ninePatchDrawable;
-
-            ScrollPane scrollPane = new ScrollPane(dialogueTable, scrollPaneStyle);
-            scrollPane.setSize(1600, 550);
-            scrollPane.setScrollbarsVisible(true);
-            scrollPane.setScrollingDisabled(false, false);
-
-            dialogueTable.add(UIFactoryCommon.getTextLabel(StarViewDescriptionCreator.generate(star, sector), UIFactoryCommon.fontSmall))
-                    .width(1500)
+            screenContentTable.add(star.cityView)
+                    .size(1600, 512)
+                    .expand()
                     .colspan(2)
-                    .padBottom(30)
-                    .row();
-
-            MarketPlaceFactory.addMarketPlace(dialogueTable, screenContentTable, sector, star, stage);
-            BlackMarketFactory.addBlackMarket(dialogueTable, screenContentTable, sector, star, stage);
-
-
-            dialogueTable.add().expandY();
-
-            scrollPane.addListener(ScrollPaneInputListener.newInstance(stage, scrollPane));
-
-            screenContentTable
-                    .add(scrollPane)
-                    .colspan(2)
-                    .size(1600, 550)
-                    .row();
+                    .center();
 
 
             ImageButton backButton = UIFactoryCommon.getBackButton();

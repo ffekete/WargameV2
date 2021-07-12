@@ -2,6 +2,7 @@ package com.mygdx.mechwargame;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.AssetLoader;
 
 import java.util.Arrays;
@@ -116,6 +117,16 @@ public class AssetManagerV2 extends AssetManager {
     public static final String GALAXY_TILE_BG_03 = "galaxy/Bg03.png";
     public static final String GALAXY_TILE_BG_04 = "galaxy/Bg04.png";
     public static final String GALAXY_TILE_BG_05 = "galaxy/Bg05.png";
+
+    public static final String STAR_SYSTEM_BUILDING_01 = "starsystem/city/Building01.png";
+    public static final String STAR_SYSTEM_BUILDING_02 = "starsystem/city/Building02.png";
+    public static final String STAR_SYSTEM_BUILDING_03 = "starsystem/city/Building03.png";
+    public static final String STAR_SYSTEM_BUILDING_04 = "starsystem/city/Building04.png";
+    public static final String STAR_SYSTEM_MARKET = "starsystem/city/Market.png";
+    public static final String STAR_SYSTEM_MECH_FACTORY = "starsystem/city/Market.png";
+    public static final String STAR_SYSTEM_PARK = "starsystem/city/Park.png";
+    public static final String STAR_SYSTEM_BG_01 = "starsystem/city/BackGround01.png";
+    public static final String STAR_SYSTEM_BG_02 = "starsystem/city/BackGround02.png";
 
     public List<String> logos = Arrays.asList(
             LOGO_01,
@@ -269,5 +280,14 @@ public class AssetManagerV2 extends AssetManager {
         load(SMALL_POWERBANK, Texture.class);
         load(ASSIGN_BUTTON_UP, Texture.class);
         load(ASSIGN_BUTTON_DOWN, Texture.class);
+        load(STAR_SYSTEM_BUILDING_01, Texture.class);
+        load(STAR_SYSTEM_BUILDING_02, Texture.class);
+        load(STAR_SYSTEM_BUILDING_03, Texture.class);
+        load(STAR_SYSTEM_BUILDING_04, Texture.class);
+        load(STAR_SYSTEM_MECH_FACTORY, Texture.class);
+        load(STAR_SYSTEM_MARKET, Texture.class);
+        load(STAR_SYSTEM_PARK, Texture.class);
+        load(STAR_SYSTEM_BG_01, Texture.class);
+        load(STAR_SYSTEM_BG_02, Texture.class);
     }
 }

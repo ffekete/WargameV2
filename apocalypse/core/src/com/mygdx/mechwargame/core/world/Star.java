@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.BaseActor;
 import com.mygdx.mechwargame.core.facility.Facility;
+import com.mygdx.mechwargame.screen.view.CityView;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 
@@ -30,6 +31,8 @@ public class Star extends BaseActor {
     public List<Facility> facilities = new ArrayList<>();
 
     public LayeredAnimatedImage capitolFrameImage = null;
+
+    public CityView cityView = new CityView();
 
     public Star() {
         super(null);
