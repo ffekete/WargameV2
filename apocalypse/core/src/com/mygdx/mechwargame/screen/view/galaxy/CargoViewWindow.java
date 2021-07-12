@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.ui.view.galaxy;
+package com.mygdx.mechwargame.screen.view.galaxy;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -10,7 +10,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
-import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
+import com.mygdx.mechwargame.screen.view.common.ItemsViewWindow;
 
 public class CargoViewWindow extends Table {
 

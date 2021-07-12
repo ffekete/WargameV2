@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
-import com.mygdx.mechwargame.ui.view.galaxy.HangarViewWindow;
+import com.mygdx.mechwargame.screen.view.galaxy.HangarViewWindow;
 
 public class MechBayClickEvent {
 

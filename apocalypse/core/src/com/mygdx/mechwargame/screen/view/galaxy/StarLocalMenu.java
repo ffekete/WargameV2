@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.ui.view.galaxy;
+package com.mygdx.mechwargame.screen.view.galaxy;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;

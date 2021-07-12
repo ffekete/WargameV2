@@ -28,7 +28,7 @@ import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
-import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
+import com.mygdx.mechwargame.screen.view.common.ItemsViewWindow;
 
 import java.util.*;
 import java.util.function.Consumer;

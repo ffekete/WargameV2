@@ -2,19 +2,17 @@ package com.mygdx.mechwargame.state;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.core.MovementPathEffect;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.faction.Faction;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.core.ship.BaseShip;
 import com.mygdx.mechwargame.core.world.Galaxy;
-import com.mygdx.mechwargame.ui.view.galaxy.CargoViewWindow;
-import com.mygdx.mechwargame.ui.view.galaxy.HangarViewWindow;
-import com.mygdx.mechwargame.ui.view.galaxy.ShipInfoLocalMenu;
-import com.mygdx.mechwargame.ui.view.galaxy.StarLocalMenu;
+import com.mygdx.mechwargame.screen.view.galaxy.CargoViewWindow;
+import com.mygdx.mechwargame.screen.view.galaxy.HangarViewWindow;
+import com.mygdx.mechwargame.screen.view.galaxy.ShipInfoLocalMenu;
+import com.mygdx.mechwargame.screen.view.galaxy.StarLocalMenu;
 
-import java.awt.*;
 import java.util.List;
 
 public class GameData {

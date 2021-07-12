@@ -403,4 +403,18 @@ public class UIFactoryCommon {
 
         return imageButton;
     }
+
+    public static ImageButton getAssignButton() {
+
+        final ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+
+        final ImageButton imageButton = new ImageButton(imageButtonStyle);
+
+        imageButton.getStyle().up = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.ASSIGN_BUTTON_UP, Texture.class));
+        imageButton.getStyle().down = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.ASSIGN_BUTTON_DOWN, Texture.class));
+
+        imageButton.pack();
+
+        return imageButton;
+    }
 }

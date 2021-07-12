@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.ui.view.galaxy;
+package com.mygdx.mechwargame.screen.view.galaxy;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,9 +16,8 @@ import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
-import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
+import com.mygdx.mechwargame.screen.view.common.ItemsViewWindow;
 
-import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

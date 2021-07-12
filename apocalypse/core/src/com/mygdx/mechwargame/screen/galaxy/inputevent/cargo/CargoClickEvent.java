@@ -17,7 +17,7 @@ import com.mygdx.mechwargame.core.item.Item;
 import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.ui.view.galaxy.CargoViewWindow;
+import com.mygdx.mechwargame.screen.view.galaxy.CargoViewWindow;
 
 import java.util.*;
 

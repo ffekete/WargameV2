@@ -1,7 +1,6 @@
-package com.mygdx.mechwargame.ui.view.galaxy;
+package com.mygdx.mechwargame.screen.view.galaxy;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,18 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.item.armor.Armor;
+import com.mygdx.mechwargame.core.item.modification.Modification;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.input.ToolTipManager;
+import com.mygdx.mechwargame.screen.view.common.ItemsViewWindow;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
-import com.mygdx.mechwargame.ui.view.common.ItemsViewWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,7 +232,6 @@ public class HangarViewWindow extends Table {
                     super.touchUp(event, x, y, pointer, button);
 
 
-
                     stage.addActor(new ArmorViewWindow(stage, hangarViewWindow, armors, selectedUnit));
                 }
             });
@@ -320,7 +319,7 @@ public class HangarViewWindow extends Table {
                 .size(1400, 150)
                 .colspan(2);
 
-        ImageTextButton assignButton = UIFactoryCommon.getSmallRoundButton("assign", UIFactoryCommon.fontSmall);
+        ImageButton assignButton = UIFactoryCommon.getAssignButton();
 
         Array<Weapon> itemArray = new Array<>();
         for (Weapon item : items) {
@@ -332,13 +331,13 @@ public class HangarViewWindow extends Table {
                 .padBottom(5)
                 .left();
 
-        String weaponName;
-
-        if (primary) {
-            weaponName = selectedUnit.primaryWeapon.name + " (" + getModName(selectedUnit.primaryWeapon) + ")";
-        } else {
-            weaponName = selectedUnit.secondaryWeapon.name + " (" + getModName(selectedUnit.secondaryWeapon) + ")";
-        }
+//        String weaponName;
+//
+//        if (primary) {
+//            weaponName = selectedUnit.primaryWeapon.name + " (" + getModName(selectedUnit.primaryWeapon) + ")";
+//        } else {
+//            weaponName = selectedUnit.secondaryWeapon.name + " (" + getModName(selectedUnit.secondaryWeapon) + ")";
+//        }
 
         HangarViewWindow hangarViewWindow = this;
 
@@ -355,16 +354,56 @@ public class HangarViewWindow extends Table {
             }
         });
 
-        weaponSelectionTable.add(UIFactoryCommon.getTextLabel(weaponName, UIFactoryCommon.fontSmall, Color.GREEN, Align.left))
-                .size(920, 60)
-                .left()
-                .row();
+//        weaponSelectionTable.add(UIFactoryCommon.getTextLabel(weaponName, UIFactoryCommon.fontSmall, Color.GREEN, Align.left))
+//                .size(920, 60)
+//                .left()
+//                .row();
 
-        weaponSelectionTable.add(assignButton)
-                .size(400, 65)
+        Table weaponDetailsWindow = new Table();
+
+        Weapon weapon = primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon;
+
+        Table cell = new Table();
+        cell.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
+        cell.add(weapon)
+                .size(128);
+        weaponDetailsWindow.add(cell)
+                .size(128)
+                .padRight(20);
+
+        addModIcon(weaponDetailsWindow, weapon.modification);
+        addModIcon(weaponDetailsWindow, weapon.secondModification);
+        addModIcon(weaponDetailsWindow, weapon.thirdModification);
+
+        weaponDetailsWindow.add(assignButton)
+                .size(128, 128);
+
+        weaponDetailsWindow.add()
+                .expandX();
+
+        weaponSelectionTable.add(weaponDetailsWindow)
+                .size(900, 128)
+                .expandX()
                 .colspan(2)
                 .padBottom(20)
                 .left();
+    }
+
+    private void addModIcon(Table weaponDetailsWindow,
+                            Modification modification) {
+
+        Table mod1cell = new Table();
+        //mod1cell.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
+        if (modification != null) {
+            mod1cell.add(modification)
+                    .size(128);
+            weaponDetailsWindow.add(mod1cell)
+                    .size(128)
+                    .padRight(20);
+        } else {
+
+        }
+
     }
 
     public void refresh() {

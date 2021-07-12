@@ -7,7 +7,7 @@ import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.action.ConditionalAction;
 import com.mygdx.mechwargame.screen.action.ShowAction;
 import com.mygdx.mechwargame.state.GameData;
-import com.mygdx.mechwargame.ui.view.galaxy.StarLocalMenu;
+import com.mygdx.mechwargame.screen.view.galaxy.StarLocalMenu;
 
 import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 

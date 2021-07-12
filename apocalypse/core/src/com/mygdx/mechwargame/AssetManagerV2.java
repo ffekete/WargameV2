@@ -87,6 +87,8 @@ public class AssetManagerV2 extends AssetManager {
     public static final String FRAME_BG = "ui/FrameBg.png";
     public static final String FRAME_DISABLED_BG = "ui/FrameDisabledBg.png";
     public static final String FRAME_BG_SMALL = "ui/FrameBgSmall.png";
+    public static final String ASSIGN_BUTTON_UP = "ui/AssignButtonUp.png";
+    public static final String ASSIGN_BUTTON_DOWN = "ui/AssignButtonDown.png";
 
     public static final String LASER_CANNON = "weapon/LaserCannon.png";
     public static final String LARGE_LASER_CANNON = "weapon/LargeLaserCannon.png";
@@ -265,5 +267,7 @@ public class AssetManagerV2 extends AssetManager {
         load(MODE_BUTTON_DOWN, Texture.class);
         load(REPEATER, Texture.class);
         load(SMALL_POWERBANK, Texture.class);
+        load(ASSIGN_BUTTON_UP, Texture.class);
+        load(ASSIGN_BUTTON_DOWN, Texture.class);
     }
 }
