@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.core.world.generator;
+package com.mygdx.mechwargame.core.world.generator.items;
 
 import com.mygdx.mechwargame.core.item.ItemsRegistry;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;

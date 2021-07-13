@@ -1,20 +1,22 @@
-package com.mygdx.mechwargame.core.world.generator;
+package com.mygdx.mechwargame.core.world.generator.factions;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.mechwargame.core.faction.Faction;
+import com.mygdx.mechwargame.core.faction.FactionNames;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 
 import java.util.*;
 
-public class PiratesDistributor {
+public class FactionDistributor {
 
     public static Random random;
 
     public static void distribute(GalaxySetupParameters galaxySetupParameters) {
-        GalaxyGeneratorState.state = "distributing pirates";
+        GalaxyGeneratorState.state = "distributing factions";
+
         List<Vector2> startingPoints = new ArrayList<>();
         Map<Faction, Vector2> factions = new HashMap<>();
         Map<Faction, Integer> factionStrengths = new HashMap<>();
@@ -22,27 +24,47 @@ public class PiratesDistributor {
         int galaxyWidth = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
         int galaxyHeight = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
 
-        int strength = galaxySetupParameters.pirateStrength * galaxySetupParameters.defaultSize;
+        int strength = galaxySetupParameters.factionStrength * galaxySetupParameters.defaultSize;
+
+        List<Color> colors = new ArrayList<>(Arrays.asList(Color.YELLOW,
+                Color.RED,
+                Color.GREEN,
+                Color.BLUE,
+                Color.MAGENTA,
+                Color.BROWN,
+                Color.PURPLE,
+                Color.CHARTREUSE,
+                Color.FIREBRICK,
+                Color.GOLD,
+                Color.LIME,
+                Color.OLIVE,
+                Color.ORANGE));
+
+        GameData.factions = new ArrayList<>();
+
+        List<String> names = new ArrayList<>(FactionNames.names);
 
         // assign starting stars
-        for (int i = 0; i < galaxySetupParameters.numberOfPirates; i++) {
+        for (int i = 0; i < galaxySetupParameters.defaultNumberOfFactions; i++) {
             int x, y;
             do {
                 x = random.nextInt(galaxyWidth);
                 y = random.nextInt(galaxyHeight);
 
-            } while (startingPoints.contains(new Vector2(x, y))
-                    || GameData.galaxy.sectors[x][y].stars.isEmpty()
-                    || GameData.galaxy.sectors[x][y].sectorOwnerArea.owner != null);
+            } while (startingPoints.contains(new Vector2(x, y)) || GameData.galaxy.sectors[x][y].stars.isEmpty());
 
-            Faction faction = new Faction("Pirates " + i, Color.WHITE);
-            faction.isPirate = true;
+            Color color = colors.remove(random.nextInt(colors.size()));
+
+            Faction faction = new Faction(names.remove(new Random().nextInt(names.size())), color);
             GameData.galaxy.sectors[x][y].sectorOwnerArea.owner = faction;
             GameData.galaxy.sectors[x][y].stars.get(0).capitol = true;
-            factionStrengths.put(faction, Math.max(random.nextInt(Math.max(strength / 2, 1) + strength / 2), 1));
+            factionStrengths.put(faction, random.nextInt(strength / 2) + strength / 2);
 
             startingPoints.add(new Vector2(x, y));
             factions.put(faction, new Vector2(x, y));
+
+            GameData.factions.add(faction);
+            faction.areas.add(new Vector2(x, y));
         }
 
         // expand
@@ -56,7 +78,9 @@ public class PiratesDistributor {
                 spread(entry.getKey(), startingPoint);
             }
         }
-        GalaxyGeneratorState.state = "done distributing pirates";
+
+        GalaxyGeneratorState.state = "done distributing factions";
+
     }
 
     private static void spread(Faction faction,
@@ -106,6 +130,7 @@ public class PiratesDistributor {
 
             if (possibilities.size() > 0) {
                 Vector2 selected = possibilities.get(random.nextInt(possibilities.size()));
+                faction.areas.add(selected);
                 GameData.galaxy.sectors[(int) selected.x][(int) selected.y].sectorOwnerArea.owner = faction;
                 return;
             }

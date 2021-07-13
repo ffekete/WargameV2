@@ -2,28 +2,22 @@ package com.mygdx.mechwargame.screen.starsystem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
-import com.mygdx.mechwargame.input.ScrollPaneInputListener;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
-import com.mygdx.mechwargame.screen.starsystem.facility.BlackMarketFactory;
-import com.mygdx.mechwargame.screen.starsystem.facility.MarketPlaceFactory;
+import com.mygdx.mechwargame.screen.starsystem.facility.BlackMarketClickHandler;
+import com.mygdx.mechwargame.screen.starsystem.facility.FactoryClickHandler;
+import com.mygdx.mechwargame.screen.starsystem.facility.MarketPlaceClickHandler;
 import com.mygdx.mechwargame.state.GameState;
-import com.mygdx.mechwargame.text.StarViewDescriptionCreator;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.text.DecimalFormat;
@@ -162,8 +156,9 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .center();
 
 
-            BlackMarketFactory.addBlackMarket(screenContentTable, sector, star, stage);
-            MarketPlaceFactory.addMarketPlace(screenContentTable, sector, star, stage);
+            BlackMarketClickHandler.addClickListener(screenContentTable, sector, star, stage);
+            MarketPlaceClickHandler.addClickListener(screenContentTable, sector, star, stage);
+            FactoryClickHandler.addClickListener(screenContentTable, sector, star, stage);
 
             ImageButton backButton = UIFactoryCommon.getBackButton();
             backButton.setSize(64, 64);

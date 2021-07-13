@@ -14,12 +14,12 @@ import com.mygdx.mechwargame.screen.starsystem.BlackMarketViewScreen;
 
 import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
-public class BlackMarketFactory {
+public class BlackMarketClickHandler {
 
-    public static void addBlackMarket(Table screenContentTable,
-                                      Sector sector,
-                                      Star star,
-                                      Stage stage) {
+    public static void addClickListener(Table screenContentTable,
+                                        Sector sector,
+                                        Star star,
+                                        Stage stage) {
         star.facilities.stream().filter(facility -> facility instanceof BlackMarket).forEach(f -> {
 
             ClickListener clickListener = new ClickListener() {

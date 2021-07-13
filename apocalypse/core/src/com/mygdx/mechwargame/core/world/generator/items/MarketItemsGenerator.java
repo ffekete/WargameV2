@@ -1,7 +1,7 @@
-package com.mygdx.mechwargame.core.world.generator;
+package com.mygdx.mechwargame.core.world.generator.items;
 
 import com.mygdx.mechwargame.core.item.consumable.HydrogenCell;
-import com.mygdx.mechwargame.core.facility.BlackMarket;
+import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.generator.items.ModificationStockGenerator;
@@ -11,7 +11,7 @@ import com.mygdx.mechwargame.state.GameData;
 
 import java.util.Random;
 
-public class BlackMarketItemsGenerator {
+public class MarketItemsGenerator {
 
     public static void generate(GalaxySetupParameters galaxySetupParameters) {
 
@@ -27,18 +27,17 @@ public class BlackMarketItemsGenerator {
                 sector.stars.forEach(star -> {
                     if(sector.sectorOwnerArea.owner != null) {
                         star.facilities.stream()
-                                .filter(f -> f instanceof BlackMarket)
-                                .map(f -> (BlackMarket)f)
-                                .forEach(blackMarket -> {
+                                .filter(f -> f instanceof Marketplace)
+                                .map(f -> (Marketplace)f)
+                                .forEach(marketplace -> {
 
-                                    // hydrogen cell
-                                    for(int k = 0; k < new Random().nextInt(star.wealth + 1); k++) {
-                                        blackMarket.itemsToSell.add(new HydrogenCell());
+                                    for(int k = 0; k < star.wealth + new Random().nextInt(5 * star.wealth); k++) {
+                                        marketplace.itemsToSell.add(new HydrogenCell());
                                     }
 
                                     // weapons
-                                    WeaponStockGenerator.generate(star.wealth + 1, blackMarket.itemsToSell);
-                                    ModificationStockGenerator.generate(star.wealth + 1, blackMarket.itemsToSell);
+                                    WeaponStockGenerator.generate(star.wealth, marketplace.itemsToSell);
+                                    ModificationStockGenerator.generate(star.wealth, marketplace.itemsToSell);
                                 });
                     }
                 });

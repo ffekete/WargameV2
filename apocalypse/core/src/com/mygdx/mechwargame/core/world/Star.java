@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.BaseActor;
 import com.mygdx.mechwargame.core.facility.Facility;
-import com.mygdx.mechwargame.screen.view.CityView;
+import com.mygdx.mechwargame.screen.view.star.CityView;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.LayeredAnimatedImage;
 

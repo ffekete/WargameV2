@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.core.world.generator;
+package com.mygdx.mechwargame.core.world.generator.star;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,8 +14,9 @@ import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
+import com.mygdx.mechwargame.core.world.generator.star.image.FactoryImageGenerator;
 import com.mygdx.mechwargame.core.world.generator.util.CellAlgorithm;
-import com.mygdx.mechwargame.screen.view.CityView;
+import com.mygdx.mechwargame.screen.view.star.CityView;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
@@ -25,6 +26,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
+
+import static com.mygdx.mechwargame.core.world.generator.star.image.MarketImageGenerator.generateMarketImage;
 
 public class StarCityImageGenerator {
 
@@ -86,47 +89,8 @@ public class StarCityImageGenerator {
                             }
                         }
 
-                        star.facilities.stream().filter(f -> f instanceof Marketplace).forEach(f -> {
-
-                            Image marketImage = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_MARKET, 32, 32, 0.2f));
-                            star.cityView.actors[5][5] = marketImage;
-                            marketImage.setSize(128, 128);
-                            marketImage.setPosition(5 * 64, 5 * 64);
-
-                            f.actor = marketImage;
-
-                            // market
-                            addBuilding(star, 5, 5);
-
-                            marketImage.addListener(new InputListener() {
-
-                                @Override
-                                public void enter(InputEvent event,
-                                                  float x,
-                                                  float y,
-                                                  int pointer,
-                                                  Actor fromActor) {
-                                    super.enter(event, x, y, pointer, fromActor);
-                                    ParallelAction parallelAction = new ParallelAction();
-                                    parallelAction.addAction(Actions.sizeTo(136, 136, 0.1f));
-                                    parallelAction.addAction(Actions.moveTo(5 * 64 - 4, 5 * 64 - 4, 0.1f));
-                                    marketImage.addAction(parallelAction);
-                                }
-
-                                @Override
-                                public void exit(InputEvent event,
-                                                 float x,
-                                                 float y,
-                                                 int pointer,
-                                                 Actor toActor) {
-                                    super.exit(event, x, y, pointer, toActor);
-                                    ParallelAction parallelAction = new ParallelAction();
-                                    parallelAction.addAction(Actions.sizeTo(128, 128, 0.1f));
-                                    parallelAction.addAction(Actions.moveTo(5 * 64, 5 * 64, 0.1f));
-                                    marketImage.addAction(parallelAction);
-                                }
-                            });
-                        });
+                        generateMarketImage(star);
+                        FactoryImageGenerator.generateImage(star);
                         star.cityView.layout();
 
 
@@ -136,29 +100,6 @@ public class StarCityImageGenerator {
         }
 
         GalaxyGeneratorState.state = "done generating city views in star systems";
-    }
-
-    private static void addBuilding(com.mygdx.mechwargame.core.world.Star star,
-                                    int x,
-                                    int y) {
-        star.cityView.actors[x][y + 1] = null;
-        star.cityView.actors[x + 1][y + 1] = null;
-        star.cityView.actors[x + 1][y] = null;
-
-        star.cityView.actors[x][y - 1] = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f));
-
-        star.cityView.actors[x][y - 1].setSize(64, 128);
-        star.cityView.actors[x][y - 1].setPosition((x) * 64, (y - 1) * 64);
-
-        star.cityView.actors[x + 1][y - 1] = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f));
-        star.cityView.actors[x + 1][y - 1].setSize(64, 128);
-        star.cityView.actors[x + 1][y - 1].setPosition((x + 1) * 64, (y - 1) * 64);
-
-        star.cityView.actors[x + 1][y - 1].setTouchable(Touchable.disabled);
-        star.cityView.actors[x][y - 1].setTouchable(Touchable.disabled);
-
-        star.cityView.actors[x + 1][y - 1].setColor(0.8f / (y / 2f), 0.8f / (y / 2f), 0.8f / (y / 2f), 1f);
-        star.cityView.actors[x][y - 1].setColor(0.8f / (y / 2f), 0.8f / (y / 2f), 0.8f / (y / 2f), 1f);
     }
 
 }

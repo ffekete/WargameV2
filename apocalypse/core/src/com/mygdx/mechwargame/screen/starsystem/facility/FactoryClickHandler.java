@@ -6,22 +6,23 @@ import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.mechwargame.core.facility.Factory;
 import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
+import com.mygdx.mechwargame.screen.starsystem.FactoryViewScreen;
 import com.mygdx.mechwargame.screen.starsystem.MarketViewScreen;
-import com.mygdx.mechwargame.text.MarketplaceDialogueCreator;
 
 import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
-public class MarketPlaceFactory {
+public class FactoryClickHandler {
 
-    public static void addMarketPlace(Table screenContentTable,
-                                      Sector sector,
-                                      Star star,
-                                      Stage stage) {
-        star.facilities.stream().filter(facility -> facility instanceof Marketplace).forEach( f-> {
+    public static void addClickListener(Table screenContentTable,
+                                        Sector sector,
+                                        Star star,
+                                        Stage stage) {
+        star.facilities.stream().filter(facility -> facility instanceof Factory).forEach(f-> {
 
             ClickListener clickListener = new ClickListener() {
                 @Override
@@ -38,7 +39,7 @@ public class MarketPlaceFactory {
                     alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
                     alphaAction.setActor(screenContentTable);
 
-                    sequenceAction.addAction(new SetScreenAction(new MarketViewScreen(star, sector)));
+                    sequenceAction.addAction(new SetScreenAction(new FactoryViewScreen(star, sector, (Factory) f)));
 
                     stage.addAction(sequenceAction);
                     return true;

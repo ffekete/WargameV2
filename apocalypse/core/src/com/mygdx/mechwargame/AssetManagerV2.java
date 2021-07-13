@@ -2,7 +2,6 @@ package com.mygdx.mechwargame;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import com.mygdx.mechwargame.ui.AssetLoader;
 
 import java.util.Arrays;
@@ -125,7 +124,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STAR_SYSTEM_BUILDING_04 = "starsystem/city/Building04.png";
     public static final String STAR_SYSTEM_BUILDING_05 = "starsystem/city/Building05.png";
     public static final String STAR_SYSTEM_MARKET = "starsystem/city/Market.png";
-    public static final String STAR_SYSTEM_MECH_FACTORY = "starsystem/city/Market.png";
+    public static final String STAR_SYSTEM_FACTORY = "starsystem/city/Factory.png";
     public static final String STAR_SYSTEM_DECORATION_01 = "starsystem/city/Decoration01.png";
     public static final String STAR_SYSTEM_DECORATION_02 = "starsystem/city/Decoration02.png";
     public static final String STAR_SYSTEM_DECORATION_03 = "starsystem/city/Decoration03.png";
@@ -242,6 +241,7 @@ public class AssetManagerV2 extends AssetManager {
         load(STATION_002, Texture.class);
         load(STATION_003, Texture.class);
         load(STATION_004, Texture.class);
+        load(STATION_005, Texture.class);
         load(PLANET_001, Texture.class);
         load(PLANET_002, Texture.class);
         load(PLANET_003, Texture.class);
@@ -292,7 +292,7 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_SYSTEM_BUILDING_03, Texture.class);
         load(STAR_SYSTEM_BUILDING_04, Texture.class);
         load(STAR_SYSTEM_BUILDING_05, Texture.class);
-        load(STAR_SYSTEM_MECH_FACTORY, Texture.class);
+        load(STAR_SYSTEM_FACTORY, Texture.class);
         load(STAR_SYSTEM_MARKET, Texture.class);
         load(STAR_SYSTEM_DECORATION_01, Texture.class);
         load(STAR_SYSTEM_DECORATION_02, Texture.class);

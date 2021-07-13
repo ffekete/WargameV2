@@ -1,4 +1,4 @@
-package com.mygdx.mechwargame.screen.view;
+package com.mygdx.mechwargame.screen.view.star;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;

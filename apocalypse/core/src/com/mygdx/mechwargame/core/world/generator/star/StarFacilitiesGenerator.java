@@ -1,6 +1,7 @@
-package com.mygdx.mechwargame.core.world.generator;
+package com.mygdx.mechwargame.core.world.generator.star;
 
 import com.mygdx.mechwargame.core.facility.BlackMarket;
+import com.mygdx.mechwargame.core.facility.Factory;
 import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
@@ -32,6 +33,8 @@ public class StarFacilitiesGenerator {
                         } else {
                             if(star.capitol) {
                                 star.facilities.add(new Marketplace(Math.max(random.nextInt(3) + 2, star.wealth)));
+                                star.facilities.add(new Factory(star.wealth - random.nextInt(2)));
+
                             } else {
                                 star.facilities.add(new Marketplace(Math.max(random.nextInt(3) + 2, star.wealth)));
                             }

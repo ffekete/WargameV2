@@ -1,4 +1,5 @@
-package com.mygdx.mechwargame.screen.view.galaxy;
+package com.mygdx.mechwargame.screen.view.star;
+
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.core.item.armor.Armor;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.modification.Modification;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
@@ -27,35 +28,29 @@ import java.util.stream.Collectors;
 import static com.mygdx.mechwargame.Config.MAX_UNIT_STAT_LEVEL;
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
 
-public class HangarViewWindow extends Table {
+public class FactoryView extends Table {
 
     private Stage stage;
     private BaseUnit selectedUnit;
-    private Table mechSetupTable;
-    private HangarViewWindow hangarViewWindow;
     private Table selectedContainer;
+    private Table mechSetupTable;
 
-    public HangarViewWindow(Stage stage) {
+    public FactoryView(Stage stage,
+                       List<BaseUnit> unitsToSell) {
 
-        this.hangarViewWindow = this;
+        TextureRegionDrawable background = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class));
 
         this.stage = stage;
 
         Table content = new Table();
 
-        Drawable unitUnselectedBackground = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class));
-
-        Drawable unitSelectedBackground = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
-
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        background(ninePatchDrawable);
+        setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
-        setSize(1500, 980);
-
-        add(UIFactoryCommon.getTextLabel("hangar", Align.center))
-                .size(1500, 50)
+        add(UIFactoryCommon.getTextLabel("factory", Align.center))
+                .size(1460, 50)
                 .padBottom(20)
                 .center()
                 .row();
@@ -81,23 +76,25 @@ public class HangarViewWindow extends Table {
                 .size(1460, 690)
                 .center();
 
-        int max = GameData.starShip.hangar.maxCapacity;
+        int max = unitsToSell.size();
+
+        Drawable selectedItemBg = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
 
         for (int i = 0; i < max; i++) {
 
             Table table = new Table();
-            table.background(unitUnselectedBackground);
+            table.background(background);
 
             if(i == 0) {
                 selectedContainer = table;
-                selectedContainer.background(unitSelectedBackground);
+                selectedContainer.background(selectedItemBg);
 
-                selectedUnit = GameData.starShip.hangar.getMechs().get(0);
+                selectedUnit = unitsToSell.get(0);
                 setupMechSetupTable(mechSetupTable, selectedUnit);
             }
 
-            if (i < GameData.starShip.hangar.capacity) {
-                BaseUnit baseUnit = GameData.starShip.hangar.getMechs().get(i);
+            if (i < unitsToSell.size()) {
+                BaseUnit baseUnit = unitsToSell.get(i);
 
                 List<EventListener> toClear = new ArrayList<>();
                 baseUnit.getListeners()
@@ -122,10 +119,10 @@ public class HangarViewWindow extends Table {
                         event.stop();
                         selectedUnit = baseUnit;
                         if(selectedContainer != null) {
-                            selectedContainer.setBackground(unitUnselectedBackground);
+                            selectedContainer.setBackground(background);
                         }
                         selectedContainer = table;
-                        selectedContainer.background(unitSelectedBackground);
+                        selectedContainer.background(selectedItemBg);
                         setupMechSetupTable(mechSetupTable, baseUnit);
                     }
                 });
@@ -141,6 +138,27 @@ public class HangarViewWindow extends Table {
                     .size(128)
                     .padRight(10);
         }
+
+        row();
+        add().size(20).row();
+
+        Table buttonRow = new Table();
+        ImageTextButton backButton = UIFactoryCommon.getSmallRoundButton("back", UIFactoryCommon.fontSmall);
+
+        buttonRow.add().expand();
+
+        buttonRow.add(backButton)
+                .size(300, 70)
+                .padRight(20);
+
+        ImageTextButton buyButton = UIFactoryCommon.getSmallRoundButton("buy", UIFactoryCommon.fontSmall);
+        buttonRow.add(buyButton)
+                .size(300, 70);
+
+        add(buttonRow)
+                .size(1460, 80);
+
+
     }
 
     private void setupMechSetupTable(Table mechSetupTable,
@@ -213,39 +231,12 @@ public class HangarViewWindow extends Table {
         mechDetailTable.add(UIFactoryCommon.getTextLabel("armor", UIFactoryCommon.fontSmall, Align.left))
                 .size(350, 60);
 
-        List<Armor> armors = GameData.starShip.cargoBay.getItems()
-                .stream()
-                .filter(i -> i instanceof Armor)
-                .map(a -> (Armor) a)
-                .collect(Collectors.toList());
-
-        boolean canUpgrade = !armors.isEmpty();
-
-        UIFactoryCommon.Pair powerUpGauge = UIFactoryCommon.getPowerUpGauge(MAX_UNIT_STAT_LEVEL, baseUnit.armor, baseUnit.maxArmor, canUpgrade);
-
-        if (powerUpGauge.image != null) {
-
-            powerUpGauge.image.addListener(addToolTip());
-
-            powerUpGauge.image.addListener(new ClickListener() {
-                @Override
-                public void touchUp(InputEvent event,
-                                    float x,
-                                    float y,
-                                    int pointer,
-                                    int button) {
-                    super.touchUp(event, x, y, pointer, button);
-
-
-                    stage.addActor(new ArmorViewWindow(stage, hangarViewWindow, armors, selectedUnit));
-                }
-            });
-        }
+        UIFactoryCommon.Pair powerUpGauge = UIFactoryCommon.getPowerUpGauge(MAX_UNIT_STAT_LEVEL, baseUnit.armor, baseUnit.maxArmor, false);
 
         mechDetailTable.add(powerUpGauge.table)
                 .size(320, 60)
-                .left()
-                .padRight(60);
+                .padRight(60)
+                .left();
 
         // hp
         mechDetailTable.add(UIFactoryCommon.getTextLabel("hp", UIFactoryCommon.fontSmall, Align.left))
@@ -338,21 +329,6 @@ public class HangarViewWindow extends Table {
                 .padBottom(5)
                 .left();
 
-        HangarViewWindow hangarViewWindow = this;
-
-        assignButton.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event,
-                                float x,
-                                float y,
-                                int pointer,
-                                int button) {
-                super.touchUp(event, x, y, pointer, button);
-
-                stage.addActor(new WeaponViewWindow(stage, hangarViewWindow, items, selectedUnit, primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon, primary));
-            }
-        });
-
         Table weaponDetailsWindow = new Table();
 
         Weapon weapon = primary ? selectedUnit.primaryWeapon : selectedUnit.secondaryWeapon;
@@ -387,7 +363,6 @@ public class HangarViewWindow extends Table {
                             Modification modification) {
 
         Table mod1cell = new Table();
-        //mod1cell.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_ITEM_BG, Texture.class)));
         if (modification != null) {
             mod1cell.add(modification)
                     .size(128);
@@ -398,17 +373,6 @@ public class HangarViewWindow extends Table {
 
         }
 
-    }
-
-    public void refresh() {
-        setupMechSetupTable(mechSetupTable, selectedUnit);
-    }
-
-    public void hide(Stage stage) {
-        stage.getActors().removeValue(this, true);
-        stage.setKeyboardFocus(null);
-        GameData.hangarViewWindow = null;
-        GameData.lockGameStage = false;
     }
 
     public Tooltip<Table> addToolTip() {
