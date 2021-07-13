@@ -4,20 +4,26 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.facility.BlackMarket;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
+import com.mygdx.mechwargame.core.world.generator.util.CellAlgorithm;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class StarAsteroidImageGenerator {
 
@@ -28,6 +34,10 @@ public class StarAsteroidImageGenerator {
     public static void generate(GalaxySetupParameters galaxySetupParameters) {
 
         random = new Random();
+
+        List<Supplier<AnimatedDrawable>> buildings = Arrays.asList(
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_BUILDING_01, 32, 64, 0.25f)
+        );
 
         GalaxyGeneratorState.state = "generating asteroid views in star systems";
         int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
@@ -42,6 +52,34 @@ public class StarAsteroidImageGenerator {
                     if (sector.sectorOwnerArea.owner != null && sector.sectorOwnerArea.owner.isPirate) {
 
                         star.cityView.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_ASTEROID_BG_01, Texture.class)));
+
+                        int[][] mapTemplate = new CellAlgorithm(random, 20).create(1, Config.CITY_WIDTH, Config.CITY_HEIGHT);
+
+                        boolean[][] occupied = new boolean[Config.CITY_WIDTH][Config.CITY_HEIGHT];
+
+                        for (int k = 0; k < Config.CITY_WIDTH; k++) {
+                            for (int l = 0; l < Config.CITY_HEIGHT; l++) {
+
+                                if (mapTemplate[k][l] == 1 && !occupiedArea(occupied, k, l)) {
+                                    star.cityView.actors[k][l] = new Image(buildings.get(random.nextInt(buildings.size())).get());
+                                    star.cityView.actors[k][l].setSize(64, 128);
+                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
+                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
+                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+
+                                    occupied[k][l] = true;
+                                    occupied[k + 1][l] = true;
+                                    occupied[k][l + 1] = true;
+                                    occupied[k + 1][l + 1] = true;
+                                } else {
+//                                    star.cityView.actors[k][l] = new Image(decoration.get(random.nextInt(decoration.size())).get());
+//                                    star.cityView.actors[k][l].setSize(64, 128);
+//                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
+//                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
+//                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+                                }
+                            }
+                        }
 
                         star.facilities.stream().filter(f -> f instanceof BlackMarket).forEach(f -> {
 
@@ -85,14 +123,27 @@ public class StarAsteroidImageGenerator {
                             });
                         });
                         star.cityView.layout();
-
-
                     }
                 });
             }
         }
 
         GalaxyGeneratorState.state = "done generating asteroid views in star systems";
+    }
+
+    private static boolean occupiedArea(boolean[][] occupied,
+                                        int k,
+                                        int l) {
+
+        if (k >= Config.CITY_WIDTH - 1 || l >= Config.CITY_HEIGHT - 1) {
+            return true;
+        }
+
+        if (occupied[k][l] || occupied[k + 1][l] || occupied[k][l + 1] || occupied[k + 1][l + 1]) {
+            return true;
+        }
+
+        return false;
     }
 
     private static void clearAroundBuilding(com.mygdx.mechwargame.core.world.Star star,

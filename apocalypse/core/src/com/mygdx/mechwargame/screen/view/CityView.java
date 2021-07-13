@@ -18,6 +18,7 @@ public class CityView extends Table {
                 Actor actor = actors[i][j];
 
                 if (actor != null) {
+
                     add(actor)
                             .size(64, 128);
                 }

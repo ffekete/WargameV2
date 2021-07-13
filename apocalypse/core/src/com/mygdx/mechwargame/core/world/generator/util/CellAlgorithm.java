@@ -17,6 +17,10 @@ public class CellAlgorithm {
         this.random = random;
     }
 
+    public CellAlgorithm(Random random, int chanceToStartAlive) {
+        this.random = random;
+        this.chanceToStartAlive = chanceToStartAlive;
+    }
 
     public int[][] create(int steps, int width, int height) {
 

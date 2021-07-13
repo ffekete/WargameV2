@@ -64,9 +64,7 @@ public class StarCityImageGenerator {
 
                         star.cityView.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_02, Texture.class)));
 
-
                         int[][] mapTemplate = new CellAlgorithm(random).create(6 - star.wealth, Config.CITY_WIDTH, Config.CITY_HEIGHT);
-
 
                         for (int k = 0; k < Config.CITY_WIDTH; k++) {
                             for (int l = 0; l < Config.CITY_HEIGHT; l++) {
