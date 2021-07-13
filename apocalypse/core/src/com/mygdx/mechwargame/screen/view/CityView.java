@@ -7,8 +7,6 @@ import com.mygdx.mechwargame.Config;
 public class CityView extends Table {
 
     public Actor[][] actors = new Actor[Config.CITY_WIDTH][8];
-    public boolean[][] occupied = new boolean[Config.CITY_WIDTH][8];
-
 
     public void layout() {
 

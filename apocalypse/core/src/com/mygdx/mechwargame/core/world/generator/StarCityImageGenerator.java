@@ -15,6 +15,7 @@ import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.generator.util.CellAlgorithm;
+import com.mygdx.mechwargame.screen.view.CityView;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
@@ -47,7 +48,7 @@ public class StarCityImageGenerator {
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_03, 16, 32, 0.25f)
         );
 
-        GalaxyGeneratorState.state = "generating facilities in star systems";
+        GalaxyGeneratorState.state = "generating city views in star systems";
         int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
         int height = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
 
@@ -57,12 +58,14 @@ public class StarCityImageGenerator {
                 Sector sector = GameData.galaxy.sectors[i][j];
 
                 sector.stars.forEach(star -> {
-                    if (sector.sectorOwnerArea.owner != null) {
+                    if (sector.sectorOwnerArea.owner != null && !sector.sectorOwnerArea.owner.isPirate) {
+
+                        star.cityView = new CityView();
 
                         star.cityView.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_02, Texture.class)));
 
 
-                        int[][] mapTemplate = new CellAlgorithm(random).create(6 - star.wealth, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+                        int[][] mapTemplate = new CellAlgorithm(random).create(6 - star.wealth, Config.CITY_WIDTH, Config.CITY_HEIGHT);
 
 
                         for (int k = 0; k < Config.CITY_WIDTH; k++) {
@@ -134,7 +137,7 @@ public class StarCityImageGenerator {
             }
         }
 
-        GalaxyGeneratorState.state = "done generating facilities in star systems";
+        GalaxyGeneratorState.state = "done generating city views in star systems";
     }
 
     private static void addBuilding(com.mygdx.mechwargame.core.world.Star star,

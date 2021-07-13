@@ -11,18 +11,16 @@ import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.screen.starsystem.BlackMarketViewScreen;
-import com.mygdx.mechwargame.text.BlackMarketDialogueCreator;
 
 import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
 public class BlackMarketFactory {
 
-    public static void addBlackMarket(Table dialogueTable,
-                                      Table screenContentTable,
+    public static void addBlackMarket(Table screenContentTable,
                                       Sector sector,
                                       Star star,
                                       Stage stage) {
-        if (star.facilities.stream().anyMatch(facility -> facility instanceof BlackMarket)) {
+        star.facilities.stream().filter(facility -> facility instanceof BlackMarket).forEach(f -> {
 
             ClickListener clickListener = new ClickListener() {
                 @Override
@@ -46,7 +44,7 @@ public class BlackMarketFactory {
                 }
             };
 
-            FactoryCommons.addTextToDialogueBox(dialogueTable, "1", BlackMarketDialogueCreator.generate(star, sector), clickListener);
-        }
+            f.actor.addListener(clickListener);
+        });
     }
 }

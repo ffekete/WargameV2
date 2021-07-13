@@ -66,6 +66,7 @@ public class GalaxyCreatorScreen extends GenericScreenAdapter {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
+                        StarAsteroidImageGenerator.generate(galaxySetupParameters);
                         StarCityImageGenerator.generate(galaxySetupParameters);
                         StarBackgroundImageGenerator.generate(galaxySetupParameters);
                     }

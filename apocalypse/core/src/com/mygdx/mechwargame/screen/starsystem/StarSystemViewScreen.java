@@ -162,6 +162,7 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .center();
 
 
+            BlackMarketFactory.addBlackMarket(screenContentTable, sector, star, stage);
             MarketPlaceFactory.addMarketPlace(screenContentTable, sector, star, stage);
 
             ImageButton backButton = UIFactoryCommon.getBackButton();
