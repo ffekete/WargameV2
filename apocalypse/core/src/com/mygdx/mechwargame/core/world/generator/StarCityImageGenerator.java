@@ -10,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
+import com.mygdx.mechwargame.core.world.generator.util.CellAlgorithm;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
@@ -21,6 +23,7 @@ import com.mygdx.mechwargame.ui.AnimatedDrawable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class StarCityImageGenerator {
 
@@ -28,14 +31,20 @@ public class StarCityImageGenerator {
 
     public static void generate(GalaxySetupParameters galaxySetupParameters) {
 
-        List<AnimatedDrawable> buildings = Arrays.asList(
-                new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_01, 16, 32, 0.25f),
-                new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_02, 16, 32, 0.25f),
-                new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_03, 16, 32, 0.25f),
-                new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_04, 16, 32, 0.25f)
+        random = new Random();
+
+        List<Supplier<AnimatedDrawable>> buildings = Arrays.asList(
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_01, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_02, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_03, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_04, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_05, 16, 32, true, 1f, 60f + random.nextFloat() * 60)
         );
 
-        random = new Random();
+        List<Supplier<AnimatedDrawable>> decoration = Arrays.asList(
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_01, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f)
+        );
 
         GalaxyGeneratorState.state = "generating facilities in star systems";
         int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
@@ -51,38 +60,41 @@ public class StarCityImageGenerator {
 
                         star.cityView.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_02, Texture.class)));
 
-                        for (int k = 0; k < 25; k++) {
-                            for (int l = 0; l < 7; l++) {
 
-                                star.cityView.actors[k][l] = new Image(buildings.get(random.nextInt(buildings.size())));
-                                star.cityView.actors[k][l].setSize(64, 128);
-                                star.cityView.actors[k][l].setTouchable(Touchable.disabled);
-                                star.cityView.actors[k][l].setPosition(k * 64, l * 64);
-                                star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+                        int[][] mapTemplate = new CellAlgorithm(random).create(6 - star.wealth, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
+
+                        for (int k = 0; k < Config.CITY_WIDTH; k++) {
+                            for (int l = 0; l < Config.CITY_HEIGHT; l++) {
+
+
+                                if(mapTemplate[k][l] == 1) {
+                                    star.cityView.actors[k][l] = new Image(buildings.get(random.nextInt(buildings.size())).get());
+                                    star.cityView.actors[k][l].setSize(64, 128);
+                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
+                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
+                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+                                } else {
+                                    star.cityView.actors[k][l] = new Image(decoration.get(random.nextInt(decoration.size())).get());
+                                    star.cityView.actors[k][l].setSize(64, 128);
+                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
+                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
+                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+                                }
                             }
                         }
 
-                        if (star.facilities.stream().anyMatch(f -> f instanceof Marketplace)) {
+                        star.facilities.stream().filter(f -> f instanceof Marketplace).forEach(f -> {
+
                             Image marketImage = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_MARKET, 32, 32, 0.2f));
                             star.cityView.actors[5][5] = marketImage;
                             marketImage.setSize(128, 128);
                             marketImage.setPosition(5 * 64, 5 * 64);
 
-                            marketImage.debug();
+                            f.actor = marketImage;
 
-                            star.cityView.actors[5][6] = null;
-                            star.cityView.actors[6][6] = null;
-                            star.cityView.actors[6][5] = null;
-
-                            star.cityView.actors[5][4] = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_PARK, 16, 32, 0.25f));
-
-                            star.cityView.actors[5][4].setSize(64, 128);
-                            star.cityView.actors[5][4].setPosition(5 * 64, 4 * 64);
-
-                            star.cityView.actors[6][4] = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_PARK, 16, 32, 0.25f));
-                            star.cityView.actors[6][4].setSize(64, 128);
-                            star.cityView.actors[6][4].setPosition(6 * 64, 4 * 64);
+                            // market
+                            addBuilding(star, 5, 5);
 
                             marketImage.addListener(new InputListener() {
 
@@ -112,7 +124,7 @@ public class StarCityImageGenerator {
                                     marketImage.addAction(parallelAction);
                                 }
                             });
-                        }
+                        });
                         star.cityView.layout();
 
 
@@ -122,6 +134,29 @@ public class StarCityImageGenerator {
         }
 
         GalaxyGeneratorState.state = "done generating facilities in star systems";
+    }
+
+    private static void addBuilding(com.mygdx.mechwargame.core.world.Star star,
+                                    int x,
+                                    int y) {
+        star.cityView.actors[x][y + 1] = null;
+        star.cityView.actors[x + 1][y + 1] = null;
+        star.cityView.actors[x + 1][y] = null;
+
+        star.cityView.actors[x][y - 1] = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f));
+
+        star.cityView.actors[x][y - 1].setSize(64, 128);
+        star.cityView.actors[x][y - 1].setPosition((x) * 64, (y - 1) * 64);
+
+        star.cityView.actors[x + 1][y - 1] = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f));
+        star.cityView.actors[x + 1][y - 1].setSize(64, 128);
+        star.cityView.actors[x + 1][y - 1].setPosition((x + 1) * 64, (y - 1) * 64);
+
+        star.cityView.actors[x + 1][y - 1].setTouchable(Touchable.disabled);
+        star.cityView.actors[x][y - 1].setTouchable(Touchable.disabled);
+
+        star.cityView.actors[x + 1][y - 1].setColor(0.8f / (y / 2f), 0.8f / (y / 2f), 0.8f / (y / 2f), 1f);
+        star.cityView.actors[x][y - 1].setColor(0.8f / (y / 2f), 0.8f / (y / 2f), 0.8f / (y / 2f), 1f);
     }
 
 }

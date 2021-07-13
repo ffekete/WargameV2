@@ -17,12 +17,11 @@ import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 
 public class MarketPlaceFactory {
 
-    public static void addMarketPlace(Table dialogueTable,
-                                      Table screenContentTable,
+    public static void addMarketPlace(Table screenContentTable,
                                       Sector sector,
                                       Star star,
                                       Stage stage) {
-        if (star.facilities.stream().anyMatch(facility -> facility instanceof Marketplace)) {
+        star.facilities.stream().filter(facility -> facility instanceof Marketplace).forEach( f-> {
 
             ClickListener clickListener = new ClickListener() {
                 @Override
@@ -46,7 +45,9 @@ public class MarketPlaceFactory {
                 }
             };
 
-            FactoryCommons.addTextToDialogueBox(dialogueTable, "1", MarketplaceDialogueCreator.generate(star, sector), clickListener);
-        }
+            f.actor.addListener(clickListener);
+
+
+        });
     }
 }

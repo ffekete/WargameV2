@@ -22,5 +22,8 @@ public class Config {
     public static final int MODIFICATION_ORDER = 3;
     public static final int ARMOR_ORDER = 4;
 
+    public static int CITY_WIDTH = 25;
+    public static int CITY_HEIGHT = 7;
+
     public static Color TOOLTIP_COLOR = Color.valueOf("ffffffEF");
 }

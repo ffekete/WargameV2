@@ -8,7 +8,7 @@ public class CellAlgorithm {
 
     private int deathLimit = 5;
     private int birthLimit = 2;
-    private float chanceToStartAlive = 43;
+    private float chanceToStartAlive = 38;
     private int width;
     private int height;
     private Random random;
@@ -33,8 +33,6 @@ public class CellAlgorithm {
         for(int i=0; i<steps; i++){
             cellmap = doSimulationStep(cellmap);
         }
-
-        System.out.println("Elapsed: " + (System.currentTimeMillis() - start) + " ms");
 
         return cellmap;
     }
