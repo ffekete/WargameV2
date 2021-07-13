@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Align;
@@ -16,6 +18,7 @@ import com.mygdx.mechwargame.core.item.modification.Modification;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
 import com.mygdx.mechwargame.input.ToolTipManager;
+import com.mygdx.mechwargame.screen.action.SetScreenAction;
 import com.mygdx.mechwargame.screen.view.common.ItemsViewWindow;
 import com.mygdx.mechwargame.state.GameData;
 import com.mygdx.mechwargame.state.GameState;
@@ -26,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.mygdx.mechwargame.Config.MAX_UNIT_STAT_LEVEL;
+import static com.mygdx.mechwargame.Config.SCREEN_TRANSITION_DELAY;
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
 
 public class FactoryView extends Table {
@@ -148,16 +152,36 @@ public class FactoryView extends Table {
         buttonRow.add().expand();
 
         buttonRow.add(backButton)
-                .size(300, 70)
+                .size(350, 70)
                 .padRight(20);
 
         ImageTextButton buyButton = UIFactoryCommon.getSmallRoundButton("buy", UIFactoryCommon.fontSmall);
         buttonRow.add(buyButton)
-                .size(300, 70);
+                .size(350, 70);
 
         add(buttonRow)
                 .size(1460, 80);
 
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                SequenceAction sequenceAction = new SequenceAction();
+                AlphaAction alphaAction = new AlphaAction();
+                sequenceAction.addAction(alphaAction);
+                alphaAction.setAlpha(0);
+                alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                alphaAction.setActor(mechSetupTable);
+
+                sequenceAction.addAction(new SetScreenAction(GameState.previousScreen));
+
+                stage.addAction(sequenceAction);
+            }
+        });
 
     }
 
@@ -317,8 +341,6 @@ public class FactoryView extends Table {
                 .size(1400, 150)
                 .colspan(2);
 
-        ImageButton assignButton = UIFactoryCommon.getAssignButton();
-
         Array<Weapon> itemArray = new Array<>();
         for (Weapon item : items) {
             itemArray.add(item);
@@ -345,7 +367,7 @@ public class FactoryView extends Table {
         addModIcon(weaponDetailsWindow, weapon.secondModification);
         addModIcon(weaponDetailsWindow, weapon.thirdModification);
 
-        weaponDetailsWindow.add(assignButton)
+        weaponDetailsWindow.add()
                 .size(128, 128);
 
         weaponDetailsWindow.add()

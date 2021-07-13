@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.mechwargame.Config;
@@ -150,20 +150,27 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .row();
 
             screenContentTable.add(star.cityView)
-                    .size(1600, 512)
+                    .size(1600, 448)
                     .expand()
                     .colspan(2)
-                    .center();
+                    .center()
+                    .row();
 
 
             BlackMarketClickHandler.addClickListener(screenContentTable, sector, star, stage);
             MarketPlaceClickHandler.addClickListener(screenContentTable, sector, star, stage);
             FactoryClickHandler.addClickListener(screenContentTable, sector, star, stage);
 
-            ImageButton backButton = UIFactoryCommon.getBackButton();
-            backButton.setSize(64, 64);
+            Table buttonRow = new Table();
+            ImageTextButton backButton = UIFactoryCommon.getSmallRoundButton("back", UIFactoryCommon.fontSmall);
+            buttonRow.add().expand();
+            buttonRow.add(backButton)
+                    .size(350, 70);
 
-            screenContentTable.addActor(backButton);
+            screenContentTable.add(buttonRow)
+                    .colspan(2)
+                    .size(1600, 70);
+
 
             backButton.addListener(new ClickListener() {
 

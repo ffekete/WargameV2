@@ -39,6 +39,12 @@ public class StarAsteroidImageGenerator {
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_BUILDING_01, 32, 64, 0.25f)
         );
 
+        List<Supplier<AnimatedDrawable>> decorations = Arrays.asList(
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_01, 16, 16, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_02, 16, 16, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_03, 16, 16, 0.25f)
+        );
+
         GalaxyGeneratorState.state = "generating asteroid views in star systems";
         int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
         int height = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
@@ -72,11 +78,11 @@ public class StarAsteroidImageGenerator {
                                     occupied[k][l + 1] = true;
                                     occupied[k + 1][l + 1] = true;
                                 } else {
-//                                    star.cityView.actors[k][l] = new Image(decoration.get(random.nextInt(decoration.size())).get());
-//                                    star.cityView.actors[k][l].setSize(64, 128);
-//                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
-//                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
-//                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+                                    star.cityView.actors[k][l] = new Image(decorations.get(random.nextInt(decorations.size())).get());
+                                    star.cityView.actors[k][l].setSize(64, 64);
+                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
+                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
+                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
                                 }
                             }
                         }

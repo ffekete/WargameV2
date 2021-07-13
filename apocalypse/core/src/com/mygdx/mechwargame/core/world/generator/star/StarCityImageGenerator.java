@@ -1,20 +1,15 @@
 package com.mygdx.mechwargame.core.world.generator.star;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
-import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.core.world.GalaxySetupParameters;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.generator.star.image.FactoryImageGenerator;
+import com.mygdx.mechwargame.core.world.generator.star.image.MarketImageGenerator;
 import com.mygdx.mechwargame.core.world.generator.util.CellAlgorithm;
 import com.mygdx.mechwargame.screen.view.star.CityView;
 import com.mygdx.mechwargame.state.GalaxyGeneratorState;
@@ -26,8 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
-
-import static com.mygdx.mechwargame.core.world.generator.star.image.MarketImageGenerator.generateMarketImage;
 
 public class StarCityImageGenerator {
 
@@ -89,7 +82,7 @@ public class StarCityImageGenerator {
                             }
                         }
 
-                        generateMarketImage(star);
+                        MarketImageGenerator.generateImage(star);
                         FactoryImageGenerator.generateImage(star);
                         star.cityView.layout();
 

@@ -131,6 +131,9 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STAR_SYSTEM_BG_02 = "starsystem/city/BackGround02.png";
     public static final String STAR_SYSTEM_ASTEROID_BG_01 = "starsystem/asteroid/BackGround.png";
     public static final String STAR_SYSTEM_ASTEROID_BUILDING_01 = "starsystem/asteroid/Building01.png";
+    public static final String STAR_SYSTEM_ASTEROID_DECORATION_01 = "starsystem/asteroid/Decoration01.png";
+    public static final String STAR_SYSTEM_ASTEROID_DECORATION_02 = "starsystem/asteroid/Decoration02.png";
+    public static final String STAR_SYSTEM_ASTEROID_DECORATION_03 = "starsystem/asteroid/Decoration03.png";
     public static final String STAR_SYSTEM_ASTEROID_BLACK_MARKET = "starsystem/asteroid/BlackMarket.png";
 
     public List<String> logos = Arrays.asList(
@@ -301,5 +304,8 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_SYSTEM_ASTEROID_BG_01, Texture.class);
         load(STAR_SYSTEM_ASTEROID_BLACK_MARKET, Texture.class);
         load(STAR_SYSTEM_ASTEROID_BUILDING_01, Texture.class);
+        load(STAR_SYSTEM_ASTEROID_DECORATION_01, Texture.class);
+        load(STAR_SYSTEM_ASTEROID_DECORATION_02, Texture.class);
+        load(STAR_SYSTEM_ASTEROID_DECORATION_03, Texture.class);
     }
 }

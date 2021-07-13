@@ -8,29 +8,28 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.core.facility.Factory;
-import com.mygdx.mechwargame.core.facility.Marketplace;
 import com.mygdx.mechwargame.ui.AnimatedDrawable;
 
-import static com.mygdx.mechwargame.core.world.generator.star.image.AreaCleaner.addBuilding;
+import static com.mygdx.mechwargame.core.world.generator.star.image.AreaCleaner.clearArea;
 
 public class FactoryImageGenerator {
 
     public static void generateImage(com.mygdx.mechwargame.core.world.Star star) {
         star.facilities.stream().filter(f -> f instanceof Factory).forEach(f -> {
 
-            Image factoryImage = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FACTORY, 32, 32, 0.2f));
+            Image factoryImage = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FACTORY, 48, 32, 0.2f));
 
             int px = 10;
             int py = 3;
 
+            // market
+            clearArea(star, px, py, 3, 2);
+
             star.cityView.actors[px][py] = factoryImage;
-            factoryImage.setSize(128, 128);
+            factoryImage.setSize(192, 128);
             factoryImage.setPosition(px * 64, py * 64);
 
             f.actor = factoryImage;
-
-            // market
-            addBuilding(star, px, py);
 
             factoryImage.addListener(new InputListener() {
 
@@ -42,7 +41,7 @@ public class FactoryImageGenerator {
                                   Actor fromActor) {
                     super.enter(event, x, y, pointer, fromActor);
                     ParallelAction parallelAction = new ParallelAction();
-                    parallelAction.addAction(Actions.sizeTo(136, 136, 0.1f));
+                    parallelAction.addAction(Actions.sizeTo(200, 136, 0.1f));
                     parallelAction.addAction(Actions.moveTo(px * 64 - 4, py * 64 - 4, 0.1f));
                     factoryImage.addAction(parallelAction);
                 }
@@ -55,7 +54,7 @@ public class FactoryImageGenerator {
                                  Actor toActor) {
                     super.exit(event, x, y, pointer, toActor);
                     ParallelAction parallelAction = new ParallelAction();
-                    parallelAction.addAction(Actions.sizeTo(128, 128, 0.1f));
+                    parallelAction.addAction(Actions.sizeTo(192, 128, 0.1f));
                     parallelAction.addAction(Actions.moveTo(px * 64, py * 64, 0.1f));
                     factoryImage.addAction(parallelAction);
                 }
