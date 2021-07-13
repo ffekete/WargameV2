@@ -43,7 +43,8 @@ public class StarCityImageGenerator {
 
         List<Supplier<AnimatedDrawable>> decoration = Arrays.asList(
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_01, 16, 32, 0.25f),
-                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f)
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_03, 16, 32, 0.25f)
         );
 
         GalaxyGeneratorState.state = "generating facilities in star systems";

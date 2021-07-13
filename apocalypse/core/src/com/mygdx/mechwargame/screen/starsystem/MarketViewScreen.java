@@ -364,8 +364,10 @@ public class MarketViewScreen extends GenericScreenAdapter {
 
         buyButtonTable.add(resetButton)
                 .width(400)
+                .height(70)
                 .padRight(30);
         buyButtonTable.add(buyButton)
+                .height(70)
                 .width(400);
 
         footerMenuTable.add(buyButtonTable)
