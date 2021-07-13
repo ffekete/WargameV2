@@ -75,6 +75,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STATION_002 = "starsystem/background/station/Station002.png";
     public static final String STATION_003 = "starsystem/background/station/Station003.png";
     public static final String STATION_004 = "starsystem/background/station/Station004.png";
+    public static final String STATION_005 = "starsystem/background/station/Station005.png";
     public static final String PIRATE_STATION_001 = "starsystem/background/station/PirateStation.png";
     public static final String DECORATION_001 = "starsystem/background/decoration/Decoration001.png";
     public static final String DECORATION_002 = "starsystem/background/decoration/Decoration002.png";
@@ -170,7 +171,8 @@ public class AssetManagerV2 extends AssetManager {
             STATION_001,
             STATION_002,
             STATION_003,
-            STATION_004
+            STATION_004,
+            STATION_005
     );
 
     public List<String> decorations = Arrays.asList(

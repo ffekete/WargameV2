@@ -141,4 +141,11 @@ public abstract class Weapon extends Item {
     public String toString() {
         return name + " dmg: " + damage + "(x" + rateOfFire + ") rng: " + range + " acc: " + accuracy;
     }
+
+    public int getPrice() {
+        return this.price
+                + (modification != null ? modification.getPrice() : 0)
+                + (secondModification != null ? secondModification.getPrice() : 0)
+                + (thirdModification != null ? thirdModification.getPrice() : 0);
+    }
 }
