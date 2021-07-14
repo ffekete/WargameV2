@@ -30,7 +30,8 @@ public class WeaponViewWindow extends Table {
 
     private Weapon currentWeapon;
     private Table currentCell;
-    Table weaponDetailsTable = new Table();
+    private Table weaponDetailsTable = new Table();
+    private HangarViewWindow hangarViewWindow;
 
     public WeaponViewWindow(Stage stage,
                             HangarViewWindow hangarViewWindow,
@@ -40,6 +41,8 @@ public class WeaponViewWindow extends Table {
                             boolean primary) {
 
         currentWeapon = initiallySelectedWeapon;
+
+        this.hangarViewWindow = hangarViewWindow;
 
         // create layout
         setTouchable(Touchable.enabled);
@@ -293,7 +296,7 @@ public class WeaponViewWindow extends Table {
                 .size(450, 65)
                 .padLeft(40);
 
-        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.damage))
+        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.getDamage()))
                 .size(350, 65)
                 .colspan(2)
                 .row();
@@ -302,7 +305,7 @@ public class WeaponViewWindow extends Table {
                 .size(450, 65)
                 .padLeft(40);
 
-        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.rateOfFire))
+        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.getRateOfFire()))
                 .size(350, 65)
                 .colspan(2)
                 .row();
@@ -311,7 +314,7 @@ public class WeaponViewWindow extends Table {
                 .size(450, 65)
                 .padLeft(40);
 
-        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.accuracy))
+        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.getAccuracy()))
                 .size(350, 65)
                 .colspan(2)
                 .row();
@@ -320,7 +323,7 @@ public class WeaponViewWindow extends Table {
                 .size(450, 65)
                 .padLeft(40);
 
-        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.range))
+        weaponDetailsTable.add(UIFactoryCommon.getPowerGauge(Config.MAX_WEAPON_STAT_LEVEL, currentWeapon.getRange()))
                 .size(350, 65)
                 .colspan(2)
                 .row();

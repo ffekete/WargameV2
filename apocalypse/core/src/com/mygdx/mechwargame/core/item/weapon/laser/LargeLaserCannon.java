@@ -11,7 +11,7 @@ public class LargeLaserCannon extends Weapon {
         super(AssetManagerV2.LARGE_LASER_CANNON);
         name = "l laser cannon";
         longName = "large laser cannon";
-        damage = 2;
+        damage = 7;
         range = 6;
         rateOfFire = 1;
         ammo = 8;

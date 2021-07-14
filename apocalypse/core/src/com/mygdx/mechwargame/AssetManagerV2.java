@@ -103,6 +103,7 @@ public class AssetManagerV2 extends AssetManager {
     public static final String ENHANCED_SENSORS_MODULE = "item/mod/EnhancedSensors.png";
     public static final String REPEATER = "item/mod/Repeater.png";
     public static final String SMALL_POWERBANK = "item/mod/SmallPowerBank.png";
+    public static final String IMPROVED_LENSES = "item/mod/ImprovedLenses.png";
 
     public static final String SINGLE_SHOT_ICON = "ui/weapon/SingleShotIcon.png";
     public static final String BURST_SHOT_ICON = "ui/weapon/BurstShotIcon.png";
@@ -317,5 +318,6 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_SYSTEM_ASTEROID_DECORATION_06, Texture.class);
         load(STAR_SYSTEM_ASTEROID_DECORATION_07, Texture.class);
         load(STAR_SYSTEM_ASTEROID_DECORATION_08, Texture.class);
+        load(IMPROVED_LENSES, Texture.class);
     }
 }

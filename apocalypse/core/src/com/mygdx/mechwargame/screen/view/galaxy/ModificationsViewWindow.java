@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -273,7 +274,10 @@ public class ModificationsViewWindow extends Table {
                 .padBottom(20)
                 .row();
 
-        modificationsDetailsTable.add(UIFactoryCommon.getTextLabel(currentModification.shortDescription, Align.topLeft))
+        Label modificationDescription = UIFactoryCommon.getTextLabel(currentModification.description, Align.topLeft);
+        modificationDescription.setWrap(true);
+
+        modificationsDetailsTable.add(modificationDescription)
                 .size(800, 660)
                 .left()
                 .top()

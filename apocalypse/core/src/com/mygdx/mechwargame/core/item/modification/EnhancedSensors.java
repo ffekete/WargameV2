@@ -1,7 +1,6 @@
 package com.mygdx.mechwargame.core.item.modification;
 
 import com.mygdx.mechwargame.AssetManagerV2;
-import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
@@ -32,9 +31,7 @@ public class EnhancedSensors extends Modification {
     @Override
     public void apply(Weapon weapon) {
         super.apply(weapon);
-        if (weapon.range < Config.MAX_WEAPON_STAT_LEVEL) {
-            weapon.range++;
-        }
+        weapon.range++;
     }
 
     @Override

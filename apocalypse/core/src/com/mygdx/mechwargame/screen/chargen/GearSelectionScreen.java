@@ -102,12 +102,12 @@ public class GearSelectionScreen extends GenericScreenAdapter {
                 .left();
         gearDescriptionTable.padBottom(40).row();
 
-        Cell<Table> primaryWeaponCell = gearDescriptionTable.add(UIFactoryCommon.getPowerGauge(baseUnit.primaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.primaryWeapon.damage * baseUnit.primaryWeapon.rateOfFire))
+        Cell<Table> primaryWeaponCell = gearDescriptionTable.add(UIFactoryCommon.getPowerGauge(baseUnit.primaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.primaryWeapon.getDamage() * baseUnit.primaryWeapon.getRateOfFire()))
                 .center()
                 .left();
         gearDescriptionTable.padBottom(40).row();
 
-        Table secondaryWeaponDescription = baseUnit.secondaryWeapon != null ? UIFactoryCommon.getPowerGauge(baseUnit.secondaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.secondaryWeapon.damage * baseUnit.secondaryWeapon.rateOfFire) : new Table();
+        Table secondaryWeaponDescription = baseUnit.secondaryWeapon != null ? UIFactoryCommon.getPowerGauge(baseUnit.secondaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.secondaryWeapon.getDamage() * baseUnit.secondaryWeapon.getRateOfFire()) : new Table();
         Cell<Table> secondaryWeaponCell = gearDescriptionTable.add(secondaryWeaponDescription)
                 .center()
                 .height(32)
@@ -169,8 +169,8 @@ public class GearSelectionScreen extends GenericScreenAdapter {
                 hpCell.setActor(UIFactoryCommon.getPowerGauge("hp", MAX_UNIT_STAT_LEVEL, baseUnit.hp));
                 movementCell.setActor(UIFactoryCommon.getPowerGauge("movement", MAX_UNIT_STAT_LEVEL, baseUnit.movementPoints));
                 initiativeCell.setActor(UIFactoryCommon.getPowerGauge("initiative", MAX_UNIT_STAT_LEVEL, baseUnit.initiative));
-                primaryWeaponCell.setActor(UIFactoryCommon.getPowerGauge(baseUnit.primaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.primaryWeapon.damage * baseUnit.primaryWeapon.rateOfFire));
-                Table secondaryWeaponDescription = baseUnit.secondaryWeapon != null ? UIFactoryCommon.getPowerGauge(baseUnit.secondaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.secondaryWeapon.damage * baseUnit.secondaryWeapon.rateOfFire) : new Table();
+                primaryWeaponCell.setActor(UIFactoryCommon.getPowerGauge(baseUnit.primaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.primaryWeapon.getDamage() * baseUnit.primaryWeapon.getRateOfFire()));
+                Table secondaryWeaponDescription = baseUnit.secondaryWeapon != null ? UIFactoryCommon.getPowerGauge(baseUnit.secondaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.secondaryWeapon.getDamage() * baseUnit.secondaryWeapon.getRateOfFire()) : new Table();
                 secondaryWeaponCell.setActor(secondaryWeaponDescription);
 
                 return true;
@@ -197,8 +197,8 @@ public class GearSelectionScreen extends GenericScreenAdapter {
                 armorCell.setActor(UIFactoryCommon.getPowerGauge("armor", MAX_UNIT_STAT_LEVEL, baseUnit.armor));
                 movementCell.setActor(UIFactoryCommon.getPowerGauge("movement", MAX_UNIT_STAT_LEVEL, baseUnit.movementPoints));
                 initiativeCell.setActor(UIFactoryCommon.getPowerGauge("initiative", MAX_UNIT_STAT_LEVEL, baseUnit.initiative));
-                primaryWeaponCell.setActor(UIFactoryCommon.getPowerGauge(baseUnit.primaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.primaryWeapon.damage * baseUnit.primaryWeapon.rateOfFire));
-                Table secondaryWeaponDescription = baseUnit.secondaryWeapon != null ? UIFactoryCommon.getPowerGauge(baseUnit.secondaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.secondaryWeapon.damage * baseUnit.secondaryWeapon.rateOfFire) : new Table();
+                primaryWeaponCell.setActor(UIFactoryCommon.getPowerGauge(baseUnit.primaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.primaryWeapon.getDamage() * baseUnit.primaryWeapon.getRateOfFire()));
+                Table secondaryWeaponDescription = baseUnit.secondaryWeapon != null ? UIFactoryCommon.getPowerGauge(baseUnit.secondaryWeapon.name, MAX_UNIT_STAT_LEVEL, baseUnit.secondaryWeapon.getDamage() * baseUnit.secondaryWeapon.getRateOfFire()) : new Table();
                 secondaryWeaponCell.setActor(secondaryWeaponDescription);
                 return true;
             }

@@ -18,6 +18,9 @@ import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Attributes;
 import com.mygdx.mechwargame.core.character.Character;
 import com.mygdx.mechwargame.core.character.Skills;
+import com.mygdx.mechwargame.core.item.modification.ImprovedLenses;
+import com.mygdx.mechwargame.core.item.modification.Repeater;
+import com.mygdx.mechwargame.core.item.modification.SmallPowerBank;
 import com.mygdx.mechwargame.core.unit.BlackBear;
 import com.mygdx.mechwargame.core.unit.Hellfire;
 import com.mygdx.mechwargame.core.unit.Interceptor;
@@ -153,10 +156,10 @@ public class MainMenuScreen extends GenericScreenAdapter {
                 starShip.hangar.addUnit(new Hellfire());
 
                 starShip.cargoBay.addItem(new LargeLaserCannon());
-                starShip.cargoBay.addItem(new ShortRangeMissile());
-                starShip.cargoBay.addItem(new LongRangeMissile());
-                starShip.cargoBay.addItem(new StandardAirToAirMissile());
-                starShip.cargoBay.addItem(new StandardAirToGroundMissile());
+                starShip.cargoBay.addItem(new ImprovedLenses());
+                starShip.cargoBay.addItem(new Repeater());
+                starShip.cargoBay.addItem(new SmallPowerBank());
+
 
                 GameData.starShip = starShip;
 

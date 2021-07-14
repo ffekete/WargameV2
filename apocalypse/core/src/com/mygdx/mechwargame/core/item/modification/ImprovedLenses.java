@@ -1,23 +1,24 @@
 package com.mygdx.mechwargame.core.item.modification;
 
 import com.mygdx.mechwargame.AssetManagerV2;
+import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.item.weapon.Mode;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 
-public class Repeater extends Modification {
+public class ImprovedLenses extends Modification {
 
-    public Repeater() {
-        super(AssetManagerV2.REPEATER);
-        name = "repeater";
-        shortName = "rpt";
-        price = 800;
-        shortDescription = "+1 rate of fire\n" +
+    public ImprovedLenses() {
+        super(AssetManagerV2.IMPROVED_LENSES);
+        name = "improved lenses";
+        shortName = "iln";
+        price = 1200;
+        shortDescription = "+2 damage\n" +
                 "slot: laser";
         description =
-                "+1 rate of fire.\n" +
+                "+2 damage.\n" +
                         "slot: laser\n\n" +
-                        "A chip to make it easy to repeat laser beams in a rapid burst.";
+                        "A lens that improves focusing of laser beams to deal more damage.";
         addToolTip();
     }
 
@@ -29,14 +30,13 @@ public class Repeater extends Modification {
     @Override
     public void apply(Weapon weapon) {
         super.apply(weapon);
-        weapon.rateOfFire++;
-        weapon.modes.add(Mode.Burst);
+
+        weapon.damage += 2;
     }
 
     @Override
     public void remove(Weapon weapon) {
         super.remove(weapon);
-        weapon.modes.remove(Mode.Burst);
-        weapon.rateOfFire--;
+        weapon.damage -= 2;
     }
 }

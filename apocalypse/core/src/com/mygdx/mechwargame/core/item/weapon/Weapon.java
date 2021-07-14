@@ -20,6 +20,7 @@ import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.mechwargame.Config.MAX_WEAPON_STAT_LEVEL;
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
 import static com.mygdx.mechwargame.Config.TOOLTIP_MAX_WIDTH;
 import static com.mygdx.mechwargame.Config.WEAPON_ORDER;
@@ -47,6 +48,22 @@ public abstract class Weapon extends Item {
     public Weapon(String image) {
         super(image);
         order = WEAPON_ORDER;
+    }
+
+    public int getDamage() {
+        return Math.min(damage, MAX_WEAPON_STAT_LEVEL);
+    }
+
+    public int getRange() {
+        return Math.min(range, MAX_WEAPON_STAT_LEVEL);
+    }
+
+    public int getRateOfFire() {
+        return Math.min(rateOfFire, MAX_WEAPON_STAT_LEVEL);
+    }
+
+    public int getAccuracy() {
+        return Math.min(accuracy, MAX_WEAPON_STAT_LEVEL);
     }
 
     public void addToolTip() {
