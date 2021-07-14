@@ -220,6 +220,7 @@ public class WeaponViewWindow extends Table {
 
                 if (oldWeapon == newWeapon) {
                     stage.getActors().removeValue(weaponViewWindow, true);
+                    hangarViewWindow.refresh();
                     return;
                 }
 
@@ -262,11 +263,10 @@ public class WeaponViewWindow extends Table {
         Container<TextField> textField = UIFactoryCommon.getTextField(currentWeapon.longName, "", UIFactoryCommon.fontSmall);
 
         weaponDetailsTable.add(textField)
+                .width(760)
+                .colspan(3)
                 .left()
                 .padLeft(40)
-                .padRight(50)
-                .fillX()
-                .colspan(2)
                 .row();
 
         textField.addListener(new InputListener() {
@@ -391,15 +391,14 @@ public class WeaponViewWindow extends Table {
 
         weaponDetailsTable.add(UIFactoryCommon.getTextLabel(text))
                 .size(450, 70)
-                .padLeft(40);
+                .padLeft(30);
 
         ImageTextButton modButton = UIFactoryCommon.getSmallRoundButton(modification != null ? modification.shortName : "add");
-        modButton.setSize(300, 60);
+        modButton.setSize(240, 60);
 
         weaponDetailsTable.add(modButton)
-                .size(260, 60)
-                .padRight(10);
-
+                .size(240, 60)
+                .left();
 
         if (modification != null) {
 
@@ -439,13 +438,14 @@ public class WeaponViewWindow extends Table {
 
             weaponDetailsTable.add(deleteButton)
                     .size(60)
-                    .center()
+                    .left()
                     .padRight(10)
                     .row();
         } else {
             weaponDetailsTable.add()
                     .size(60)
                     .padRight(10)
+                    .left()
                     .row();
         }
 
