@@ -2,11 +2,13 @@ package com.mygdx.mechwargame.screen.view.star;
 
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.IntAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
+import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.item.modification.Modification;
 import com.mygdx.mechwargame.core.item.weapon.Weapon;
 import com.mygdx.mechwargame.core.unit.BaseUnit;
@@ -53,7 +56,66 @@ public class FactoryView extends Table {
 
         setSize(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
-        add(UIFactoryCommon.getTextLabel("factory", Align.center))
+        Table headerTable = new Table();
+
+        headerTable.add(UIFactoryCommon.getTextLabel("hangar capacity", Align.left))
+                .padRight(30);
+
+        Label capacityLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(GameData.starShip.hangar.maxCapacity - GameData.starShip.hangar.capacity), UIFactoryCommon.fontMedium, Align.right);
+
+        capacityLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                int cap = GameData.starShip.hangar.maxCapacity - GameData.starShip.hangar.capacity;
+
+                if (selectedUnit == null) {
+                    capacityLabel.setColor(Color.WHITE);
+                } else if (cap - selectedUnit.unitType.size >= 0) {
+                    capacityLabel.setColor(Color.GREEN);
+                } else {
+                    capacityLabel.setColor(Color.RED);
+                }
+                return false;
+            }
+        });
+
+        headerTable.add(capacityLabel)
+                .width(55)
+                .padRight(80);
+
+        headerTable.add(UIFactoryCommon.getTextLabel("money", Align.left))
+                .padRight(10);
+        headerTable.add(UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(Company.money), UIFactoryCommon.fontMedium, Align.right))
+                .width(200)
+                .padRight(80);
+
+        Label priceLabel = UIFactoryCommon.getDynamicTextLabel(() -> Integer.toString(selectedUnit == null ? 0 : selectedUnit.getPrice()), UIFactoryCommon.fontMedium, Align.right);
+
+        priceLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+
+                if (selectedUnit == null) {
+                    priceLabel.setColor(Color.WHITE);
+                } else if (Company.money >= selectedUnit.getPrice()) {
+                    priceLabel.setColor(Color.GREEN);
+                } else {
+                    priceLabel.setColor(Color.RED);
+                }
+                return false;
+            }
+        });
+
+        headerTable.add(UIFactoryCommon.getTextLabel("cost"))
+                .padRight(10);
+
+        headerTable.add(priceLabel)
+                .width(200);
+
+        headerTable.add()
+                .expand();
+
+        add(headerTable)
                 .size(1460, 50)
                 .padBottom(20)
                 .center()
@@ -84,12 +146,121 @@ public class FactoryView extends Table {
 
         Drawable selectedItemBg = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
 
+        refreshContent(unitsToSell, background, content, mechSetupTable, max, selectedItemBg);
+
+        row();
+        add().size(20).row();
+
+        Table buttonRow = new Table();
+        ImageTextButton backButton = UIFactoryCommon.getSmallRoundButton("back", UIFactoryCommon.fontSmall);
+
+        buttonRow.add().expand();
+
+        buttonRow.add(backButton)
+                .size(350, 70)
+                .padRight(20);
+
+        ImageTextButton buyButton = UIFactoryCommon.getSmallRoundButton("buy", UIFactoryCommon.fontSmall);
+        buttonRow.add(buyButton)
+                .size(350, 70);
+
+        add(buttonRow)
+                .size(1460, 80);
+
+        buyButton.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                if (selectedUnit == null ||
+                        !GameData.starShip.hangar.canAdd(selectedUnit)
+                        || Company.money < selectedUnit.getPrice()) {
+                    buyButton.setDisabled(true);
+                } else {
+                    buyButton.setDisabled(false);
+                }
+                return false;
+            }
+        });
+
+        buyButton.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                if (GameData.starShip.hangar.addUnit(selectedUnit)) {
+
+                    IntAction intAction = new IntAction() {
+                        @Override
+                        public boolean act(float delta) {
+                            boolean result = super.act(delta);
+                            Company.money = getValue();
+                            return result;
+                        }
+                    };
+
+                    intAction.setStart(Company.money);
+                    intAction.setEnd(Company.money - selectedUnit.getPrice());
+                    intAction.setDuration(0.5f);
+
+                    stage.addAction(intAction);
+
+                    stage.addAction(intAction);
+
+                    unitsToSell.remove(selectedUnit);
+
+                    if (!unitsToSell.isEmpty()) {
+                        selectedUnit = unitsToSell.get(0);
+                        setupMechSetupTable(mechSetupTable, selectedUnit);
+                    }
+
+                    refreshContent(unitsToSell, background, content, mechSetupTable, max, selectedItemBg);
+                }
+            }
+        });
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event,
+                                float x,
+                                float y,
+                                int pointer,
+                                int button) {
+                super.touchUp(event, x, y, pointer, button);
+                SequenceAction sequenceAction = new SequenceAction();
+                AlphaAction alphaAction = new AlphaAction();
+                sequenceAction.addAction(alphaAction);
+                alphaAction.setAlpha(0);
+                alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
+                alphaAction.setActor(mechSetupTable);
+
+                sequenceAction.addAction(new SetScreenAction(GameState.previousScreen));
+
+                stage.addAction(sequenceAction);
+            }
+        });
+
+    }
+
+    private void refreshContent(List<BaseUnit> unitsToSell,
+                                TextureRegionDrawable background,
+                                Table content,
+                                Table mechSetupTable,
+                                int max,
+                                Drawable selectedItemBg) {
+        content.clear();
+
+        if (unitsToSell.isEmpty()) {
+            return;
+        }
+
         for (int i = 0; i < max; i++) {
 
             Table table = new Table();
             table.background(background);
 
-            if(i == 0) {
+            if (i == 0) {
                 selectedContainer = table;
                 selectedContainer.background(selectedItemBg);
 
@@ -122,7 +293,7 @@ public class FactoryView extends Table {
                         super.touchUp(event, x, y, pointer, button);
                         event.stop();
                         selectedUnit = baseUnit;
-                        if(selectedContainer != null) {
+                        if (selectedContainer != null) {
                             selectedContainer.setBackground(background);
                         }
                         selectedContainer = table;
@@ -142,47 +313,6 @@ public class FactoryView extends Table {
                     .size(128)
                     .padRight(10);
         }
-
-        row();
-        add().size(20).row();
-
-        Table buttonRow = new Table();
-        ImageTextButton backButton = UIFactoryCommon.getSmallRoundButton("back", UIFactoryCommon.fontSmall);
-
-        buttonRow.add().expand();
-
-        buttonRow.add(backButton)
-                .size(350, 70)
-                .padRight(20);
-
-        ImageTextButton buyButton = UIFactoryCommon.getSmallRoundButton("buy", UIFactoryCommon.fontSmall);
-        buttonRow.add(buyButton)
-                .size(350, 70);
-
-        add(buttonRow)
-                .size(1460, 80);
-
-        backButton.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event,
-                                float x,
-                                float y,
-                                int pointer,
-                                int button) {
-                super.touchUp(event, x, y, pointer, button);
-                SequenceAction sequenceAction = new SequenceAction();
-                AlphaAction alphaAction = new AlphaAction();
-                sequenceAction.addAction(alphaAction);
-                alphaAction.setAlpha(0);
-                alphaAction.setDuration(SCREEN_TRANSITION_DELAY);
-                alphaAction.setActor(mechSetupTable);
-
-                sequenceAction.addAction(new SetScreenAction(GameState.previousScreen));
-
-                stage.addAction(sequenceAction);
-            }
-        });
-
     }
 
     private void setupMechSetupTable(Table mechSetupTable,
@@ -213,6 +343,7 @@ public class FactoryView extends Table {
                 .size(400, 64)
                 .fillX()
                 .left()
+                .colspan(2)
                 .row();
 
         textField.addListener(new InputListener() {
@@ -239,8 +370,38 @@ public class FactoryView extends Table {
         modelTable.add(UIFactoryCommon.getTextLabel("type", UIFactoryCommon.fontSmall, Align.left))
                 .size(200, 64);
         modelTable.add(UIFactoryCommon.getTextLabel(baseUnit.unitType.name, UIFactoryCommon.fontSmall, Align.left))
-                .size(850, 64)
+                .height(64)
+                .padRight(30)
                 .left();
+
+        modelTable.add(UIFactoryCommon.getTextLabel("(size", UIFactoryCommon.fontSmall, Align.left))
+                .height(64)
+                .padRight(30);
+
+        Label sizeLabel = UIFactoryCommon.getTextLabel(Integer.toString(baseUnit.unitType.size), UIFactoryCommon.fontSmall, Align.left);
+
+        sizeLabel.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                int cap = GameData.starShip.hangar.maxCapacity - GameData.starShip.hangar.capacity;
+
+                if (selectedUnit == null) {
+                    sizeLabel.setColor(Color.WHITE);
+                } else if (cap - selectedUnit.unitType.size >= 0) {
+                    sizeLabel.setColor(Color.GREEN);
+                } else {
+                    sizeLabel.setColor(Color.RED);
+                }
+                return false;
+            }
+        });
+
+        modelTable.add(sizeLabel)
+                .height(64)
+                .padRight(5)
+                .left();
+
+        modelTable.add(UIFactoryCommon.getTextLabel(")", UIFactoryCommon.fontSmall));
 
         mechSetupTable
                 .row();

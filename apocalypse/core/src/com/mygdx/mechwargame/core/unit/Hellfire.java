@@ -12,6 +12,7 @@ public class Hellfire extends BaseUnit {
         super.setDrawable(idleDrawable);
         name = "hellfire";
         armor = 2;
+        initialArmor = armor;
         maxArmor = 3;
         hp = 2;
         movementPoints = 1;
@@ -19,6 +20,7 @@ public class Hellfire extends BaseUnit {
         primaryWeapon = new LongRangeMissile();
         primaryWeaponSocket = Socket.LargeMissile;
         unitType = UnitType.Vehicle;
+        price = 5000;
     }
 
     @Override

@@ -30,8 +30,12 @@ public class Hangar extends Component {
         capacity = 0;
     }
 
+    public boolean canAdd(BaseUnit baseUnit) {
+        return capacity + baseUnit.unitType.size <= maxCapacity;
+    }
+
     public boolean addUnit(BaseUnit baseUnit) {
-        if (capacity + baseUnit.unitType.size >= maxCapacity) {
+        if (capacity + baseUnit.unitType.size > maxCapacity) {
             return false;
         }
 

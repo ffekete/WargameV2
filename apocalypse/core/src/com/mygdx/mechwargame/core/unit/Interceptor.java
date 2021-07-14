@@ -13,6 +13,7 @@ public class Interceptor extends BaseUnit {
         super.setDrawable(idleDrawable);
         name = "interceptor";
         armor = 0;
+        initialArmor = armor;
         maxArmor = 0;
         hp = 1;
         movementPoints = 5;
@@ -25,6 +26,8 @@ public class Interceptor extends BaseUnit {
         secondaryWeaponSocket = Socket.AAMissile;
 
         unitType = UnitType.Aircraft;
+
+        price = 5000;
     }
 
     @Override

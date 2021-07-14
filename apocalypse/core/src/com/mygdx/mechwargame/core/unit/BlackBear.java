@@ -13,6 +13,7 @@ public class BlackBear extends BaseUnit {
         name = "black bear";
 
         armor = 3;
+        initialArmor = armor;
         maxArmor = 4;
         movementPoints = 1;
         initiative = 1;
@@ -22,6 +23,8 @@ public class BlackBear extends BaseUnit {
         hp = 2;
 
         unitType = UnitType.PowerArmor;
+
+        price = 5000;
     }
 
     @Override

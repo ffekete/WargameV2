@@ -382,8 +382,12 @@ public class UIFactoryCommon {
         NinePatch ninePatchSmall = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG_SMALL, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawableSmall = new NinePatchDrawable(ninePatchSmall);
 
+        NinePatch ninePatchDisabled = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_DISABLED_BG, Texture.class), 16, 16, 16, 16);
+        NinePatchDrawable ninePatchDrawableDisabled = new NinePatchDrawable(ninePatchDisabled);
+
         textButton.getStyle().up = ninePatchDrawable;
         textButton.getStyle().down = ninePatchDrawableSmall;
+        textButton.getStyle().disabled = ninePatchDrawableDisabled;
 
         textButton.pack();
 

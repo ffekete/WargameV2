@@ -16,6 +16,8 @@ public class Config {
 
     public static float SCREEN_TRANSITION_DELAY = 0.25f;
 
+    public static final int ARMOR_PRICE = 2000;
+
     // orders
     public static final int FUEL_ORDER = 1;
     public static final int WEAPON_ORDER = 2;

@@ -42,7 +42,12 @@ public class StarAsteroidImageGenerator {
         List<Supplier<AnimatedDrawable>> decorations = Arrays.asList(
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_01, 16, 16, 0.25f),
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_02, 16, 16, 0.25f),
-                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_03, 16, 16, 0.25f)
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_03, 16, 16, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_04, 16, 16, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_05, 16, 16, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_06, 16, 16, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_07, 16, 16, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_ASTEROID_DECORATION_08, 16, 16, true, 1f, 5f)
         );
 
         GalaxyGeneratorState.state = "generating asteroid views in star systems";
@@ -77,7 +82,7 @@ public class StarAsteroidImageGenerator {
                                     occupied[k + 1][l] = true;
                                     occupied[k][l + 1] = true;
                                     occupied[k + 1][l + 1] = true;
-                                } else {
+                                } else if(random.nextInt(8) == 0) {
                                     star.cityView.actors[k][l] = new Image(decorations.get(random.nextInt(decorations.size())).get());
                                     star.cityView.actors[k][l].setSize(64, 64);
                                     star.cityView.actors[k][l].setTouchable(Touchable.disabled);
