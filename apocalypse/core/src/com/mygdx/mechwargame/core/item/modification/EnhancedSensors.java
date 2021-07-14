@@ -17,8 +17,7 @@ public class EnhancedSensors extends Modification {
         description =
                 "+1 weapon range.\n" +
                         "slots: all missiles\n\n" +
-                        "Simple chip that enhances the maximum range\n" +
-                        "of the missile launcher it is applied to.\n";
+                        "Simple chip that enhances the maximum range of the missile launcher it is applied to.";
         addToolTip();
     }
 

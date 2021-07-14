@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
-import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -19,6 +16,7 @@ import java.text.DecimalFormat;
 
 import static com.mygdx.mechwargame.Config.FUEL_ORDER;
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
+import static com.mygdx.mechwargame.Config.TOOLTIP_MAX_WIDTH;
 import static com.mygdx.mechwargame.input.ToolTipManager.getTooltipManager;
 
 public class HydrogenCell extends ConsumableItem {
@@ -34,8 +32,7 @@ public class HydrogenCell extends ConsumableItem {
         order = FUEL_ORDER;
         price = 50;
         name = "hydrogen cell";
-        description = String.format("Simple fuel cell used to power ships.\n" +
-                "Maximum uel capacity: %s", maxFuelCapacity);
+        description = String.format("Simple fuel cell used to power ships. Maximum fuel capacity: %s", maxFuelCapacity);
 
         addToolTip();
     }
@@ -97,8 +94,13 @@ public class HydrogenCell extends ConsumableItem {
                 .expandX()
                 .row();
 
-        table.add(UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall))
+        Label descriptionLabel = UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall);
+        descriptionLabel.setWrap(true);
+
+        table.add(descriptionLabel)
                 .colspan(2)
+                .width(TOOLTIP_MAX_WIDTH)
+                .left()
                 .row();
 
         this.addListener(tooltip);

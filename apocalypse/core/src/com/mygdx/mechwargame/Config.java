@@ -18,6 +18,8 @@ public class Config {
 
     public static final int ARMOR_PRICE = 2000;
 
+    public static final int TOOLTIP_MAX_WIDTH = 900;
+
     // orders
     public static final int FUEL_ORDER = 1;
     public static final int WEAPON_ORDER = 2;

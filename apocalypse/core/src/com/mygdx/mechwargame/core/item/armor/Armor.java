@@ -3,6 +3,7 @@ package com.mygdx.mechwargame.core.item.armor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
@@ -16,6 +17,7 @@ import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import static com.mygdx.mechwargame.Config.ARMOR_ORDER;
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
+import static com.mygdx.mechwargame.Config.TOOLTIP_MAX_WIDTH;
 
 public abstract class Armor extends Item {
 
@@ -42,7 +44,7 @@ public abstract class Armor extends Item {
 
         table.add(UIFactoryCommon.getTextLabel("name", UIFactoryCommon.fontSmall, Align.left))
                 .left()
-                .width(250)
+                .width(300)
                 .padRight(30);
         table.add(UIFactoryCommon.getTextLabel(name, UIFactoryCommon.fontSmall, Align.left))
                 .left()
@@ -51,7 +53,7 @@ public abstract class Armor extends Item {
 
         table.add(UIFactoryCommon.getTextLabel("value", UIFactoryCommon.fontSmall, Align.left))
                 .left()
-                .width(250)
+                .width(300)
                 .padRight(30);
 
         table.add(UIFactoryCommon.getTextLabel(getPrice() + "c", UIFactoryCommon.fontSmall, Align.left))
@@ -61,16 +63,29 @@ public abstract class Armor extends Item {
 
         table.add(UIFactoryCommon.getTextLabel("protection", UIFactoryCommon.fontSmall, Align.left))
                 .left()
-                .width(250)
+                .width(300)
+                .padBottom(50)
                 .padRight(30);
 
         table.add(UIFactoryCommon.getTextLabel(Integer.toString(protection), UIFactoryCommon.fontSmall, Align.left))
                 .left()
                 .expandX()
+                .padBottom(50)
                 .row();
 
-        table.add(UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall))
+        Label descriptionLabel = UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall);
+        descriptionLabel.setWrap(true);
+
+        Table descrContainer = new Table();
+
+        descrContainer.add(descriptionLabel)
+                .width(TOOLTIP_MAX_WIDTH)
+                .left();
+
+        table.add(descrContainer)
                 .colspan(2)
+                .width(TOOLTIP_MAX_WIDTH)
+                .left()
                 .row();
 
         this.addListener(tooltip);

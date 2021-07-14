@@ -334,8 +334,21 @@ public class HangarViewWindow extends Table {
             itemArray.add(item);
         }
 
-        weaponSelectionTable.add(UIFactoryCommon.getTextLabel(message, UIFactoryCommon.fontSmall, Align.left))
+        Table weaponNameTable = new Table();
+
+        weaponNameTable.add(UIFactoryCommon.getTextLabel(message, UIFactoryCommon.fontSmall, Align.left))
                 .size(480, 60)
+                .padBottom(10)
+                .left()
+                .row();
+
+        weaponNameTable.add(UIFactoryCommon.getTextLabel(primary ? selectedUnit.primaryWeapon.socket.name : selectedUnit.secondaryWeapon.socket.name, UIFactoryCommon.fontSmall, Align.left))
+                .size(480, 60)
+                .padBottom(10)
+                .left();
+
+        weaponSelectionTable.add(weaponNameTable)
+                .size(480, 140)
                 .padBottom(5)
                 .left();
 

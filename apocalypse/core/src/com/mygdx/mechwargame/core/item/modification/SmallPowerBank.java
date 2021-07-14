@@ -16,8 +16,7 @@ public class SmallPowerBank extends Modification {
         description =
                 "+2 ammo.\n" +
                         "slot: laser\n\n" +
-                        "An extension to the battery of a\n" +
-                        "laser weapon to enhance ammo capacity.";
+                        "An extension to the battery of a laser weapon to enhance ammo capacity.";
         addToolTip();
     }
 

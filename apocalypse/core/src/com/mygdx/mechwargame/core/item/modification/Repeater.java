@@ -18,8 +18,7 @@ public class Repeater extends Modification {
         description =
                 "+1 rate of fire.\n" +
                         "slot: laser\n\n" +
-                        "A chip to make it easy to repeat\n" +
-                        "laser beams in a rapid burst.";
+                        "A chip to make it easy to repeat laser beams in a rapid burst.";
         addToolTip();
     }
 

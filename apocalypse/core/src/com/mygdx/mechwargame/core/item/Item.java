@@ -3,10 +3,7 @@ package com.mygdx.mechwargame.core.item;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
-import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.mechwargame.AssetManagerV2;
@@ -15,6 +12,7 @@ import com.mygdx.mechwargame.state.GameState;
 import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
+import static com.mygdx.mechwargame.Config.TOOLTIP_MAX_WIDTH;
 import static com.mygdx.mechwargame.Config.UNIT_SIZE;
 
 public abstract class Item extends Image {
@@ -64,8 +62,13 @@ public abstract class Item extends Image {
                 .expandX()
                 .row();
 
-        table.add(UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall))
+        Label descriptionLabel = UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall);
+        descriptionLabel.setWrap(true);
+
+        table.add(descriptionLabel)
                 .colspan(2)
+                .width(TOOLTIP_MAX_WIDTH)
+                .left()
                 .row();
 
         this.addListener(tooltip);

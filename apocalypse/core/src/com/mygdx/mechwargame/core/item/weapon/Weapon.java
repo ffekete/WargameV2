@@ -3,6 +3,7 @@ package com.mygdx.mechwargame.core.item.weapon;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.mechwargame.Config.TOOLTIP_COLOR;
+import static com.mygdx.mechwargame.Config.TOOLTIP_MAX_WIDTH;
 import static com.mygdx.mechwargame.Config.WEAPON_ORDER;
 
 public abstract class Weapon extends Item {
@@ -130,8 +132,13 @@ public abstract class Weapon extends Item {
                 .expandX()
                 .row();
 
-        table.add(UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall))
+        Label descriptionLabel = UIFactoryCommon.getTextLabel(description, UIFactoryCommon.fontSmall);
+        descriptionLabel.setWrap(true);
+
+        table.add(descriptionLabel)
                 .colspan(2)
+                .width(TOOLTIP_MAX_WIDTH)
+                .left()
                 .row();
 
         this.addListener(tooltip);
