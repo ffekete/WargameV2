@@ -15,7 +15,8 @@ public class ModificationStockGenerator {
             TargetingModule.class,
             EnhancedSensors.class,
             Repeater.class,
-            SmallPowerBank.class
+            SmallPowerBank.class,
+            ImprovedLenses.class
     );
 
     private static List<Class<? extends Modification>> advancedItems = Arrays.asList(

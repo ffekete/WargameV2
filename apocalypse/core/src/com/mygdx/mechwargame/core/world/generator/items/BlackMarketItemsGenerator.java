@@ -15,7 +15,7 @@ public class BlackMarketItemsGenerator {
 
     public static void generate(GalaxySetupParameters galaxySetupParameters) {
 
-        GalaxyGeneratorState.state = "generating items in marketplaces";
+        GalaxyGeneratorState.state = "generating items in black markets";
         int width = galaxySetupParameters.width * galaxySetupParameters.defaultSize;
         int height = galaxySetupParameters.height * galaxySetupParameters.defaultSize;
 
@@ -45,7 +45,7 @@ public class BlackMarketItemsGenerator {
             }
         }
 
-        GalaxyGeneratorState.state = "done generating items in marketplaces";
+        GalaxyGeneratorState.state = "done generating items in black markets";
     }
 
 }
