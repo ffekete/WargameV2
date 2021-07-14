@@ -29,7 +29,7 @@ public class Repeater extends Modification {
     @Override
     public void apply(Weapon weapon) {
         super.apply(weapon);
-        weapon.rateOfFire++;
+        weapon.increaseRateOfFire(1);
         weapon.modes.add(Mode.Burst);
     }
 
@@ -37,6 +37,6 @@ public class Repeater extends Modification {
     public void remove(Weapon weapon) {
         super.remove(weapon);
         weapon.modes.remove(Mode.Burst);
-        weapon.rateOfFire--;
+        weapon.increaseRateOfFire(-1);
     }
 }

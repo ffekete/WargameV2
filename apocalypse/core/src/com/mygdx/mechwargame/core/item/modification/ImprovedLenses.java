@@ -31,12 +31,12 @@ public class ImprovedLenses extends Modification {
     public void apply(Weapon weapon) {
         super.apply(weapon);
 
-        weapon.damage += 2;
+        weapon.increaseDamage(2);
     }
 
     @Override
     public void remove(Weapon weapon) {
         super.remove(weapon);
-        weapon.damage -= 2;
+        weapon.increaseDamage(-2);
     }
 }

@@ -31,12 +31,12 @@ public class EnhancedSensors extends Modification {
     @Override
     public void apply(Weapon weapon) {
         super.apply(weapon);
-        weapon.range++;
+        weapon.increaseRange(1);
     }
 
     @Override
     public void remove(Weapon weapon) {
         super.remove(weapon);
-        weapon.range--;
+        weapon.increaseRange(-1);
     }
 }

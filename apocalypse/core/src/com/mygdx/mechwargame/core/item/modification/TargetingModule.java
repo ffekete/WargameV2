@@ -32,12 +32,12 @@ public class TargetingModule extends Modification {
     @Override
     public void apply(Weapon weapon) {
         super.apply(weapon);
-        weapon.accuracy++;
+        weapon.increaseAccuracy(1);
     }
 
     @Override
     public void remove(Weapon weapon) {
         super.remove(weapon);
-        weapon.accuracy--;
+        weapon.increaseAccuracy(-1);
     }
 }

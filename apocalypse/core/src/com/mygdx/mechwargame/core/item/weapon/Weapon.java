@@ -33,11 +33,11 @@ public abstract class Weapon extends Item {
     public Modification secondModification;
     public Modification thirdModification;
 
-    public int damage;
-    public int range;
-    public int rateOfFire;
+    protected int damage;
+    protected int range;
+    protected int rateOfFire;
     public int ammo;
-    public int accuracy; // roll accuracy against armor, if this roll is bigger, hit
+    protected int accuracy; // roll accuracy against armor, if this roll is bigger, hit
 
     public String name;
     public String longName;
@@ -48,6 +48,23 @@ public abstract class Weapon extends Item {
     public Weapon(String image) {
         super(image);
         order = WEAPON_ORDER;
+    }
+
+    public void increaseDamage(int value) {
+        this.damage += value;
+    }
+
+    public void increaseRange(int value) {
+        this.range += value;
+    }
+
+    public void increaseRateOfFire(int value) {
+        this.rateOfFire += value;
+    }
+
+
+    public void increaseAccuracy(int value) {
+        this.accuracy += value;
     }
 
     public int getDamage() {
