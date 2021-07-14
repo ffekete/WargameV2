@@ -53,6 +53,7 @@ public class HangarViewWindow extends Table {
         background(ninePatchDrawable);
 
         setSize(1500, 980);
+        setTouchable(Touchable.enabled);
 
         add(UIFactoryCommon.getTextLabel("hangar", Align.center))
                 .size(1500, 50)
