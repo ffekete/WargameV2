@@ -96,7 +96,8 @@ public class AssetManagerV2 extends AssetManager {
     public static final String LARGE_LASER_CANNON = "weapon/LargeLaserCannon.png";
     public static final String AA_MISSILE = "weapon/AirToAirMissile.png";
     public static final String AG_MISSILE = "weapon/AirToGroundMissile.png";
-    public static final String MISSILE = "weapon/Missile.png";
+    public static final String SR_MISSILE = "weapon/ShortRangeMissile.png";
+    public static final String LR_MISSILE = "weapon/LongRangeMissile.png";
 
     public static final String ARMOR_PLATE = "item/ArmorPlate.png";
 
@@ -280,7 +281,8 @@ public class AssetManagerV2 extends AssetManager {
         load(LARGE_LASER_CANNON, Texture.class);
         load(AA_MISSILE, Texture.class);
         load(AG_MISSILE, Texture.class);
-        load(MISSILE, Texture.class);
+        load(SR_MISSILE, Texture.class);
+        load(LR_MISSILE, Texture.class);
         load(CARGO_SELECTED_ITEM_BG, Texture.class);
         load(TARGETING_MODULE, Texture.class);
         load(ENHANCED_SENSORS_MODULE, Texture.class);

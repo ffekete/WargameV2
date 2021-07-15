@@ -8,7 +8,7 @@ import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 public class ShortRangeMissile extends Weapon {
 
     public ShortRangeMissile() {
-        super(AssetManagerV2.MISSILE);
+        super(AssetManagerV2.SR_MISSILE);
         name = "SR missile";
         longName = "short range missile";
         damage = 1;

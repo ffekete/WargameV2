@@ -8,7 +8,7 @@ import com.mygdx.mechwargame.core.item.weapon.socket.Socket;
 public class LongRangeMissile extends Weapon {
 
     public LongRangeMissile() {
-        super(AssetManagerV2.MISSILE);
+        super(AssetManagerV2.LR_MISSILE);
         name = "LR missile";
         longName = "long range missile";
         damage = 1;
