@@ -23,6 +23,7 @@ import com.mygdx.mechwargame.AssetManagerV2;
 import com.mygdx.mechwargame.Config;
 import com.mygdx.mechwargame.core.character.Company;
 import com.mygdx.mechwargame.core.ship.BaseShip;
+import com.mygdx.mechwargame.core.world.Nebulae;
 import com.mygdx.mechwargame.core.world.Sector;
 import com.mygdx.mechwargame.core.world.Star;
 import com.mygdx.mechwargame.screen.GenericScreenAdapter;
@@ -245,6 +246,31 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
             starNameLabel.setTouchable(Touchable.disabled);
             starNameLabel.setSize(300, 80);
             starNameLabel.setColor(Color.WHITE);
+
+            List<String> nebulas = Arrays.asList(
+                    AssetManagerV2.NEBULA_01,
+                    AssetManagerV2.NEBULA_02
+            );
+
+            for (int i = 0; i < (GameData.galaxy.width - 3); i+=4) {
+                for (int j = 0; j < (GameData.galaxy.height - 3); j+=4) {
+
+                    if(new Random().nextInt(6) == 0) {
+                        Nebulae nebulae = new Nebulae(nebulas.get(new Random().nextInt(nebulas.size())));
+
+                        nebulae.setSize(128 * 4, 128 * 4);
+                        nebulae.setPosition(i * UNIT_SIZE,
+                                j * UNIT_SIZE
+                        );
+
+                        nebulae.setRotation(new Random().nextInt(4) * 90);
+
+                        stage.addActor(nebulae);
+
+                        nebulae.toBack();
+                    }
+                }
+            }
 
             for (int i = 0; i < GameData.galaxy.width; i++) {
                 for (int j = 0; j < GameData.galaxy.height; j++) {

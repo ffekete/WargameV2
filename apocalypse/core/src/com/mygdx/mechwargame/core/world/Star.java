@@ -62,7 +62,7 @@ public class Star extends BaseActor {
     public void draw(Batch batch,
                      float parentAlpha) {
         if (capitolFrameImage != null) {
-            capitolFrameImage.setColor(Color.valueOf("FFFFFF11"));
+            capitolFrameImage.setColor(Color.valueOf("FFFFFF22"));
             capitolFrameImage.draw(batch, parentAlpha);
         }
         layeredAnimatedImage.draw(batch, parentAlpha);
