@@ -86,6 +86,7 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String TOOLTIP_BG = "ui/ToolTipBg.png";
     public static final String FRAME_BG = "ui/FrameBg.png";
+    public static final String PANEL_FRAME_BG = "ui/PanelFrameBg.png";
     public static final String FRAME_DISABLED_BG = "ui/FrameDisabledBg.png";
     public static final String FRAME_BG_SMALL = "ui/FrameBgSmall.png";
     public static final String ASSIGN_BUTTON_UP = "ui/AssignButtonUp.png";
@@ -319,5 +320,6 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_SYSTEM_ASTEROID_DECORATION_07, Texture.class);
         load(STAR_SYSTEM_ASTEROID_DECORATION_08, Texture.class);
         load(IMPROVED_LENSES, Texture.class);
+        load(PANEL_FRAME_BG, Texture.class);
     }
 }

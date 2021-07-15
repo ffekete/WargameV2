@@ -586,15 +586,13 @@ public class FactoryView extends Table {
         table.setBackground(ninePatchDrawable);
         Tooltip<Table> tooltip = new Tooltip<>(table, tooltipManager);
 
-        String text = "Select armor upgrade.\n" +
-                "Armor can be upgraded by adding armor\n" +
-                "component that you already own.\n" +
-                "This armor cannot be removed once fixed.";
-
-        table.add(UIFactoryCommon.getTextLabel(text, UIFactoryCommon.fontSmall, Align.left))
+        String text = "Select armor upgrade. Armor can be upgraded by adding armor component that you already own. This armor cannot be removed once fixed.";
+        Label toolTipLabel = UIFactoryCommon.getTextLabel(text, UIFactoryCommon.fontSmall, Align.left);
+        toolTipLabel.setWrap(true);
+        table.add(toolTipLabel)
                 .left()
                 .colspan(2)
-                .expandX()
+                .width(900)
                 .row();
 
 

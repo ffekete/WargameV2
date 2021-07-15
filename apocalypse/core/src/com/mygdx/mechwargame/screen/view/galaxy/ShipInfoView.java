@@ -21,7 +21,7 @@ import com.mygdx.mechwargame.ui.factory.UIFactoryCommon;
 
 import java.text.DecimalFormat;
 
-public class ShipInfoLocalMenu extends Container<Table> {
+public class ShipInfoView extends Container<Table> {
 
     public ImageTextButton engineInfoButton;
     public ImageTextButton mechBayInfoButton;
@@ -31,15 +31,18 @@ public class ShipInfoLocalMenu extends Container<Table> {
     public ImageTextButton cargoInfoButton;
     public TextField nameTextField;
 
-    public ShipInfoLocalMenu(Stage stage) {
+    public ShipInfoView(Stage stage) {
 
         BaseShip ship = GameData.starShip;
         Camera camera = stage.getCamera();
 
+        NinePatch panelNinePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.PANEL_FRAME_BG, Texture.class), 16, 16, 16, 16);
+        NinePatchDrawable panelNinePatchDrawable = new NinePatchDrawable(panelNinePatch);
+
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        this.background(ninePatchDrawable);
+        this.background(panelNinePatchDrawable);
         this.setSize(1500, 700);
         this.setPosition(camera.position.x - 750f, camera.position.y - 350);
 
@@ -423,7 +426,7 @@ public class ShipInfoLocalMenu extends Container<Table> {
     public void hide(Stage stage) {
         stage.getActors().removeValue(this, true);
         stage.setKeyboardFocus(null);
-        GameData.shipInfoLocalMenu = null;
+        GameData.shipInfoView = null;
         GameData.lockGameStage = false;
     }
 

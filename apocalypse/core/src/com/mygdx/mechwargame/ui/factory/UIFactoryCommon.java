@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 
 public class UIFactoryCommon {
 
+    private static final Color DEFAULT_FONT_COLOR = Color.valueOf("BCFFF9");
     public static BitmapFont fontSmall;
     public static BitmapFont fontMedium;
     public static BitmapFont fontLarge;
@@ -182,6 +183,7 @@ public class UIFactoryCommon {
                                      BitmapFont bitmapFont) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = bitmapFont;
+        labelStyle.fontColor = DEFAULT_FONT_COLOR;
         return new Label(text, labelStyle);
     }
 
@@ -202,6 +204,7 @@ public class UIFactoryCommon {
                                      int align) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = bitmapFont;
+        labelStyle.fontColor = DEFAULT_FONT_COLOR;
         Label label = new Label(text, labelStyle);
         label.setAlignment(align);
         return label;
@@ -212,6 +215,7 @@ public class UIFactoryCommon {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = fontMedium;
         Label label = new Label(text, labelStyle);
+        labelStyle.fontColor = DEFAULT_FONT_COLOR;
         label.setAlignment(align);
         return label;
     }
@@ -219,12 +223,14 @@ public class UIFactoryCommon {
     public static Label getTextLabel(String text) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = fontMedium;
+        labelStyle.fontColor = DEFAULT_FONT_COLOR;
         return new Label(text, labelStyle);
     }
 
     public static Label getDynamicTextLabel(Supplier<String> textSource) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = fontMedium;
+        labelStyle.fontColor = DEFAULT_FONT_COLOR;
         return new DynamicTextLabel("", labelStyle, textSource);
     }
 
@@ -232,6 +238,7 @@ public class UIFactoryCommon {
                                             BitmapFont bitmapFont) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = bitmapFont;
+        labelStyle.fontColor = DEFAULT_FONT_COLOR;
         return new DynamicTextLabel("", labelStyle, textSource);
     }
 
@@ -240,6 +247,7 @@ public class UIFactoryCommon {
                                             int align) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = bitmapFont;
+        labelStyle.fontColor = DEFAULT_FONT_COLOR;
         Label label = new DynamicTextLabel("", labelStyle, textSource);
         label.setAlignment(align);
         return label;
@@ -264,8 +272,8 @@ public class UIFactoryCommon {
         textFieldStyle.font = bitmapFont;
         textFieldStyle.cursor = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.TEXT_CURSOR, Texture.class));
         textFieldStyle.messageFont = bitmapFont;
-        textFieldStyle.fontColor = Color.GREEN;
-        textFieldStyle.messageFontColor = Color.GREEN;
+        textFieldStyle.fontColor = DEFAULT_FONT_COLOR;
+        textFieldStyle.messageFontColor = DEFAULT_FONT_COLOR;
         TextField textField = new TextField(text, textFieldStyle);
         textField.setMessageText(message);
 
@@ -278,9 +286,8 @@ public class UIFactoryCommon {
 
     public static <T extends Actor> Container<T> getInputContainer(T t) {
         Container<T> container = new Container<>(t);
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.PANEL_FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
-        ninePatch.setColor(Color.GREEN);
         container.background(ninePatchDrawable);
         return container;
     }
@@ -289,13 +296,14 @@ public class UIFactoryCommon {
                                            BitmapFont bitmapFont) {
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = bitmapFont;
-
+        textButtonStyle.fontColor = DEFAULT_FONT_COLOR;
         return new TextButton(text, textButtonStyle);
     }
 
     public static TextButton getTextButton(String text) {
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = fontMedium;
+        textButtonStyle.fontColor = DEFAULT_FONT_COLOR;
 
         return new TextButton(text, textButtonStyle);
     }
@@ -319,6 +327,7 @@ public class UIFactoryCommon {
 
         final ImageTextButton.ImageTextButtonStyle textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = UIFactoryCommon.fontMedium;
+        textButtonStyle.fontColor = DEFAULT_FONT_COLOR;
 
         final ImageTextButton textButton = new ImageTextButton(text, textButtonStyle);
 
@@ -371,6 +380,7 @@ public class UIFactoryCommon {
 
         final ImageTextButton.ImageTextButtonStyle textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = bitmapFont;
+        textButtonStyle.fontColor = DEFAULT_FONT_COLOR;
 
         final ImageTextButton textButton = new ImageTextButton(text, textButtonStyle);
 

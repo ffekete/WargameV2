@@ -19,7 +19,7 @@ public class CargoViewWindow extends Table {
     public CargoViewWindow(Table content,
                            Stage stage) {
 
-        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
+        NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.PANEL_FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
         background(ninePatchDrawable);

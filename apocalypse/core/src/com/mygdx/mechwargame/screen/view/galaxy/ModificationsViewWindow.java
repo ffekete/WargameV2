@@ -57,7 +57,10 @@ public class ModificationsViewWindow extends Table {
             });
         });
 
-        this.background(ninePatchDrawable);
+        NinePatch panelNinePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.PANEL_FRAME_BG, Texture.class), 16, 16, 16, 16);
+        NinePatchDrawable panelNinePatchDrawable = new NinePatchDrawable(panelNinePatch);
+
+        this.background(panelNinePatchDrawable);
 
         ModificationsViewWindow modificationsViewWindow = this;
 

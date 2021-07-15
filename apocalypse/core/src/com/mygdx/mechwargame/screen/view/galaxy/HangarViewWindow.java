@@ -47,10 +47,13 @@ public class HangarViewWindow extends Table {
 
         Drawable unitSelectedBackground = new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.CARGO_SELECTED_ITEM_BG, Texture.class));
 
+        NinePatch ninePatchPanel = new NinePatch(GameState.assetManager.get(AssetManagerV2.PANEL_FRAME_BG, Texture.class), 16, 16, 16, 16);
+        NinePatchDrawable ninePatchPanelDrawable = new NinePatchDrawable(ninePatchPanel);
+
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        background(ninePatchDrawable);
+        background(ninePatchPanelDrawable);
 
         setSize(1500, 980);
         setTouchable(Touchable.enabled);

@@ -53,7 +53,10 @@ public class ArmorViewWindow extends Table {
         NinePatch ninePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.FRAME_BG, Texture.class), 16, 16, 16, 16);
         NinePatchDrawable ninePatchDrawable = new NinePatchDrawable(ninePatch);
 
-        this.background(ninePatchDrawable);
+        NinePatch panelNinePatch = new NinePatch(GameState.assetManager.get(AssetManagerV2.PANEL_FRAME_BG, Texture.class), 16, 16, 16, 16);
+        NinePatchDrawable panelNinePatchDrawable = new NinePatchDrawable(panelNinePatch);
+
+        this.background(panelNinePatchDrawable);
 
         ArmorViewWindow modificationsViewWindow = this;
 
