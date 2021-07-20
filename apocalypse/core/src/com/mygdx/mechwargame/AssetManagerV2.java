@@ -134,6 +134,13 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STAR_SYSTEM_BG_01 = "starsystem/city/BackGround01.png";
     public static final String STAR_SYSTEM_BG_02 = "starsystem/city/BackGround02.png";
     public static final String STAR_SYSTEM_BG_03 = "starsystem/city/BackGround03.png";
+    public static final String STAR_SYSTEM_BG_04 = "starsystem/city/BackGround04.png";
+    public static final String STAR_SYSTEM_BG_05 = "starsystem/city/BackGround05.png";
+    public static final String STAR_SYSTEM_BG_06 = "starsystem/city/BackGround06.png";
+    public static final String STAR_SYSTEM_BG_07 = "starsystem/city/BackGround07.png";
+    public static final String STAR_SYSTEM_BG_08 = "starsystem/city/BackGround08.png";
+    public static final String STAR_SYSTEM_BG_09 = "starsystem/city/BackGround09.png";
+    public static final String STAR_SYSTEM_BG_10 = "starsystem/city/BackGround10.png";
     public static final String STAR_SYSTEM_ASTEROID_BG_01 = "starsystem/asteroid/BackGround.png";
     public static final String STAR_SYSTEM_ASTEROID_BUILDING_01 = "starsystem/asteroid/Building01.png";
     public static final String STAR_SYSTEM_ASTEROID_DECORATION_01 = "starsystem/asteroid/Decoration01.png";
@@ -318,6 +325,13 @@ public class AssetManagerV2 extends AssetManager {
         load(STAR_SYSTEM_BG_01, Texture.class);
         load(STAR_SYSTEM_BG_02, Texture.class);
         load(STAR_SYSTEM_BG_03, Texture.class);
+        load(STAR_SYSTEM_BG_04, Texture.class);
+        load(STAR_SYSTEM_BG_05, Texture.class);
+        load(STAR_SYSTEM_BG_06, Texture.class);
+        load(STAR_SYSTEM_BG_07, Texture.class);
+        load(STAR_SYSTEM_BG_08, Texture.class);
+        load(STAR_SYSTEM_BG_09, Texture.class);
+        load(STAR_SYSTEM_BG_10, Texture.class);
         load(STAR_SYSTEM_ASTEROID_BG_01, Texture.class);
         load(STAR_SYSTEM_ASTEROID_BLACK_MARKET, Texture.class);
         load(STAR_SYSTEM_ASTEROID_BUILDING_01, Texture.class);

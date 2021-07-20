@@ -44,7 +44,14 @@ public class StarCityImageGenerator {
         List<Supplier<TextureRegionDrawable>> backGrounds = Arrays.asList(
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_01, Texture.class)),
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_02, Texture.class)),
-                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_03, Texture.class))
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_03, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_04, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_05, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_06, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_07, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_08, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_09, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_10, Texture.class))
         );
 
         GalaxyGeneratorState.state = "generating city views in star systems";
