@@ -249,7 +249,8 @@ public class GalaxyViewScreen extends GenericScreenAdapter {
 
             List<String> nebulas = Arrays.asList(
                     AssetManagerV2.NEBULA_01,
-                    AssetManagerV2.NEBULA_02
+                    AssetManagerV2.NEBULA_02,
+                    AssetManagerV2.NEBULA_03
             );
 
             for (int i = 0; i < (GameData.galaxy.width - 3); i+=4) {

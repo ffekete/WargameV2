@@ -146,6 +146,7 @@ public class AssetManagerV2 extends AssetManager {
 
     public static final String NEBULA_01 = "galaxy/decoration/Nebula01.png";
     public static final String NEBULA_02 = "galaxy/decoration/Nebula02.png";
+    public static final String NEBULA_03 = "galaxy/decoration/Nebula03.png";
 
     public List<String> logos = Arrays.asList(
             LOGO_01,
@@ -328,5 +329,6 @@ public class AssetManagerV2 extends AssetManager {
         load(PANEL_FRAME_BG, Texture.class);
         load(NEBULA_01, Texture.class);
         load(NEBULA_02, Texture.class);
+        load(NEBULA_03, Texture.class);
     }
 }
