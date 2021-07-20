@@ -38,10 +38,13 @@ public class StarCityImageGenerator {
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_05, 16, 32, true, 1f, 60f + random.nextFloat() * 60)
         );
 
-        List<Supplier<AnimatedDrawable>> decoration = Arrays.asList(
-                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_01, 16, 32, 0.25f),
-                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f),
-                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_03, 16, 32, 0.25f)
+        List<Supplier<AnimatedDrawable>> decoration = getDecorationSuppliers();
+
+
+        List<Supplier<TextureRegionDrawable>> backGrounds = Arrays.asList(
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_01, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_02, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_03, Texture.class))
         );
 
         GalaxyGeneratorState.state = "generating city views in star systems";
@@ -58,7 +61,7 @@ public class StarCityImageGenerator {
 
                         star.cityView = new CityView();
 
-                        star.cityView.background(new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_02, Texture.class)));
+                        star.cityView.background(backGrounds.get(random.nextInt(backGrounds.size())).get());
 
                         int[][] mapTemplate = new CellAlgorithm(random).create(6 - star.wealth, Config.CITY_WIDTH, Config.CITY_HEIGHT);
 
@@ -93,6 +96,15 @@ public class StarCityImageGenerator {
         }
 
         GalaxyGeneratorState.state = "done generating city views in star systems";
+    }
+
+    public static List<Supplier<AnimatedDrawable>> getDecorationSuppliers() {
+        List<Supplier<AnimatedDrawable>> decoration = Arrays.asList(
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_01, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_02, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_DECORATION_03, 16, 32, 0.25f)
+        );
+        return decoration;
     }
 
 }
