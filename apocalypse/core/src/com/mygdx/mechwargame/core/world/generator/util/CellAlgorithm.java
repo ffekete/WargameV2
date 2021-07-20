@@ -7,7 +7,7 @@ public class CellAlgorithm {
     private final static boolean DEBUG = false;
 
     private int deathLimit = 5;
-    private int birthLimit = 2;
+    private int birthLimit = 3;
     private float chanceToStartAlive = 38;
     private int width;
     private int height;

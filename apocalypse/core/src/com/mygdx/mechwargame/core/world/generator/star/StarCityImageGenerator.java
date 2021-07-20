@@ -69,18 +69,18 @@ public class StarCityImageGenerator {
                             for (int l = 0; l < Config.CITY_HEIGHT; l++) {
 
 
-                                if(mapTemplate[k][l] == 1) {
+                                if (mapTemplate[k][l] == 1) {
                                     star.cityView.actors[k][l] = new Image(buildings.get(random.nextInt(buildings.size())).get());
                                     star.cityView.actors[k][l].setSize(64, 128);
                                     star.cityView.actors[k][l].setTouchable(Touchable.disabled);
                                     star.cityView.actors[k][l].setPosition(k * 64, l * 64);
-                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+                                    //star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
                                 } else {
                                     star.cityView.actors[k][l] = new Image(decoration.get(random.nextInt(decoration.size())).get());
                                     star.cityView.actors[k][l].setSize(64, 128);
                                     star.cityView.actors[k][l].setTouchable(Touchable.disabled);
                                     star.cityView.actors[k][l].setPosition(k * 64, l * 64);
-                                    star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
+                                    //star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
                                 }
                             }
                         }
