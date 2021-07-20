@@ -23,7 +23,7 @@ public class MarketImageGenerator {
             Image marketImage = new Image(new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_MARKET, 32, 32, 0.2f));
 
             // market
-            clearArea(star, px, py, 2, 2);
+            clearArea(star, px, py, 2, 1);
 
             star.cityView.actors[px][py] = marketImage;
             marketImage.setSize(128, 128);

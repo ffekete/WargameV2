@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.mechwargame.Config;
-import com.mygdx.mechwargame.core.facility.Facility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,8 @@ public class CityView extends Table {
 
         setSize(1600, 512);
 
-        for (int i = 0; i < Config.CITY_WIDTH; i++) {
-            for (int j = Config.CITY_HEIGHT - 1; j >= 0; j--) {
-
+        for (int j = Config.CITY_HEIGHT - 1; j >= 0; j--) {
+            for (int i = 0; i < Config.CITY_WIDTH; i++) {
                 Actor actor = actors[i][j];
 
                 if (actor != null) {

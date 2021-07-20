@@ -23,7 +23,7 @@ public class FactoryImageGenerator {
             int py = 3;
 
             // market
-            clearArea(star, px, py, 3, 2);
+            clearArea(star, px, py, 3, 1);
 
             star.cityView.actors[px][py] = factoryImage;
             factoryImage.setSize(192, 128);
