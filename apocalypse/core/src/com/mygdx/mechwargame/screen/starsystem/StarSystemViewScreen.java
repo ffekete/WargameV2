@@ -133,7 +133,7 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
 
             screenContentTable.add(detailTable)
                     .size(800, 500)
-                    .center();
+                    .right();
 
             Table imageTable = new Table();
             imageTable.setSize(800, 500);
@@ -147,7 +147,10 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
             screenContentTable
                     .add(imageTable)
                     .size(800, 500)
+                    .left()
                     .row();
+
+            screenContentTable.debug();
 
             screenContentTable.add(star.cityView)
                     .size(1600, 448)
