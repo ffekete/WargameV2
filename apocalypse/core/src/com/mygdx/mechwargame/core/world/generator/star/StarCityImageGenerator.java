@@ -30,6 +30,11 @@ public class StarCityImageGenerator {
 
         random = new Random();
 
+        List<Supplier<AnimatedDrawable>> foliages = Arrays.asList(
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_01, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_02, 16, 32, 0.25f)
+        );
+
         List<Supplier<AnimatedDrawable>> buildings = Arrays.asList(
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_01, 16, 32, 0.25f),
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_BUILDING_02, 16, 32, 0.25f),
@@ -63,12 +68,35 @@ public class StarCityImageGenerator {
 
                 Sector sector = GameData.galaxy.sectors[i][j];
 
+                AnimatedDrawable foliage = foliages.get(random.nextInt(foliages.size())).get();
+
                 sector.stars.forEach(star -> {
                     if (sector.sectorOwnerArea.owner != null && !sector.sectorOwnerArea.owner.isPirate) {
 
                         star.cityView = new CityView();
 
                         star.cityView.background(backGrounds.get(random.nextInt(backGrounds.size())).get());
+
+                        int[][] foliageTemplate = new CellAlgorithm(random, 48).create(3, Config.CITY_WIDTH, Config.CITY_HEIGHT);
+
+                        for (int k = 0; k < Config.CITY_WIDTH; k++) {
+                            for (int l = 0; l < Config.CITY_HEIGHT; l++) {
+
+                                if (foliageTemplate[k][l] == 1) {
+
+                                    star.cityView.actors[k][l] = new Image(decoration.get(random.nextInt(decoration.size())).get());
+                                    star.cityView.actors[k][l].setSize(64, 128);
+                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
+                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
+
+                                } else {
+                                    star.cityView.actors[k][l] = new Image(foliage);
+                                    star.cityView.actors[k][l].setSize(64, 128);
+                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
+                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
+                                }
+                            }
+                        }
 
                         int[][] mapTemplate = new CellAlgorithm(random).create(6 - star.wealth, Config.CITY_WIDTH, Config.CITY_HEIGHT);
 
@@ -78,12 +106,6 @@ public class StarCityImageGenerator {
 
                                 if (mapTemplate[k][l] == 1) {
                                     star.cityView.actors[k][l] = new Image(buildings.get(random.nextInt(buildings.size())).get());
-                                    star.cityView.actors[k][l].setSize(64, 128);
-                                    star.cityView.actors[k][l].setTouchable(Touchable.disabled);
-                                    star.cityView.actors[k][l].setPosition(k * 64, l * 64);
-                                    //star.cityView.actors[k][l].setColor(0.8f / (l / 2f), 0.8f / (l / 2f), 0.8f / (l / 2f), 1f);
-                                } else {
-                                    star.cityView.actors[k][l] = new Image(decoration.get(random.nextInt(decoration.size())).get());
                                     star.cityView.actors[k][l].setSize(64, 128);
                                     star.cityView.actors[k][l].setTouchable(Touchable.disabled);
                                     star.cityView.actors[k][l].setPosition(k * 64, l * 64);

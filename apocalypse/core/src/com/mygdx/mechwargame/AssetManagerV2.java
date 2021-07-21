@@ -152,6 +152,8 @@ public class AssetManagerV2 extends AssetManager {
     public static final String STAR_SYSTEM_ASTEROID_DECORATION_07 = "starsystem/asteroid/Decoration07.png";
     public static final String STAR_SYSTEM_ASTEROID_DECORATION_08 = "starsystem/asteroid/Decoration08.png";
     public static final String STAR_SYSTEM_ASTEROID_BLACK_MARKET = "starsystem/asteroid/BlackMarket.png";
+    public static final String STAR_SYSTEM_FOLIAGE_01 = "starsystem/city/Foliage01.png";
+    public static final String STAR_SYSTEM_FOLIAGE_02 = "starsystem/city/Foliage02.png";
 
     public static final String NEBULA_01 = "galaxy/decoration/Nebula01.png";
     public static final String NEBULA_02 = "galaxy/decoration/Nebula02.png";
@@ -348,5 +350,7 @@ public class AssetManagerV2 extends AssetManager {
         load(NEBULA_01, Texture.class);
         load(NEBULA_02, Texture.class);
         load(NEBULA_03, Texture.class);
+        load(STAR_SYSTEM_FOLIAGE_01, Texture.class);
+        load(STAR_SYSTEM_FOLIAGE_02, Texture.class);
     }
 }

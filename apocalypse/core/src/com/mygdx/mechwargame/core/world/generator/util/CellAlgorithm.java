@@ -22,6 +22,13 @@ public class CellAlgorithm {
         this.chanceToStartAlive = chanceToStartAlive;
     }
 
+    public CellAlgorithm(Random random, int chanceToStartAlive, int birthLimit, int deathLimit) {
+        this.birthLimit = birthLimit;
+        this.deathLimit = deathLimit;
+        this.random = random;
+        this.chanceToStartAlive = chanceToStartAlive;
+    }
+
     public int[][] create(int steps, int width, int height) {
 
         this.width = width;
