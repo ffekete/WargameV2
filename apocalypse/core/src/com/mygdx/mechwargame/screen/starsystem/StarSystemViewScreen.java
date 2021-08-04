@@ -150,8 +150,6 @@ public class StarSystemViewScreen extends GenericScreenAdapter {
                     .left()
                     .row();
 
-            screenContentTable.debug();
-
             screenContentTable.add(star.cityView)
                     .size(1600, 448)
                     .expand()

@@ -30,9 +30,15 @@ public class StarCityImageGenerator {
 
         random = new Random();
 
-        List<Supplier<AnimatedDrawable>> foliages = Arrays.asList(
+        List<Supplier<AnimatedDrawable>> yellowFoliages = Arrays.asList(
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_04, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_05, 16, 32, 0.25f)
+        );
+
+        List<Supplier<AnimatedDrawable>> greenFolaiges = Arrays.asList(
                 () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_01, 16, 32, 0.25f),
-                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_02, 16, 32, 0.25f)
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_02, 16, 32, 0.25f),
+                () -> new AnimatedDrawable(AssetManagerV2.STAR_SYSTEM_FOLIAGE_03, 16, 32, 0.25f)
         );
 
         List<Supplier<AnimatedDrawable>> buildings = Arrays.asList(
@@ -45,18 +51,20 @@ public class StarCityImageGenerator {
 
         List<Supplier<AnimatedDrawable>> decoration = getDecorationSuppliers();
 
-
-        List<Supplier<TextureRegionDrawable>> backGrounds = Arrays.asList(
+        List<Supplier<TextureRegionDrawable>> yellowBackgrounds = Arrays.asList(
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_01, Texture.class)),
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_02, Texture.class)),
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_03, Texture.class)),
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_04, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_09, Texture.class)),
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_10, Texture.class))
+        );
+
+        List<Supplier<TextureRegionDrawable>> greenBackgrounds = Arrays.asList(
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_05, Texture.class)),
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_06, Texture.class)),
                 () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_07, Texture.class)),
-                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_08, Texture.class)),
-                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_09, Texture.class)),
-                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_10, Texture.class))
+                () -> new TextureRegionDrawable(GameState.assetManager.get(AssetManagerV2.STAR_SYSTEM_BG_08, Texture.class))
         );
 
         GalaxyGeneratorState.state = "generating city views in star systems";
@@ -68,6 +76,11 @@ public class StarCityImageGenerator {
 
                 Sector sector = GameData.galaxy.sectors[i][j];
 
+                int colourType = random.nextInt(2); // green, yellow for now
+
+                List<Supplier<AnimatedDrawable>> foliages = colourType == 0 ? greenFolaiges : yellowFoliages;
+                List<Supplier<TextureRegionDrawable>> backgrounds = colourType == 0 ? greenBackgrounds : yellowBackgrounds;
+
                 AnimatedDrawable foliage = foliages.get(random.nextInt(foliages.size())).get();
 
                 sector.stars.forEach(star -> {
@@ -75,7 +88,7 @@ public class StarCityImageGenerator {
 
                         star.cityView = new CityView();
 
-                        star.cityView.background(backGrounds.get(random.nextInt(backGrounds.size())).get());
+                        star.cityView.background(backgrounds.get(random.nextInt(backgrounds.size())).get());
 
                         int[][] foliageTemplate = new CellAlgorithm(random, 48).create(3, Config.CITY_WIDTH, Config.CITY_HEIGHT);
 
